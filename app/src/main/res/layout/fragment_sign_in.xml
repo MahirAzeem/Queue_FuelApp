@@ -19,7 +19,6 @@
             android:layout_height="match_parent">
 
 
-<!--    Don't Consider This        -->
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
