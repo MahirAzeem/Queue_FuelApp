@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    app:cnb_unselectedColor="#fff"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/homepage"
+        android:title="Home"
+        android:icon="@drawable/home"
+        android:iconTint="#000000"
+        app:cnb_backgroundColor="#c1c7cd"
+        app:cnb_iconColor='#000000'
+        app:cnb_textColor='#000000'/>
+
+    <item
+        android:id="@+id/profile"
+        android:title="Profile"
+        android:icon="@drawable/profile"
+        android:iconTint="#000000"
+        app:cnb_backgroundColor="#c1c7cd"
+        app:cnb_iconColor='#000000'
+        app:cnb_textColor='#000000'/>
+
+    <item
+        android:id="@+id/logout"
+        android:title="Logout"
+        android:icon="@drawable/logout"
+        android:iconTint="#000000"
+        app:cnb_backgroundColor="#c1c7cd"
+        app:cnb_iconColor='#000000'
+        app:cnb_textColor='#000000'/>
+
+</menu>

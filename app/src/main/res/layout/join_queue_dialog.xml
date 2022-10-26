@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:layout_marginVertical="10dp"
+    app:cardCornerRadius="30dp"
+    tools:context=".user.FuelStation">
+
+    <TextView
+        android:id="@+id/joinQueue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="Join Queue"
+        android:textColor="@color/colorDarkBlue"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/enterStationName"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="300dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="37dp"
+        android:layout_marginBottom="32dp"
+        android:enabled="false"
+        android:hint="Station Name"
+        app:endIconMode="clear_text"
+        app:endIconTint="@color/colorGrey"
+        app:layout_constraintBottom_toTopOf="@+id/vehicle_Type"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/joinQueue">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/vehicle_Type"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="37dp"
+        android:hint="Vehicle Type"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enterStationName">
+
+        <AutoCompleteTextView
+            android:id="@+id/vehicleType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/join_queue"
+        android:layout_width="113dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="38dp"
+        android:elevation="4dp"
+        android:text="Join"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cancel_button"
+        app:layout_constraintTop_toBottomOf="@+id/vehicle_Type" />
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="113dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="38dp"
+
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="38dp"
+        android:backgroundTint="@color/colorGrey"
+        android:elevation="4dp"
+        android:text="Cancal"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/join_queue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vehicle_Type" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

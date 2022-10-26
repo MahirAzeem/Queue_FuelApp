@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Fuel</string>
+    <string name="petrol_shed_location">Dehiwala</string>
+    <string name="petrol_shed_type">IOC</string>
+    <string-array name="locations">
+        <item>Colombo</item>
+        <item>Kandy</item>
+        <item>Kaluthara</item>
+        <item>Galle</item>
+        <item>Matara</item>
+    </string-array>
+    <string name="title_activity_homepage">Homepage</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="petrol_shed_name">Ahmed Petrol Shed</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--  Table Values  -->
+    <string name="col1">Name</string>
+    <string name="col2">Age</string>
+    <string name="col3">Surname</string>
+    <string name="row1Name">Ali</string>
+    <string name="row1Age">51</string>
+    <string name="row1Surname">Mohammad</string>
+    <string name="row2Name">Dave</string>
+    <string name="row2Age">45</string>
+    <string name="row2Surname">Smith</string>
+    <string name="row3Name">Jason</string>
+    <string name="row3Age">67</string>
+    <string name="row3Surname">William</string>
+    <string name="label">Select Location</string>
+    <string name="title_activity_splash_screen">SplashScreen</string>
+</resources>
