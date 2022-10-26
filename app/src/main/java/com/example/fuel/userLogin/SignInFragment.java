@@ -97,9 +97,6 @@ public class SignInFragment extends Fragment {
             }
         });
 
-
-
-
         return v;
 
     }

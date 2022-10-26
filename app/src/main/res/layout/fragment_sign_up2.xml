@@ -136,7 +136,7 @@
                     android:id="@+id/stationLocations"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none" />
+                    android:inputType="textAutoComplete" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -164,8 +164,8 @@
 
             <ImageView
                 android:id="@+id/idIVLogo"
-                android:layout_width="1425dp"
-                android:layout_height="336dp"
+                android:layout_width="1453dp"
+                android:layout_height="369dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:src="@drawable/petrol"

@@ -95,11 +95,12 @@
 
             <ImageView
                 android:id="@+id/idIVLogo"
-                android:layout_width="580dp"
-                android:layout_height="468dp"
+                android:layout_width="1453dp"
+                android:layout_height="369dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/gasoline"
+                android:layout_marginTop="204dp"
+                android:src="@drawable/petrol"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/enterPasswordField" />
