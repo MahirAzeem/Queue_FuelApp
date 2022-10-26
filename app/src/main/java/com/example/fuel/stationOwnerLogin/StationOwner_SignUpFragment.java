@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.example.fuel.DBHelper;
 import com.example.fuel.Login_SignUp_Interface;
-import com.example.fuel.MainActivity;
 import com.example.fuel.R;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -74,7 +73,7 @@ public class StationOwner_SignUpFragment extends Fragment {
                              Bundle savedInstanceState) {
 
 //        Initializing Dropdown values for Station Location and Station Type in Signup
-        String[] LocationList = {"Dehiwala", "Kalubowila", "Ratmalana"};
+        String[] LocationList = {"Colombo", "Galle", "Gampaha", "Jaffna", "Kandy"};
         String[] TypeList = {"IOC", "Ceypetco"};
         AutoCompleteTextView stationLocation;
         AutoCompleteTextView stationType;
@@ -140,7 +139,7 @@ public class StationOwner_SignUpFragment extends Fragment {
                 if (station_Name.equals("") || pass.equals("") || station_Email.equals("") || station_Location.equals("") || station_Type.equals("")) {
                     Toast.makeText(getActivity(), "Please enter all the fields", Toast.LENGTH_SHORT).show();
                 } else if (checkExistingUser == false) {
-                    Boolean registerUser = DB.insertData(station_Email, station_Email, pass, station_Location, station_Type);
+                    Boolean registerUser = DB.insertStationOwner(station_Email, pass);
                     if (registerUser == true) {
                         Toast.makeText(getActivity(), "You have successfully registered", Toast.LENGTH_SHORT).show();
                         Intent moveToLogin = new Intent(getActivity(), Login_SignUp_Interface.class);
