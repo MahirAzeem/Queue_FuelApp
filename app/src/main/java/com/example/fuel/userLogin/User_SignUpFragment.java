@@ -18,62 +18,21 @@ import com.example.fuel.Login_SignUp_Interface;
 import com.example.fuel.R;
 import com.google.android.material.textfield.TextInputLayout;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link User_SignUpFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
+//Implementation of User Sign Up
 public class User_SignUpFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public User_SignUpFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SignUp.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static User_SignUpFragment newInstance(String param1, String param2) {
-        User_SignUpFragment fragment = new User_SignUpFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+//    Providing value for User District Dropdown
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //        Initializing Dropdown values for Station Location and Station Type in Signup
+
         String[] UserDistrict = {"Colombo", "Galle", "Gampaha", "Jaffna", "Kandy"};
         AutoCompleteTextView userDistrict;
         ArrayAdapter<String> adapteruserDistrict;
 
-        View v =inflater.inflate(R.layout.fragment_sign_up, null);
+        View v =inflater.inflate(R.layout.user_sign_up, null);
 
         userDistrict = v.findViewById(R.id.UserDistrict);
         adapteruserDistrict = new ArrayAdapter<String>(getActivity(), R.layout.list_item, UserDistrict);
@@ -83,11 +42,11 @@ public class User_SignUpFragment extends Fragment {
 
         final String[] userDistrictValue = new String[1];
 
+//      Extracting the dropdown value using setOnItemClickListener
         userDistrict.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 userDistrictValue[0] = adapterView.getItemAtPosition(position).toString();
-//                Toast.makeText(getActivity(), "Item: " + stationType, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -99,6 +58,7 @@ public class User_SignUpFragment extends Fragment {
         Button UserSignUpButton = v.findViewById(R.id.userSignUpBtn);
         DBHelper DB = new DBHelper(getActivity());
 
+//        Register User when Sign Up button is clicked
         UserSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

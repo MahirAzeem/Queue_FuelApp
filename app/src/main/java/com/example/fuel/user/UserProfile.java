@@ -8,11 +8,12 @@ import android.os.Bundle;
 import com.example.fuel.R;
 import com.example.fuel.Login_SignUp_Interface;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
-
+// User Profile Class
 public class UserProfile extends AppCompatActivity {
 
     ChipNavigationBar bottomNav;
 
+//    Implementation of user Nav Bar from Profile to other Activities
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

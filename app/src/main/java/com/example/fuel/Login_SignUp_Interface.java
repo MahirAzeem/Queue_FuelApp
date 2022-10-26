@@ -1,21 +1,20 @@
 package com.example.fuel;
 
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
-
-import com.example.fuel.R;
 import com.example.fuel.adapterClass.FragmentAdapter;
 import com.google.android.material.tabs.TabLayout;
 
+//Implementation of TabLayout with Login and SignUp Fragments
 public class Login_SignUp_Interface extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager2 viewPager2;
     private FragmentAdapter adapter;
 
+//  Adding Sign In and Sign Up Fragments to TabLayout
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +31,7 @@ public class Login_SignUp_Interface extends AppCompatActivity {
         adapter = new FragmentAdapter(fragmentManager , getLifecycle());
         viewPager2.setAdapter(adapter);
 
+//        Displaying the selected fragments in ViewPager2 according to tab positions
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

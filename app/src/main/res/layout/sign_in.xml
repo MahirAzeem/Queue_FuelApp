@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E2E5DE"
-    tools:context=".userLogin.SignInFragment">
+    tools:context=".SignInFragment">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
                 android:text="QUEUE"
                 android:fontFamily="@font/quicksand_semibold"
                 android:textColor="@color/colorDarkBlue"
-                android:textSize="20sp"
+                android:textSize="30sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,7 +41,7 @@
                 android:layout_marginTop="24dp"
                 android:text="Sign In"
                 android:textColor="@color/colorDarkBlue"
-                android:textSize="30sp"
+                android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -95,8 +95,8 @@
 
             <ImageView
                 android:id="@+id/idIVLogo"
-                android:layout_width="1453dp"
-                android:layout_height="369dp"
+                android:layout_width="1705dp"
+                android:layout_height="342dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="204dp"
@@ -111,13 +111,14 @@
                 android:layout_height="60dp"
 
                 android:layout_marginStart="70dp"
-                android:layout_marginTop="324dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginEnd="70dp"
-                android:layout_marginBottom="32dp"
+                android:layout_marginBottom="40dp"
                 android:elevation="4dp"
                 android:text="Sign In"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/idIVLogo"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/enterPasswordField" />
 

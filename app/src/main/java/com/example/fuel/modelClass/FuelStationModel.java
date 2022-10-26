@@ -1,5 +1,6 @@
 package com.example.fuel.modelClass;
 
+//Fuel Station Model Class
 public class FuelStationModel {
 
 
@@ -9,6 +10,7 @@ public class FuelStationModel {
     private int fuelStation_image;
 
 
+//    Constructor
     public FuelStationModel(String fuelStation_name, String fuelStation_location, String fuelStation_type, int fuelStation_image) {
         this.fuelStation_name = fuelStation_name;
         this.fuelStation_location = fuelStation_location;
@@ -16,7 +18,7 @@ public class FuelStationModel {
         this.fuelStation_image = fuelStation_image;
     }
 
-
+//Implementation of Setter and Getters
     public String getFuelStation_name() {
         return fuelStation_name;
     }

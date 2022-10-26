@@ -6,19 +6,20 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+//Implementation of SQLite functionality class
 public class DBHelper extends SQLiteOpenHelper {
     public static final String DBNAME = "users.db";
     public DBHelper(Context context) {
         super(context, "users.db", null, 1);
     }
 
+//    Creation of Table
     @Override
     public void onCreate(SQLiteDatabase users) {
         String query = "create Table users(email TEXT primary key, password TEXT)";
 
         users.execSQL(query);
     }
-
 
     @Override
     public void onUpgrade(SQLiteDatabase users, int i, int i1) {
@@ -29,8 +30,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public Boolean insertStationOwner(String email, String password){
 
         SQLiteDatabase users = this.getWritableDatabase();
-
-//      Create Station Owner Table
         ContentValues contentValues= new ContentValues();
         contentValues.put("email", email);
         contentValues.put("password", password);
@@ -55,7 +54,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    //    Check for existence of station owner email
+    //    Check for existence of users email
     public Boolean checkUserName(String email) {
         SQLiteDatabase users = this.getWritableDatabase();
         Cursor cursorSO = users.rawQuery("Select * from users where email = ?", new String[]{email});
@@ -66,27 +65,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-//    //    Check for existence of user email
-//    public Boolean checkUser_UserName(String email) {
-//        SQLiteDatabase users = this.getWritableDatabase();
-//        Cursor cursorUsers = users.rawQuery("Select * from queueUsers where email = ?", new String[]{email});
-//        if (cursorUsers.getCount() > 0)
-//            return true;
-//        else
-//            return false;
-//    }
 
-//    //    Check for existence of station owner account
-//    public Boolean checkExistingStationOwner(String email, String password){
-//        SQLiteDatabase users = this.getWritableDatabase();
-//        Cursor cursorSO = users.rawQuery("Select * from stationOwners where email = ? and password = ?", new String[] {email,password});
-//        if(cursorSO.getCount()>0)
-//            return true;
-//        else
-//            return false;
-//    }
-
-    //    Check for existence of user account
+    //    Check for existence of users account
     public Boolean checkExistingUser(String email, String password){
         SQLiteDatabase users = this.getWritableDatabase();
         Cursor cursor = users.rawQuery("Select * from users where email = ? and password = ?", new String[] {email,password});

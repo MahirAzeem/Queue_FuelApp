@@ -80,35 +80,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".stationOwnerLogin.StationRegister"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".stationOwnerLogin.StationLogin"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".user.UserProfile"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".userLogin.Login"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".userLogin.Register"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
