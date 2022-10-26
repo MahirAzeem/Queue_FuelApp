@@ -3,6 +3,7 @@ package com.example.fuel.user;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -199,6 +200,16 @@ public class FuelStation extends AppCompatActivity {
         adapterExistReason = new ArrayAdapter<String>(FuelStation.this, R.layout.list_item, exitReason);
 
         autoCompleteTextView.setAdapter(adapterExistReason);
+
+        final String[] item = new String[1];
+
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                item[0] = adapterView.getItemAtPosition(position).toString();
+                Toast.makeText(FuelStation.this, "Item: " + item[0], Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 }

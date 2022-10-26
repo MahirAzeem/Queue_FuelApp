@@ -7,26 +7,26 @@
         android:title="Home"
         android:icon="@drawable/home"
         android:iconTint="#000000"
-        app:cnb_backgroundColor="#c1c7cd"
-        app:cnb_iconColor='#000000'
-        app:cnb_textColor='#000000'/>
+        app:cnb_backgroundColor="#273443"
+        app:cnb_iconColor='#fff'
+        app:cnb_textColor='#fff'/>
 
     <item
         android:id="@+id/profile"
         android:title="Profile"
         android:icon="@drawable/profile"
         android:iconTint="#000000"
-        app:cnb_backgroundColor="#c1c7cd"
-        app:cnb_iconColor='#000000'
-        app:cnb_textColor='#000000'/>
+        app:cnb_backgroundColor="#273443"
+        app:cnb_iconColor='#fff'
+        app:cnb_textColor='#fff'/>
 
     <item
         android:id="@+id/logout"
         android:title="Logout"
         android:icon="@drawable/logout"
         android:iconTint="#000000"
-        app:cnb_backgroundColor="#c1c7cd"
-        app:cnb_iconColor='#000000'
-        app:cnb_textColor='#000000'/>
+        app:cnb_backgroundColor="#273443"
+        app:cnb_iconColor='#fff'
+        app:cnb_textColor='#fff'/>
 
 </menu>

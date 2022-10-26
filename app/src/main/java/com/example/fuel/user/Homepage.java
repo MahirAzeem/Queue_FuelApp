@@ -30,8 +30,6 @@ public class Homepage extends AppCompatActivity {
     private FuelStationAdapter.RecyclerViewClickListener listener;
     ChipNavigationBar bottomNav;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -6,11 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.fuel.DBHelper;
 import com.example.fuel.R;
 import com.example.fuel.user.Homepage;
+import com.google.android.material.textfield.TextInputLayout;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,14 +68,38 @@ public class SignInFragment extends Fragment {
         // Inflate the layout for this fragment
         View v =inflater.inflate(R.layout.fragment_sign_in, null);
 
-        Button button = (Button) v.findViewById(R.id.signInBtn);
+        TextInputLayout emailLogin = v.findViewById(R.id.enterEmailField);
+        TextInputLayout passwordLogin = v.findViewById(R.id.enterPasswordField);
+        Button signIn = (Button) v.findViewById(R.id.signInBtn);
+        DBHelper DB = new DBHelper(getActivity());
 
-        button.setOnClickListener(new View.OnClickListener() {
+        signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openHomepage();
+
+                String email = emailLogin.getEditText().getText().toString();
+                String pass = passwordLogin.getEditText().getText().toString();
+
+//                openHomepage();
+
+                if(email.equals("")||pass.equals(""))
+                    Toast.makeText(getActivity(), "Please enter all the fields", Toast.LENGTH_SHORT).show();
+                else{
+                    Boolean checkuserpass = DB.checkExistingUser(email, pass);
+                    if(checkuserpass==true){
+                        Toast.makeText(getActivity(), "Sign in successful", Toast.LENGTH_SHORT).show();
+                        Intent intent  = new Intent(getActivity(), Homepage.class);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(getActivity(), "User does not exist", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
+
+
+
+
         return v;
 
     }
