@@ -17,11 +17,13 @@ import com.example.fuel.modelClass.FuelStatusModel;
 
 import java.util.List;
 
+//ArrayAdapter Class to display List View of Current Vehicle
 public class CurrentVehicleAdapter extends ArrayAdapter<CurrentVehicleModel> {
 
     private Context mContext;
     private int mResource;
 
+//    Constructors
     public CurrentVehicleAdapter(@NonNull Context context, int resource, @NonNull List<CurrentVehicleModel> objects) {
         super(context, resource, objects);
         mContext = context;

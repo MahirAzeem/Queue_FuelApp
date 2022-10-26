@@ -6,14 +6,17 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.fuel.R;
-import com.example.fuel.user.Homepage;
 import com.example.fuel.Login_SignUp_Interface;
+import com.example.fuel.user.FuelStation;
+import com.example.fuel.user.Homepage;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
+//Station Owner Profile
 public class StationProfile extends AppCompatActivity {
 
     ChipNavigationBar bottomNav;
 
+// Integration of Bottom Navigation Bar
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

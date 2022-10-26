@@ -15,6 +15,7 @@ import com.example.fuel.modelClass.FuelStationModel;
 import java.util.ArrayList;
 import java.util.List;
 
+//RecyclerView Adapter to display Fuel Station Recycle View
 public class FuelStationAdapter extends RecyclerView.Adapter<FuelStationAdapter.ViewHolder> {
 
     private final Context context;
@@ -28,6 +29,7 @@ public class FuelStationAdapter extends RecyclerView.Adapter<FuelStationAdapter.
         this.listener = listener;
     }
 
+//    Filter ArrayList for Search View
     public void setFilteredList(ArrayList<FuelStationModel> filteredList){
         this.fuelStationModelArrayList = filteredList;
         notifyDataSetChanged();
@@ -36,14 +38,15 @@ public class FuelStationAdapter extends RecyclerView.Adapter<FuelStationAdapter.
     @NonNull
     @Override
     public FuelStationAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // to inflate the layout for each item of recycler view.
+        // to inflate the layout for every recycler view item
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout, parent, false);
         return new ViewHolder(view);
     }
 
+    // For setting the data to textview and imageview of each card layout
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // to set data to textview and imageview of each card layout
+
         FuelStationModel model = fuelStationModelArrayList.get(position);
 
         holder.fuelStationName.setText(model.getFuelStation_name());
@@ -52,13 +55,13 @@ public class FuelStationAdapter extends RecyclerView.Adapter<FuelStationAdapter.
         holder.fuelStationImage.setImageResource(model.getFuelStation_image());
     }
 
+    // Display number of card items in recycler view
     @Override
     public int getItemCount() {
-        // this method is used for showing number of card items in recycler view
         return fuelStationModelArrayList.size();
     }
 
-    // View holder class for initializing of your views such as TextView and Imageview
+    // View holder class for initializing views such as TextView and Imageview
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final ImageView fuelStationImage;
         private final TextView fuelStationName;

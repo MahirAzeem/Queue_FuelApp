@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
+//Implementation of Homepage Screen with Recycler View and Search View
 public class Homepage extends AppCompatActivity {
 
     private ArrayList<FuelStationModel> fuelStationModelArrayList;
@@ -30,6 +31,7 @@ public class Homepage extends AppCompatActivity {
     private FuelStationAdapter.RecyclerViewClickListener listener;
     ChipNavigationBar bottomNav;
 
+//    Page Navigation and Recycler View Implementation
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +76,6 @@ public class Homepage extends AppCompatActivity {
 
         setOnClickListener();
 
-        // Here, we have created new array list and added data to it
         fuelStationModelArrayList = new ArrayList<FuelStationModel>();
         fuelStationModelArrayList.add(new FuelStationModel("Aagaash Petrol Shed", "Kalubowila", "Ceypetco", R.drawable.petrol_shed));
         fuelStationModelArrayList.add(new FuelStationModel("Ahmed Petrol Shed", "Rajagiriya", "IOC", R.drawable.petrol_shed));
@@ -84,18 +85,15 @@ public class Homepage extends AppCompatActivity {
         fuelStationModelArrayList.add(new FuelStationModel("Mahir Petrol Shed", "Dehiwala", "Ceypetco", R.drawable.petrol_shed));
         fuelStationModelArrayList.add(new FuelStationModel("Dilan Petrol Shed", "Kotikawatta", "IOC", R.drawable.petrol_shed));
 
-        // we are initializing our adapter class and passing our arraylist to it.
         fuelStationAdapter = new FuelStationAdapter(this, fuelStationModelArrayList, listener);
 
-        // below line is for setting a layout manager for our recycler view.
-        // here we are creating vertical list so we will provide orientation as vertical
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
-        // in below two lines we are setting layoutmanager and adapter to our recycler view.
         fuelStation.setLayoutManager(linearLayoutManager);
         fuelStation.setAdapter(fuelStationAdapter);
     }
 
+//    Change Activity when Recycler View Card is pressed
     public void setOnClickListener() {
         listener = new FuelStationAdapter.RecyclerViewClickListener() {
             @Override
@@ -108,6 +106,7 @@ public class Homepage extends AppCompatActivity {
         };
     }
 
+//    Implementation of Search Filter using Fuel Station Location and Fuel Station Type
     private void filterList(String text) {
 
         ArrayList<FuelStationModel> filteredList = new ArrayList<>();

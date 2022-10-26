@@ -30,6 +30,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+//Implementation of Fuel Station Profile
 public class FuelStation extends AppCompatActivity {
 
     private ActivityFuelStationBinding binding;
@@ -39,10 +40,10 @@ public class FuelStation extends AppCompatActivity {
     String fuelStation_name;
 
 
+//    Retrieving and Displaying Fuel Station Name and Fuel Station Location
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_fuel_station);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_fuel_station);
         fuelStation = this;
 
@@ -52,7 +53,7 @@ public class FuelStation extends AppCompatActivity {
         //      Retrieving Fuel Station name and location
         myCustomMessage = (TextView) findViewById(R.id.myCustommessage);
 
-        fuelStation_name = "Namenot available";
+        fuelStation_name = "Name not available";
         String fuelStation_location = "Location not available";
 
         Bundle extras = getIntent().getExtras();
@@ -65,15 +66,12 @@ public class FuelStation extends AppCompatActivity {
 
     }
 
+// Initializing the TabLayout view of Fuel Status and Current Vehicle
     private void initView() {
         setupViewPager(binding.viewPager);
-//        binding.Login_SignUp_Interface.setupWithViewPager(binding.viewPager);
-
-
         new TabLayoutMediator(binding.tabLayout, binding.viewPager,
                 (tab, position) -> {
                     tab.setText(adapter.mFragmentTitleList.get(position));
-//                tab.setCustomView(R.layout.custom_tab);
                 }).attach();
 
         for (int i = 0; i < binding.tabLayout.getTabCount(); i++) {
@@ -85,6 +83,7 @@ public class FuelStation extends AppCompatActivity {
         }
     }
 
+//    Connecting Fuel Status and Current Vehicle fragments to the adapter
     private void setupViewPager(ViewPager2 viewPager) {
         adapter = new ViewPagerAdapter(fuelStation.getSupportFragmentManager(),
                 fuelStation.getLifecycle());
@@ -122,6 +121,7 @@ public class FuelStation extends AppCompatActivity {
         }
     }
 
+//    Implementation of Join Queue Dialog Box
     public void btn_showMessage(View view) {
 
         final AlertDialog.Builder alert = new AlertDialog.Builder(FuelStation.this);
@@ -143,7 +143,6 @@ public class FuelStation extends AppCompatActivity {
         btn_okay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                myCustomMessage.setText(txt_inputText.getText().toString());
                 alertDialog.dismiss();
             }
         });
@@ -160,6 +159,7 @@ public class FuelStation extends AppCompatActivity {
 
     }
 
+    //    Implementation of Exist Queue Dialog Box
     public void btn_exitModal(View view) {
 
         final AlertDialog.Builder alert = new AlertDialog.Builder(FuelStation.this);
