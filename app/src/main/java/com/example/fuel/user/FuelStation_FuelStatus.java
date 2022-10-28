@@ -1,6 +1,5 @@
 package com.example.fuel.user;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,13 +7,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.fuel.R;
 import com.example.fuel.adapterClass.FuelStatusAdapter;
 import com.example.fuel.modelClass.FuelStatusModel;
-import com.example.fuel.stationOwner.UpdateFuelStatus;
 
 import java.util.ArrayList;
 
@@ -31,10 +28,10 @@ public class FuelStation_FuelStatus extends Fragment {
         ListView mListView = (ListView) v.findViewById(R.id.listView);
 
         //Create the Fuel Types and their availability
-        FuelStatusModel petrol92 = new FuelStatusModel("Petrol 92", "Yes");
-        FuelStatusModel petrol95 = new FuelStatusModel("Petrol 95", "No");
-        FuelStatusModel superDiesel = new FuelStatusModel("Super Diesel", "Yes");
-        FuelStatusModel diesel = new FuelStatusModel("Diesel", "No");
+        FuelStatusModel petrol92 = new FuelStatusModel("Petrol 92", "Yes", "1");
+        FuelStatusModel petrol95 = new FuelStatusModel("Petrol 95", "No", "1");
+        FuelStatusModel superDiesel = new FuelStatusModel("Super Diesel", "Yes", "1");
+        FuelStatusModel diesel = new FuelStatusModel("Diesel", "No", "1");
 
         //Add Fuel types to an ArrayList
         ArrayList<FuelStatusModel> fuelTypes = new ArrayList<>();
@@ -48,15 +45,15 @@ public class FuelStation_FuelStatus extends Fragment {
 
 
 //Update Fuel Availability when ListView is clicked
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), UpdateFuelStatus.class);
-                intent.putExtra("fuelType", fuelTypes.get(position).getFuelName());
-                intent.putExtra("fuelAvailability", fuelTypes.get(position).getFuelAvailability());
-                startActivity(intent);
-            }
-        });
+//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+//                Intent intent = new Intent(getActivity(), UpdateFuelStatus.class);
+//                intent.putExtra("fuelType", fuelTypes.get(position).getFuelName());
+//                intent.putExtra("fuelAvailability", fuelTypes.get(position).getFuelAvailability());
+//                startActivity(intent);
+//            }
+//        });
 
         return v;
 

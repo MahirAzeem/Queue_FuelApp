@@ -7,11 +7,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +18,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
-
 import com.example.fuel.R;
 import com.example.fuel.databinding.ActivityFuelStationBinding;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -121,7 +117,7 @@ public class FuelStation extends AppCompatActivity {
         }
     }
 
-//    Implementation of Join Queue Dialog Box
+    //    Implementation of Join Queue Dialog Box
     public void btn_showMessage(View view) {
 
         final AlertDialog.Builder alert = new AlertDialog.Builder(FuelStation.this);

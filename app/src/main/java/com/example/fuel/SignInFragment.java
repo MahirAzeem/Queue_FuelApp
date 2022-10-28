@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.fuel.stationOwner.FuelStationHomepage;
 import com.example.fuel.user.Homepage;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -44,8 +45,11 @@ public class SignInFragment extends Fragment {
                     Boolean checkuserpass = DB.checkExistingUser(email, pass);
                     if(checkuserpass==true){
                         Toast.makeText(getActivity(), "Sign in successful", Toast.LENGTH_SHORT).show();
-                        Intent intent  = new Intent(getActivity(), Homepage.class);
-                        startActivity(intent);
+                        Intent userSide  = new Intent(getActivity(), Homepage.class);
+                        startActivity(userSide);
+
+//                        Intent stationOwnerSide  = new Intent(getActivity(), FuelStationHomepage.class);
+//                        startActivity(stationOwnerSide);
                     }else{
                         Toast.makeText(getActivity(), "User does not exist", Toast.LENGTH_SHORT).show();
                     }

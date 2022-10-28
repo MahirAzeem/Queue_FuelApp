@@ -47,7 +47,7 @@ public class Homepage extends AppCompatActivity {
 
                 switch (id){
                     case R.id.profile:
-                        Intent profile = new Intent(Homepage.this, StationProfile.class);
+                        Intent profile = new Intent(Homepage.this, UserProfile.class);
                         startActivity(profile);
                         break;
                     case R.id.logout:

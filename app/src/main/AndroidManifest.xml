@@ -17,11 +17,11 @@
             android:exported="true"
             android:label="Splash Screen"
             android:theme="@style/Theme.Fuel.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -56,17 +56,26 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".stationOwner.FuelStationHomepage"
+            android:exported="true">
+
+<!--             <intent-filter>-->
+<!--             <action android:name="android.intent.action.MAIN" />-->
+<!--             <category android:name="android.intent.category.LAUNCHER" />-->
+<!--             </intent-filter>-->
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".user.Homepage"
             android:exported="true"
             android:label="@string/title_activity_homepage"
             android:theme="@style/Theme.Fuel.NoActionBar">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
 
             <meta-data
                 android:name="android.app.lib_name"
@@ -74,6 +83,7 @@
         </activity>
         <activity
             android:name=".stationOwner.StationProfile"
+            android:theme="@style/Theme.Fuel.NoActionBar"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -81,28 +91,30 @@
         </activity>
         <activity
             android:name=".user.UserProfile"
+            android:theme="@style/Theme.Fuel.NoActionBar"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
+<!--        <activity-->
+<!--            android:name=".MainActivity"-->
+<!--            android:exported="true">-->
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
+<!--            &lt;!&ndash; <intent-filter> &ndash;&gt;-->
+<!--            &lt;!&ndash; <action android:name="android.intent.action.MAIN" /> &ndash;&gt;-->
 
 
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+<!--            &lt;!&ndash; <category android:name="android.intent.category.LAUNCHER" /> &ndash;&gt;-->
+<!--            &lt;!&ndash; </intent-filter> &ndash;&gt;-->
 
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+<!--            <meta-data-->
+<!--                android:name="android.app.lib_name"-->
+<!--                android:value="" />-->
+<!--        </activity>-->
         <activity
             android:name=".Login_SignUp_Interface"
+            android:theme="@style/Theme.Fuel.NoActionBar"
             android:exported="true">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -116,6 +128,7 @@
         </activity>
         <activity
             android:name=".stationOwner.UpdateFuelStatus"
+            android:theme="@style/Theme.Fuel.NoActionBar"
             android:exported="true">
 
             <!-- <intent-filter> -->
