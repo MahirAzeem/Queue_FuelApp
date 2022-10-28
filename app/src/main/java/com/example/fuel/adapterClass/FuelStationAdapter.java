@@ -13,7 +13,6 @@ import com.example.fuel.R;
 import com.example.fuel.modelClass.FuelStationModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 //RecyclerView Adapter to display Fuel Station Recycle View
 public class FuelStationAdapter extends RecyclerView.Adapter<FuelStationAdapter.ViewHolder> {
@@ -39,7 +38,7 @@ public class FuelStationAdapter extends RecyclerView.Adapter<FuelStationAdapter.
     @Override
     public FuelStationAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // to inflate the layout for every recycler view item
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_card_layout, parent, false);
         return new ViewHolder(view);
     }
 

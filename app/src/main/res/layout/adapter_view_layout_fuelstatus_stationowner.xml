@@ -16,6 +16,14 @@
         android:layout_weight="33"
         android:textColor="@color/black"/>
 
+    <TextView
+        android:id="@+id/fuelAvailabilityTime"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_weight="33"
+        android:gravity="center"
+        android:text="Fuel Availability Time"
+        android:textColor="@color/black" />
 
     <TextView
         android:id="@+id/fuelAvailability"
@@ -27,13 +35,4 @@
         android:textColor="@color/black"/>
 
 
-    <TextView
-        android:id="@+id/fuelAvailabilityTime"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_weight="33"
-        android:gravity="center"
-        android:text="Fuel Availability Time"
-        android:textColor="@color/black"/>
-
-    </LinearLayout>
+</LinearLayout>
