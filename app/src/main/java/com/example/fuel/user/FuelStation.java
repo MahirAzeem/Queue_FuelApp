@@ -23,6 +23,8 @@ import com.example.fuel.databinding.ActivityFuelStationBinding;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,50 +119,88 @@ public class FuelStation extends AppCompatActivity {
         }
     }
 
+
+
+
     //    Implementation of Join Queue Dialog Box
     public void btn_showMessage(View view) {
+
+        //        Values for Vehicle Type Dropdown in Join Queue Dialog
+        String[] vehicleType = {"Light Vehicle", "Heavy Vehicle", "Bike", "Three Wheel"};
+        ArrayAdapter<String> adapterVehicleType;
 
         final AlertDialog.Builder alert = new AlertDialog.Builder(FuelStation.this);
         View mView = getLayoutInflater().inflate(R.layout.join_queue_dialog, null);
         final TextInputLayout textInputLayout = (TextInputLayout) mView.findViewById(R.id.enterStationName);
         textInputLayout.setHint(fuelStation_name);
         final AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) mView.findViewById(R.id.vehicleType);
+        adapterVehicleType = new ArrayAdapter<String>(FuelStation.this, R.layout.list_item, vehicleType);
+        autoCompleteTextView.setAdapter(adapterVehicleType);
+
         Button btn_cancel = (Button) mView.findViewById(R.id.cancel_button);
         Button btn_okay = (Button) mView.findViewById(R.id.join_queue);
         alert.setView(mView);
         final AlertDialog alertDialog = alert.create();
         alertDialog.setCanceledOnTouchOutside(false);
+
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
             }
         });
+
+        //        Dropdown value is stored in item variable
+        final String[] item = new String[1];
+
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                item[0] = adapterView.getItemAtPosition(position).toString();
+            }
+        });
+
+//        Time value is stored in time variable
+        final String[] time = new String[1];
+
+
         btn_okay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //                Printing Time
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+                LocalDateTime now = LocalDateTime.now();
+
+                time[0] = dtf.format(now);
+
+                Toast.makeText(FuelStation.this, "Item: " + item[0] + " Time: " + time[0], Toast.LENGTH_SHORT).show();
+
+                System.out.println("----------------------Item--------------------"+item[0]);
+                System.out.println("----------------------time--------------------"+time[0]);
+
                 alertDialog.dismiss();
             }
         });
         alertDialog.show();
-
-//        Values for Vehicle Type Dropdown in Join Queue Dialog
-        String[] vehicleType = {"Light Vehicle", "Heavy Vehicle", "Bike", "Three Wheel"};
-        AutoCompleteTextView vehicle_Type;
-        ArrayAdapter<String> adapterVehicleType;
-
-        adapterVehicleType = new ArrayAdapter<String>(FuelStation.this, R.layout.list_item, vehicleType);
-
-        autoCompleteTextView.setAdapter(adapterVehicleType);
-
     }
 
     //    Implementation of Exist Queue Dialog Box
     public void btn_exitModal(View view) {
 
+        //        Values for Exit Queue Dropdown in Join Queue Dialog
+        String[] exitReason = {"Pumped Fuel", "Fuel Over", "Other"};
+        ArrayAdapter<String> adapterExistReason;
+
+
         final AlertDialog.Builder alert = new AlertDialog.Builder(FuelStation.this);
         View mView = getLayoutInflater().inflate(R.layout.exit_queue_dialog, null);
+
         final AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) mView.findViewById(R.id.exitReason);
+        //        Values for Vehicle Type Dropdown in Join Queue Dialog
+        adapterExistReason = new ArrayAdapter<String>(FuelStation.this, R.layout.list_item, exitReason);
+        autoCompleteTextView.setAdapter(adapterExistReason);
+
 
         Button btn_cancel = (Button) mView.findViewById(R.id.cancel_button);
         Button btn_okay = (Button) mView.findViewById(R.id.exitQueueButton);
@@ -176,10 +216,33 @@ public class FuelStation extends AppCompatActivity {
             }
         });
 
+//        Dropdown value is stored in item variable
+        final String[] item = new String[1];
+
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                item[0] = adapterView.getItemAtPosition(position).toString();
+            }
+        });
+
+//        Time value is stored in time variable
+        final String[] time = new String[1];
 
         btn_okay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+//                Printing Time
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+                LocalDateTime now = LocalDateTime.now();
+
+                time[0] = dtf.format(now);
+
+                Toast.makeText(FuelStation.this, "Item: " + item[0] + " Time: " + time[0], Toast.LENGTH_SHORT).show();
+
+                System.out.println("----------------------Item--------------------"+item[0]);
+                System.out.println("----------------------time--------------------"+time[0]);
 
                 alertDialog.dismiss();
             }
@@ -187,25 +250,15 @@ public class FuelStation extends AppCompatActivity {
 
         alertDialog.show();
 
-        //        Values for Exit Queue Dropdown in Join Queue Dialog
-        String[] exitReason = {"Pumped Fuel", "Fuel Over", "Other"};
-        AutoCompleteTextView exit_Reason;
-        ArrayAdapter<String> adapterExistReason;
-
-        //        Values for Vehicle Type Dropdown in Join Queue Dialog
-        adapterExistReason = new ArrayAdapter<String>(FuelStation.this, R.layout.list_item, exitReason);
-
-        autoCompleteTextView.setAdapter(adapterExistReason);
-
-        final String[] item = new String[1];
-
-        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                item[0] = adapterView.getItemAtPosition(position).toString();
-                Toast.makeText(FuelStation.this, "Item: " + item[0], Toast.LENGTH_SHORT).show();
-            }
-        });
-
     }
+
+
+
+
+
+
+
+
+
+
 }

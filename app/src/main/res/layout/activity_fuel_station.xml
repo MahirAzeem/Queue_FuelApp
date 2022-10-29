@@ -137,19 +137,7 @@
 <!--            app:layout_constraintHorizontal_bias="0.497"-->
 <!--            app:layout_constraintStart_toStartOf="parent" />-->
 
-<!--        <Button-->
-<!--            android:id="@+id/cancelStation"-->
-<!--            android:layout_width="271dp"-->
-<!--            android:layout_height="60dp"-->
-<!--            android:layout_marginBottom="32dp"-->
-<!--            android:backgroundTint="@color/colorDarkBlue"-->
-<!--            android:onClick="btn_exitModal"-->
-<!--            android:text="Close Station"-->
-<!--            android:textColor="#ffffff"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintHorizontal_bias="0.497"-->
-<!--            app:layout_constraintStart_toStartOf="parent" />-->
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

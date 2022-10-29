@@ -18,9 +18,11 @@ import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.fuel.Controller.StationInterface;
 import com.example.fuel.Login_SignUp_Interface;
 import com.example.fuel.R;
 import com.example.fuel.databinding.ActivityFuelStationHomepageBinding;
+import com.example.fuel.modelClass.StationModel;
 import com.example.fuel.user.FuelStation_CurrentVehicle;
 import com.example.fuel.stationOwner.FuelStation_FuelStatus_StationOwner;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -30,6 +32,12 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 //Implementation of Fuel Station Profile
 public class FuelStationHomepage extends AppCompatActivity {
@@ -41,6 +49,14 @@ public class FuelStationHomepage extends AppCompatActivity {
     String fuelStation_name;
     ChipNavigationBar bottomNav;
 
+    private StationInterface stationInterface ;
+    List<StationModel> fuelStationModelList;
+    String  userForStation = "";
+
+    String  dbStationName = "";
+    String  dbStationLocation = "";
+    String  dbStationBrand = "";
+
     //    Retrieving and Displaying Fuel Station Name and Fuel Station Location
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +64,71 @@ public class FuelStationHomepage extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_fuel_station_homepage);
         fuelStationHomepage = this;
         initView();
+
+
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            userForStation = extras.getString("userForStation");
+        }
+        System.out.println("userForStation id : "+userForStation);
+
+
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://ahmedameer-001-site1.atempurl.com/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        stationInterface = retrofit.create(StationInterface.class);
+
+        Call<List<StationModel>> call = stationInterface.getStation();
+        call.enqueue(new Callback<List<StationModel>>() {
+
+            @Override
+            public void onResponse(Call<List<StationModel>> call, Response<List<StationModel>> response) {
+
+                if(!response.isSuccessful()){
+//                    Toast.makeText(getActivity(), "failed response", Toast.LENGTH_SHORT).show();
+                    System.out.println("faillllllllllllllll");
+                }
+
+                fuelStationModelList =response.body();
+                for(int i=0;i<fuelStationModelList.size();i++){
+
+                if(fuelStationModelList.get(i).getUserId().equals(userForStation)){
+
+                      dbStationName = response.body().get(i).getStationName();
+                      dbStationLocation = response.body().get(i).getLocation();
+                      dbStationBrand = response.body().get(i).getBrand();
+
+
+                }
+
+
+            }
+
+                System.out.println("inn------------------- dbStationName : "+dbStationName);
+                System.out.println("inn------------------- dbStationName : "+dbStationLocation);
+                System.out.println("inn------------------- dbStationName : "+dbStationBrand);
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<List<StationModel>> call, Throwable t) {
+
+            }
+
+
+        });
+
+
+        System.out.println("------------------- dbStationName : "+dbStationName);
+        System.out.println("------------------- dbStationName : "+dbStationLocation);
+        System.out.println("------------------- dbStationName : "+dbStationBrand);
+
+
 
 //        // calling this activity's function to
 //        // use ActionBar utility methods

@@ -14,6 +14,7 @@ public class UserModel {
     private String drivingLicenceNo;
 
 
+    //user constructor
     public UserModel(String email, String password, String phoneNumber, String userRole, String drivingLicenceNo) {
         this.email = email;
         this.password = password;
@@ -22,11 +23,19 @@ public class UserModel {
         this.drivingLicenceNo = drivingLicenceNo;
     }
 
-
+    //admin constructor
     public UserModel(String email, String password, String userRole) {
         this.email = email;
         this.password = password;
         this.userRole = userRole;
+    }
+
+    //update constructor
+    public UserModel(String id,String email, String password, String phoneNumber) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getId() {

@@ -26,11 +26,11 @@ public interface UserInterface {
     Call<UserModel> createUser(@Body UserModel userModel);
 
     @PUT("User/{id}")
-    Call<UserModel> putUser(@Path("id") String id , @Body UserModel  userModel);
+    Call<UserModel> updateUser(@Path("id") String id , @Body UserModel  userModel);
 
+    @POST("User/{email}")
+    Call<UserModel> findUser(@Path("email") String email );
 
-    @PATCH("User/{id}")
-    Call<UserModel> patchUser(@Path("id") String id , @Body UserModel userModel);
 
     @DELETE("User/{id}")
     Call<UserModel> deleteUser(@Path("id") String  id );

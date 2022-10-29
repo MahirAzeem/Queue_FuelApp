@@ -26,11 +26,8 @@ public interface QueueInterface {
     Call<QueueModel> createQueue(@Body QueueModel queueModel);
 
     @PUT("Queue/{id}")
-    Call<QueueModel> putQueue(@Path("id") String id , @Body QueueModel  queueModel);
+    Call<QueueModel> updateQueue(@Path("id") String id , @Body QueueModel  queueModel);
 
-
-    @PATCH("Queue/{id}")
-    Call<QueueModel> patchQueue(@Path("id") String id , @Body QueueModel queueModel);
 
     @DELETE("Queue/{id}")
     Call<QueueModel> deleteQueue(@Path("id") String  id );
