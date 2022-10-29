@@ -30,9 +30,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 //Station Owner Profile
 public class StationProfile extends AppCompatActivity {
 
+
     private StationInterface stationInterface ;
     private QueueInterface  queueInterface ;
     ChipNavigationBar bottomNav;
+=======
+    ChipNavigationBar stationOwnerProfile;
+
 
     List<StationModel> stationModelList;
     List<QueueModel> queueModelList;
@@ -48,9 +52,10 @@ public class StationProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.station_profile);
 
-        bottomNav = findViewById(R.id.bottom_nav);
+        stationOwnerProfile = findViewById(R.id.bottom_nav);
 
-        bottomNav.setItemSelected(R.id.profile, true);
+        stationOwnerProfile.setItemSelected(R.id.profile, true);
+
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -138,12 +143,15 @@ public class StationProfile extends AppCompatActivity {
 
 
         bottomNav.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
+=======
+        stationOwnerProfile.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
+
             @Override
             public void onItemSelected(int id) {
 
                 switch (id){
                     case R.id.homepage:
-                        Intent homepage = new Intent(StationProfile.this, Homepage.class);
+                        Intent homepage = new Intent(StationProfile.this, FuelStationHomepage.class);
                         startActivity(homepage);
                         break;
                     case R.id.logout:

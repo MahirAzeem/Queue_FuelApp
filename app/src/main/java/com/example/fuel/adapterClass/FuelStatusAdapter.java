@@ -37,18 +37,20 @@ public class FuelStatusAdapter extends ArrayAdapter<FuelStatusModel> {
         //get the Fuel Status information
         String fuelType = getItem(position).getFuelName();
         String fuelAvailability = getItem(position).getFuelAvailability();
+        String fuelStatusChangeTime = getItem(position).getFuelStatusChangeTime();
 
-
-        FuelStatusModel fuelStatusModel = new FuelStatusModel(fuelType,fuelAvailability);
+        FuelStatusModel fuelStatusModel = new FuelStatusModel(fuelType,fuelAvailability, fuelStatusChangeTime);
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);
 
         TextView tvFuelType = (TextView) convertView.findViewById(R.id.fuelType);
         TextView tvFuelAvailability = (TextView) convertView.findViewById(R.id.fuelAvailability);
+        TextView tvFuelAvailabilityTime = (TextView) convertView.findViewById(R.id.fuelAvailabilityTime);
 
         tvFuelType.setText(fuelType);
         tvFuelAvailability.setText(fuelAvailability);
+        tvFuelAvailabilityTime.setText(fuelStatusChangeTime);
 
         return convertView;
 

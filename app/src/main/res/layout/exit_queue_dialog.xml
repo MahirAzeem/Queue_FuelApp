@@ -10,12 +10,12 @@
     tools:context=".user.FuelStation">
 
     <TextView
-        android:id="@+id/exitQueue"
+        android:id="@+id/closeStation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:text="Exit Queue"
+        android:text="Close Station"
         android:textColor="@color/colorDarkBlue"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
