@@ -87,84 +87,84 @@ public class API_TEST extends AppCompatActivity {
         });
     }
 
-    private void createStations() {
+//    private void createStations() {
+//
+//
+//        StationModel stationModel = new StationModel("TEST","TEST","TEST");
+//        Call<StationModel> call = stationInterface.createStation(stationModel);
+//
+//        call.enqueue(new Callback<StationModel>() {
+//            @Override
+//            public void onResponse(Call<StationModel> call, Response<StationModel> response) {
+//                if(!response.isSuccessful()){
+//                    textViewResults.setText("Code : " +response.code());
+//                    return;
+//                }
+//
+//                StationModel posts = response.body();
+//
+//
+//                String content ="";
+//                content += "ID :"+posts.getId()+"\n";
+//                content += "stationName  :"+posts.getStationName()+"\n";
+//                content += "location :"+posts.getLocation()+"\n";
+//                content += "brand :"+posts.getBrand()+"\n";
+//                content += "............. :\n";
+//
+//
+//                textViewResults.append(content);
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<StationModel> call, Throwable t) {
+//
+//            }
+//
+//
+//        });
+//
+//    }
 
-
-        StationModel stationModel = new StationModel("TEST","TEST","TEST");
-        Call<StationModel> call = stationInterface.createStation(stationModel);
-
-        call.enqueue(new Callback<StationModel>() {
-            @Override
-            public void onResponse(Call<StationModel> call, Response<StationModel> response) {
-                if(!response.isSuccessful()){
-                    textViewResults.setText("Code : " +response.code());
-                    return;
-                }
-
-                StationModel posts = response.body();
-
-
-                String content ="";
-                content += "ID :"+posts.getId()+"\n";
-                content += "stationName  :"+posts.getStationName()+"\n";
-                content += "location :"+posts.getLocation()+"\n";
-                content += "brand :"+posts.getBrand()+"\n";
-                content += "............. :\n";
-
-
-                textViewResults.append(content);
-
-            }
-
-            @Override
-            public void onFailure(Call<StationModel> call, Throwable t) {
-
-            }
-
-
-        });
-
-    }
-
-
-    private void updatePost() {
-
-
-        StationModel post = new StationModel("TEST","TEST","TEST");
-        Call<StationModel> call = stationInterface.putStation("jjdddddd",post);
-
-        call.enqueue(new Callback<StationModel>() {
-            @Override
-            public void onResponse(Call<StationModel> call, Response<StationModel> response) {
-                if(!response.isSuccessful()){
-                    textViewResults.setText("Code : " +response.code());
-                    return;
-                }
-
-                StationModel posts = response.body();
-
-
-                String content ="";
-                content += "ID :"+posts.getId()+"\n";
-                content += "stationName  :"+posts.getStationName()+"\n";
-                content += "location :"+posts.getLocation()+"\n";
-                content += "brand :"+posts.getBrand()+"\n";
-                content += "............. :\n";
-
-
-                textViewResults.append(content);
-
-            }
-
-            @Override
-            public void onFailure(Call<StationModel> call, Throwable t) {
-
-            }
-
-
-        });
-
-    }
+//
+//    private void updatePost() {
+//
+//
+//        StationModel post = new StationModel("TEST","TEST","TEST");
+//        Call<StationModel> call = stationInterface.putStation("jjdddddd",post);
+//
+//        call.enqueue(new Callback<StationModel>() {
+//            @Override
+//            public void onResponse(Call<StationModel> call, Response<StationModel> response) {
+//                if(!response.isSuccessful()){
+//                    textViewResults.setText("Code : " +response.code());
+//                    return;
+//                }
+//
+//                StationModel posts = response.body();
+//
+//
+//                String content ="";
+//                content += "ID :"+posts.getId()+"\n";
+//                content += "stationName  :"+posts.getStationName()+"\n";
+//                content += "location :"+posts.getLocation()+"\n";
+//                content += "brand :"+posts.getBrand()+"\n";
+//                content += "............. :\n";
+//
+//
+//                textViewResults.append(content);
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<StationModel> call, Throwable t) {
+//
+//            }
+//
+//
+//        });
+//
+//    }
 
 
 

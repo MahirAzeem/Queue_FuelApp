@@ -51,33 +51,56 @@ public class UserProfile extends AppCompatActivity {
         userInterface = retrofit.create(UserInterface.class);
         fuelInterface = retrofit.create(FuelInterface.class);
 
-        String userEmail ="ahm@gmail.com";
 
 
-        Call<List<UserModel>> call = userInterface.getUser();
-        call.enqueue(new Callback<List<UserModel>>() {
-            @Override
-            public void onResponse(Call<List<UserModel>> call, Response<List<UserModel>> response) {
 
-                userModelList = response.body();
-                for(int i =0 ; i<userModelList.size(); i++){
-                    if(userModelList.get(i).getUserRole().equals(userEmail)){
-                        System.out.println("true");
-                        System.out.println(userModelList.size());
-                        System.out.println(userModelList.get(i).getUserRole());
-                        System.out.println(userModelList.get(i).getEmail());
-                        System.out.println(userModelList.get(i).getDrivingLicenceNo());
-                    }
+//        //retreiving details from the email
+//        String userEmail ="test1@gmail.com";
+//        Call<List<UserModel>> call = userInterface.getUser();
+//        call.enqueue(new Callback<List<UserModel>>() {
+//            @Override
+//            public void onResponse(Call<List<UserModel>> call, Response<List<UserModel>> response) {
+//
+//                userModelList = response.body();
+//                for(int i =0 ; i<userModelList.size(); i++){
+//                    System.out.println(userModelList.get(i).getEmail());
+//                    System.out.println(userModelList.get(i).getEmail().equals(userEmail));
+//                    System.out.println("----------------------------");
+//                    if(userModelList.get(i).getEmail().equals(userEmail)){
+//
+//                        System.out.println(userModelList.size());
+//                        System.out.println(userModelList.get(i).getUserRole());
+//                        System.out.println(userModelList.get(i).getEmail());
+//                        System.out.println(userModelList.get(i).getDrivingLicenceNo());
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<UserModel>> call, Throwable t) {
+//
+//            }
+//
+//
+//        });
+
+
+
+            //updating the details from email
+            UserModel post = new UserModel("1","TEST","TEST","TEST");
+            Call<UserModel> call = userInterface.updateUser("635aa30cb0759a27d5b35d5c",post);
+            call.enqueue(new Callback<UserModel>() {
+                @Override
+                public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                    System.out.println("successs update -------");
                 }
-            }
 
-            @Override
-            public void onFailure(Call<List<UserModel>> call, Throwable t) {
+                @Override
+                public void onFailure(Call<UserModel> call, Throwable t) {
+                }
+            });
 
-            }
 
-
-        });
 
 
 

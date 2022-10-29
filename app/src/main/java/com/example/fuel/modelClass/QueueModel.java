@@ -7,23 +7,20 @@ public class QueueModel {
 
     private String id;
     private String reason;
-    private DateTimeFormatter arivalTime;
-    private DateTimeFormatter departureTime;
+    private String arivalTime;
+    private String departureTime;
     private String vehicleType;
     private String stationName;
 
 
-    public QueueModel(DateTimeFormatter arivalTime, String vehicleType, String stationName) {
+    public QueueModel(String arivalTime, String vehicleType, String stationName) {
         this.arivalTime = arivalTime;
         this.vehicleType = vehicleType;
         this.stationName = stationName;
     }
 
-    public QueueModel(String reason, DateTimeFormatter departureTime, String stationName) {
-        this.reason = reason;
-        this.departureTime = departureTime;
-        this.stationName = stationName;
-    }
+
+
 
     public String getId() {
         return id;
@@ -41,19 +38,19 @@ public class QueueModel {
         this.reason = reason;
     }
 
-    public DateTimeFormatter getArivalTime() {
+    public String getArivalTime() {
         return arivalTime;
     }
 
-    public void setArivalTime(DateTimeFormatter arivalTime) {
+    public void setArivalTime(String arivalTime) {
         this.arivalTime = arivalTime;
     }
 
-    public DateTimeFormatter getDepartureTime() {
+    public String getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(DateTimeFormatter departureTime) {
+    public void setDepartureTime(String departureTime) {
         this.departureTime = departureTime;
     }
 

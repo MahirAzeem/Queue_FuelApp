@@ -8,11 +8,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fuel.Controller.FuelInterface;
 import com.example.fuel.Controller.StationInterface;
 import com.example.fuel.R;
+import com.example.fuel.SignInFragment;
 import com.example.fuel.adapterClass.FuelStationAdapter;
 import com.example.fuel.modelClass.FuelStationModel;
 import com.example.fuel.modelClass.StationModel;
@@ -41,14 +43,32 @@ public class Homepage extends AppCompatActivity {
     private FuelStationAdapter.RecyclerViewClickListener listener;
     ChipNavigationBar bottomNav;
 
+
+    SignInFragment  sss = new SignInFragment();
+
     List<StationModel> fuelStationModelList;
     private StationInterface stationInterface ;
 
-//    Page Navigation and Recycler View Implementation
+    //    Page Navigation and Recycler View Implementation
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
+
+//        myCustomMessage = (TextView) findViewById(R.id.myCustommessage);
+
+       String  fuelStation_name = "Name not available";
+        String fuelStation_location = "Location not available";
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            fuelStation_name = extras.getString("email");
+
+        }
+
+//        myCustomMessage.setText(fuelStation_name + "\n" + fuelStation_location);
+        System.out.println("home ----------------------------------"+fuelStation_name);
+        ////
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://ahmedameer-001-site1.atempurl.com/api/")
@@ -191,7 +211,7 @@ public class Homepage extends AppCompatActivity {
         fuelStation.setAdapter(fuelStationAdapter);
     }
 
-//    Change Activity when Recycler View Card is pressed
+    //    Change Activity when Recycler View Card is pressed
     public void setOnClickListener() {
         listener = new FuelStationAdapter.RecyclerViewClickListener() {
             @Override
@@ -204,7 +224,7 @@ public class Homepage extends AppCompatActivity {
         };
     }
 
-//    Implementation of Search Filter using Fuel Station Location and Fuel Station Type
+    //    Implementation of Search Filter using Fuel Station Location and Fuel Station Type
     private void filterList(String text) {
 
         ArrayList<FuelStationModel> filteredList = new ArrayList<>();
@@ -216,7 +236,7 @@ public class Homepage extends AppCompatActivity {
                 filteredList.add(fuelStationModel);
             }
         }
-        
+
         if(filteredList.isEmpty()){
             Toast.makeText(this, "Fuel Station not found", Toast.LENGTH_SHORT).show();
         }else{

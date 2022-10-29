@@ -37,6 +37,7 @@ public class StationOwner_SignUpFragment extends Fragment {
     private UserInterface userInterface ;
     private FuelInterface fuelInterface ;
     String  stationId = "";
+    String  userIdresponse = "";
 
 
 //  Initializing Dropdown values for Fuel Station Location and Type
@@ -121,6 +122,27 @@ public class StationOwner_SignUpFragment extends Fragment {
                 @Override
                 public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                     System.out.println(" User Created Successfully");
+                    userIdresponse = response.body().getId();
+                    System.out.println("  inside userid 77777 88888888888888  [0]------------- "+ userIdresponse);
+
+
+                    StationModel stationModel = new StationModel(userIdresponse,station_Name, stationLocationValue[0],stationTypeValue[0]);
+                    Call<StationModel> call1 = stationInterface.createStation(stationModel);
+                    call1.enqueue(new Callback<StationModel>() {
+                        @Override
+                        public void onResponse(Call<StationModel> call, Response<StationModel> response) {
+                            System.out.println(" Station Created Successfully");
+                            System.out.println(response.body().getLocation());
+                            stationId = response.body().getId();
+                            System.out.println("  stationId[0] "+ stationId);
+                        }
+                        @Override
+                        public void onFailure(Call<StationModel> call, Throwable t) {
+                            System.out.println(" Station Created Failed");
+                        }
+
+                    });
+
                 }
                 @Override
                 public void onFailure(Call<UserModel> call, Throwable t) {
@@ -131,22 +153,7 @@ public class StationOwner_SignUpFragment extends Fragment {
 
 
 
-                StationModel stationModel = new StationModel(station_Name, stationLocationValue[0],stationTypeValue[0]);
-                Call<StationModel> call = stationInterface.createStation(stationModel);
-                call.enqueue(new Callback<StationModel>() {
-                    @Override
-                    public void onResponse(Call<StationModel> call, Response<StationModel> response) {
-                        System.out.println(" Station Created Successfully");
-                        System.out.println(response.body().getLocation());
-                        stationId = response.body().getId();
-                        System.out.println("  stationId[0] "+ stationId);
-                    }
-                    @Override
-                    public void onFailure(Call<StationModel> call, Throwable t) {
-                        System.out.println(" Station Created Failed");
-                    }
 
-                });
 
 
 

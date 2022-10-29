@@ -28,7 +28,7 @@ public class FuelStationAdapter extends RecyclerView.Adapter<FuelStationAdapter.
         this.listener = listener;
     }
 
-//    Filter ArrayList for Search View
+    //    Filter ArrayList for Search View
     public void setFilteredList(ArrayList<FuelStationModel> filteredList){
         this.fuelStationModelArrayList = filteredList;
         notifyDataSetChanged();

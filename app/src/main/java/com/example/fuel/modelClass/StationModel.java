@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 public class StationModel {
 
     private String id;
+    private String userId;
     private String stationName;
     private String location;
     private String brand;
@@ -20,10 +21,26 @@ public class StationModel {
     }
 
 
-    public StationModel(String stationName, String location, String brand) {
+    public StationModel( String userId,  String stationName, String location, String brand) {
+        this.userId = userId;
         this.stationName = stationName;
         this.location = location;
         this.brand = brand;
+    }
+
+    public StationModel(   String stationName, String location, String brand) {
+
+        this.stationName = stationName;
+        this.location = location;
+        this.brand = brand;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getStationName() {

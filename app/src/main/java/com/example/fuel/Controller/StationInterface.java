@@ -26,7 +26,7 @@ public interface StationInterface {
     Call<StationModel> createStation(@Body StationModel stationModel);
 
     @PUT("Station/{id}")
-    Call<StationModel> putStation(@Path("id") String id , @Body StationModel stationModel);
+    Call<StationModel> updateStation(@Path("id") String id , @Body StationModel stationModel);
 
 
     @PATCH("Station/{id}")

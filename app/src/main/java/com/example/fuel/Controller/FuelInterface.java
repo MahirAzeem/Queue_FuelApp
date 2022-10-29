@@ -26,11 +26,10 @@ public interface FuelInterface {
     Call<FuelModel> createFuel(@Body FuelModel fuelModel);
 
     @PUT("Fuel/{id}")
-    Call<FuelModel> putFuel(@Path("id") String id , @Body FuelModel fuelModel);
+    Call<FuelModel> updateFuel(@Path("id") String id , @Body FuelModel fuelModel);
 
 
-    @PATCH("Fuel/{id}")
-    Call<FuelModel> patchFuel(@Path("id") String id , @Body FuelModel fuelModel);
+
 
     @DELETE("Fuel/{id}")
     Call<UserModel> deleteFuel(@Path("id") String  id );
