@@ -10,9 +10,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.fuel.Controller.FuelInterface;
+import com.example.fuel.Controller.StationInterface;
 import com.example.fuel.R;
 import com.example.fuel.adapterClass.FuelStationAdapter;
 import com.example.fuel.modelClass.FuelStationModel;
+import com.example.fuel.modelClass.StationModel;
 import com.example.fuel.stationOwner.StationProfile;
 import com.example.fuel.Login_SignUp_Interface;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
@@ -21,6 +24,13 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 //Implementation of Homepage Screen with Recycler View and Search View
 public class Homepage extends AppCompatActivity {
@@ -31,11 +41,99 @@ public class Homepage extends AppCompatActivity {
     private FuelStationAdapter.RecyclerViewClickListener listener;
     ChipNavigationBar bottomNav;
 
+    List<StationModel> fuelStationModelList;
+    private StationInterface stationInterface ;
+
 //    Page Navigation and Recycler View Implementation
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://ahmedameer-001-site1.atempurl.com/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        stationInterface = retrofit.create(StationInterface.class);
+
+
+        Call<List<StationModel>> call = stationInterface.getStation();
+        call.enqueue(new Callback<List<StationModel>>() {
+
+            @Override
+            public void onResponse(Call<List<StationModel>> call, Response<List<StationModel>> response) {
+
+                if(!response.isSuccessful()){
+//                    Toast.makeText(getActivity(), "failed response", Toast.LENGTH_SHORT).show();
+                    System.out.println("faillllllllllllllll");
+                }
+
+                fuelStationModelList =response.body();
+
+                System.out.println(response.body().size());
+                System.out.println(response.body().get(0).getStationName());
+                System.out.println(response.body().get(1).getLocation() );
+                System.out.println(response.body().get(1).getBrand() );
+            }
+
+            @Override
+            public void onFailure(Call<List<StationModel>> call, Throwable t) {
+
+            }
+
+//            @Override
+//            public void onResponse(Call<List<FuelStationModel>> call, Response<List<FuelStationModel>> response) {
+//                if(!response.isSuccessful()){
+////                    Toast.makeText(getActivity(), "failed response", Toast.LENGTH_SHORT).show();
+//                    System.out.println("faillllllllllllllll");
+//                }
+//                fuelStationModelList =response.body();
+//
+//
+//                System.out.println(response.body().size());
+//                System.out.println(response.body().get(1).getStationName());
+//                System.out.println(response.body().get(1).getLocation() );
+//                System.out.println(response.body().get(1).getBrand() );
+//
+//
+//                //attach adapter
+//                System.out.println(fuelStationModelList.isEmpty());
+//                System.out.println(fuelStationModelList.size());
+//
+//
+//                System.out.println("inside adapter class attaching");
+//                System.out.println("inside adapter class attaching----");
+//                fuelStationAdapter = new FuelStationAdapter( fuelStationModelList);
+//                fuelStation.setAdapter(fuelStationAdapter);
+//                fuelStation.setLayoutManager(new LinearLayoutManager(SysConfig.context));
+//                System.out.println("inside adapter class attaching 11111111111 : "+fuelStationModelList.size());
+//
+//                // below line is for setting a layout manager for our recycler view.
+//                // here we are creating vertical list so we will provide orientation as vertical
+//
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<FuelStationModel>> call, Throwable t) {
+//
+//            }
+
+
+
+
+//            @Override
+//            public void onFailure(Call<List<FuelStop>> call, Throwable t) {
+//
+//                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+//                System.out.println(t.getMessage());
+//            }
+        });
+
+
+
+
+
         RecyclerView fuelStation = findViewById(R.id.idFuelStation);
         bottomNav = findViewById(R.id.bottom_nav);
 
