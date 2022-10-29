@@ -45,11 +45,11 @@ public class SignInFragment extends Fragment {
                     Boolean checkuserpass = DB.checkExistingUser(email, pass);
                     if(checkuserpass==true){
                         Toast.makeText(getActivity(), "Sign in successful", Toast.LENGTH_SHORT).show();
-                        Intent userSide  = new Intent(getActivity(), Homepage.class);
-                        startActivity(userSide);
+//                        Intent userSide  = new Intent(getActivity(), Homepage.class);
+//                        startActivity(userSide);
 
-//                        Intent stationOwnerSide  = new Intent(getActivity(), FuelStationHomepage.class);
-//                        startActivity(stationOwnerSide);
+                        Intent stationOwnerSide  = new Intent(getActivity(), FuelStationHomepage.class);
+                        startActivity(stationOwnerSide);
                     }else{
                         Toast.makeText(getActivity(), "User does not exist", Toast.LENGTH_SHORT).show();
                     }

@@ -20,7 +20,6 @@ import com.example.fuel.user.Homepage;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,10 +30,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class StationProfile extends AppCompatActivity {
 
 
-    private StationInterface stationInterface ;
-    private QueueInterface  queueInterface ;
-    ChipNavigationBar bottomNav;
-=======
+    private StationInterface stationInterface;
+    private QueueInterface queueInterface;
     ChipNavigationBar stationOwnerProfile;
 
 
@@ -42,11 +39,11 @@ public class StationProfile extends AppCompatActivity {
     List<QueueModel> queueModelList;
 
 
-    int  bikeCount = 0;
-    int  threeWheelCount = 0;
+    int bikeCount = 0;
+    int threeWheelCount = 0;
 
 
-// Integration of Bottom Navigation Bar
+    // Integration of Bottom Navigation Bar
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +52,6 @@ public class StationProfile extends AppCompatActivity {
         stationOwnerProfile = findViewById(R.id.bottom_nav);
 
         stationOwnerProfile.setItemSelected(R.id.profile, true);
-
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -69,7 +65,7 @@ public class StationProfile extends AppCompatActivity {
         System.out.println("inside   station profile ---------------------------------");
 
 
-        String queueStationName ="john";
+        String queueStationName = "john";
 
         Call<List<QueueModel>> call = queueInterface.getQueue();
         System.out.println("inside 1111111111111----------------------");
@@ -80,7 +76,7 @@ public class StationProfile extends AppCompatActivity {
                 System.out.println("inside 2222222222222----------------------");
                 queueModelList = response.body();
                 System.out.println("inside 4444444444----------------------");
-                System.out.println(response.body().get(0).getVehicleType());
+//                System.out.println(response.body().get(0).getVehicleType());
 //                for(int i =0 ; i<queueModelList.size(); i++){
 //
 //                    if(queueModelList.get(i).getStationName().equals(queueStationName)){
@@ -99,22 +95,20 @@ public class StationProfile extends AppCompatActivity {
 //                    }
 //                }
 
-                System.out.println("total vehicle  in station : "+queueStationName );
+                System.out.println("total vehicle  in station : " + queueStationName);
                 System.out.println("---------------------------------");
-                System.out.println("bikeCount : "+bikeCount);
-                System.out.println("threeWheelCount : "+threeWheelCount);
+                System.out.println("bikeCount : " + bikeCount);
+                System.out.println("threeWheelCount : " + threeWheelCount);
                 System.out.println("---------------------------------");
 
 
             }
+
             @Override
             public void onFailure(Call<List<QueueModel>> call, Throwable t) {
                 System.out.println("failed .......  ---------------------");
             }
         });
-
-
-
 
 
 //        String stationName ="test_station";
@@ -141,15 +135,12 @@ public class StationProfile extends AppCompatActivity {
 //                     });
 
 
-
-        bottomNav.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
-=======
         stationOwnerProfile.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(int id) {
 
-                switch (id){
+                switch (id) {
                     case R.id.homepage:
                         Intent homepage = new Intent(StationProfile.this, FuelStationHomepage.class);
                         startActivity(homepage);
@@ -162,5 +153,6 @@ public class StationProfile extends AppCompatActivity {
 
             }
         });
+
     }
 }
