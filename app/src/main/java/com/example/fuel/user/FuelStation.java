@@ -1,5 +1,6 @@
 package com.example.fuel.user;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +19,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
+
+import com.example.fuel.Controller.QueueInterface;
+import com.example.fuel.Controller.StationInterface;
+import com.example.fuel.Login_SignUp_Interface;
 import com.example.fuel.R;
 import com.example.fuel.databinding.ActivityFuelStationBinding;
+import com.example.fuel.modelClass.QueueModel;
+import com.example.fuel.modelClass.UserModel;
+import com.example.fuel.stationOwner.FuelStationHomepage;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -27,6 +35,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 //Implementation of Fuel Station Profile
 public class FuelStation extends AppCompatActivity {
@@ -38,12 +52,32 @@ public class FuelStation extends AppCompatActivity {
     String fuelStation_name;
 
 
+
+
+    private QueueInterface queueInterface ;
+
 //    Retrieving and Displaying Fuel Station Name and Fuel Station Location
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_fuel_station);
         fuelStation = this;
+
+
+//        System.out.println("admin----------------------- ");
+//        Intent intent = new Intent(FuelStation.this, FuelStation_CurrentVehicle.class);
+//        intent.putExtra("fuelStation_name", fuelStation_name);
+//        startActivity(intent);
+//
+
+
+
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://ahmedameer-001-site1.atempurl.com/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        queueInterface = retrofit.create(QueueInterface.class);
 
         initView();
 
@@ -62,6 +96,12 @@ public class FuelStation extends AppCompatActivity {
 
         myCustomMessage.setText(fuelStation_name + "\n" + fuelStation_location);
 
+    }
+
+
+
+    public String getMyData() {
+        return fuelStation_name;
     }
 
 // Initializing the TabLayout view of Fuel Status and Current Vehicle
@@ -174,6 +214,33 @@ public class FuelStation extends AppCompatActivity {
 
                 time[0] = dtf.format(now);
 
+                //inserting join queue details to the database
+
+                System.out.println("----------------------Item--------------------"+item[0]);
+                System.out.println("----------------------time--------------------"+time[0]);
+
+                System.out.println("----------------------station namemmmm --------------------"+fuelStation_name);
+
+
+                QueueModel queueModel = new QueueModel(time[0], item[0],fuelStation_name);
+                Call<QueueModel> userModelcall = queueInterface.createQueue(queueModel);
+                userModelcall.enqueue(new Callback<QueueModel>() {
+                    @Override
+                    public void onResponse(Call<QueueModel> call, Response<QueueModel> response) {
+                        System.out.println(" Queue Created Successfully");
+
+                    }
+                    @Override
+                    public void onFailure(Call<QueueModel> call, Throwable t) {
+                        System.out.println(" Queue Created Failed");
+                    }
+                });
+
+
+
+
+
+
                 Toast.makeText(FuelStation.this, "Item: " + item[0] + " Time: " + time[0], Toast.LENGTH_SHORT).show();
 
                 System.out.println("----------------------Item--------------------"+item[0]);
@@ -243,6 +310,27 @@ public class FuelStation extends AppCompatActivity {
 
                 System.out.println("----------------------Item--------------------"+item[0]);
                 System.out.println("----------------------time--------------------"+time[0]);
+
+
+                String queueID= "635cd550387c133270c94a4f";
+
+                QueueModel queueModel = new QueueModel(queueID,time[0], item[0],"ddd");
+                Call<QueueModel> userModelcall = queueInterface.updateQueue(queueID,queueModel);
+                userModelcall.enqueue(new Callback<QueueModel>() {
+                    @Override
+                    public void onResponse(Call<QueueModel> call, Response<QueueModel> response) {
+                        System.out.println(" Queue Updated Successfully");
+
+                    }
+                    @Override
+                    public void onFailure(Call<QueueModel> call, Throwable t) {
+                        System.out.println(" Queue Updated Failed");
+                    }
+                });
+
+
+
+
 
                 alertDialog.dismiss();
             }

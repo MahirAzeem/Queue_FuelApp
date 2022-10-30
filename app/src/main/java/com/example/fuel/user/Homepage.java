@@ -43,6 +43,8 @@ public class Homepage extends AppCompatActivity {
     private FuelStationAdapter.RecyclerViewClickListener listener;
     ChipNavigationBar bottomNav;
 
+    String userEmail;
+
 
     SignInFragment  sss = new SignInFragment();
 
@@ -57,17 +59,26 @@ public class Homepage extends AppCompatActivity {
 
 //        myCustomMessage = (TextView) findViewById(R.id.myCustommessage);
 
-       String  fuelStation_name = "Name not available";
-        String fuelStation_location = "Location not available";
+//       String  fuelStation_name = "Name not available";
+//        String fuelStation_location = "Location not available";
+//
+//        Bundle extras = getIntent().getExtras();
+//        if (extras != null) {
+//            fuelStation_name = extras.getString("email");
+//
+//        }
+
+
+        userEmail = "Name not available";
+//        String fuelStation_location = "Location not available";
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            fuelStation_name = extras.getString("email");
-
+            userEmail = extras.getString("userEmail");
         }
 
 //        myCustomMessage.setText(fuelStation_name + "\n" + fuelStation_location);
-        System.out.println("home ----------------------------------"+fuelStation_name);
+        System.out.println("home ----------------------------------"+userEmail);
         ////
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -166,7 +177,11 @@ public class Homepage extends AppCompatActivity {
                 switch (id){
                     case R.id.profile:
                         Intent profile = new Intent(Homepage.this, UserProfile.class);
+                        profile.putExtra("userEmail", userEmail);
                         startActivity(profile);
+
+
+
                         break;
                     case R.id.logout:
                         Intent login = new Intent(Homepage.this, Login_SignUp_Interface.class);
@@ -195,13 +210,13 @@ public class Homepage extends AppCompatActivity {
         setOnClickListener();
 
         fuelStationModelArrayList = new ArrayList<FuelStationModel>();
-        fuelStationModelArrayList.add(new FuelStationModel("Aagaash Petrol Shed", "Kalubowila", "Ceypetco", R.drawable.petrol_shed));
-        fuelStationModelArrayList.add(new FuelStationModel("Ahmed Petrol Shed", "Rajagiriya", "IOC", R.drawable.petrol_shed));
-        fuelStationModelArrayList.add(new FuelStationModel("Malindu Petrol Shed", "Narahenpita", "IOC", R.drawable.petrol_shed));
-        fuelStationModelArrayList.add(new FuelStationModel("Saajidh Petrol Shed", "Panadura", "Ceypetco", R.drawable.petrol_shed));
-        fuelStationModelArrayList.add(new FuelStationModel("Hussain Petrol Shed", "Budhgamuwa", "IOC", R.drawable.petrol_shed));
-        fuelStationModelArrayList.add(new FuelStationModel("Mahir Petrol Shed", "Dehiwala", "Ceypetco", R.drawable.petrol_shed));
-        fuelStationModelArrayList.add(new FuelStationModel("Dilan Petrol Shed", "Kotikawatta", "IOC", R.drawable.petrol_shed));
+        fuelStationModelArrayList.add(new FuelStationModel("john station", "Kalubowila", "Ceypetco", R.drawable.petrol_shed));
+        fuelStationModelArrayList.add(new FuelStationModel("Ahmed", "Rajagiriya", "IOC", R.drawable.petrol_shed));
+//        fuelStationModelArrayList.add(new FuelStationModel("Malindu", "Narahenpita", "IOC", R.drawable.petrol_shed));
+//        fuelStationModelArrayList.add(new FuelStationModel("Saajid", "Panadura", "Ceypetco", R.drawable.petrol_shed));
+//        fuelStationModelArrayList.add(new FuelStationModel("Hussain", "Budhgamuwa", "IOC", R.drawable.petrol_shed));
+//        fuelStationModelArrayList.add(new FuelStationModel("Mahir", "Dehiwala", "Ceypetco", R.drawable.petrol_shed));
+//        fuelStationModelArrayList.add(new FuelStationModel("Dilan", "Kotikawatta", "IOC", R.drawable.petrol_shed));
 
         fuelStationAdapter = new FuelStationAdapter(this, fuelStationModelArrayList, listener);
 

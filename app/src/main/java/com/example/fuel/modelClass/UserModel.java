@@ -31,8 +31,8 @@ public class UserModel {
     }
 
     //update constructor
-    public UserModel(String id,String email, String password, String phoneNumber) {
-        this.id = id;
+    public UserModel(String drivingLicenceNo,String email, String password, String phoneNumber) {
+        this.drivingLicenceNo = drivingLicenceNo;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;

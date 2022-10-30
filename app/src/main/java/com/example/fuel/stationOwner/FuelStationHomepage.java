@@ -25,6 +25,8 @@ import com.example.fuel.databinding.ActivityFuelStationHomepageBinding;
 import com.example.fuel.modelClass.StationModel;
 import com.example.fuel.user.FuelStation_CurrentVehicle;
 import com.example.fuel.stationOwner.FuelStation_FuelStatus_StationOwner;
+import com.example.fuel.user.Homepage;
+import com.example.fuel.user.UserProfile;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
@@ -53,9 +55,16 @@ public class FuelStationHomepage extends AppCompatActivity {
     List<StationModel> fuelStationModelList;
     String  userForStation = "";
 
-    String  dbStationName = "";
+    String  testName;
+
+
+
+    String  dbStationName;
     String  dbStationLocation = "";
     String  dbStationBrand = "";
+
+    String ReceivedfuelStation_name;
+
 
     //    Retrieving and Displaying Fuel Station Name and Fuel Station Location
     @Override
@@ -66,6 +75,8 @@ public class FuelStationHomepage extends AppCompatActivity {
         initView();
 
 
+        TextView stationName = findViewById(R.id.myCustommessage);
+        TextView stationLocation = findViewById(R.id.myCustommessage2);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -86,49 +97,41 @@ public class FuelStationHomepage extends AppCompatActivity {
 
             @Override
             public void onResponse(Call<List<StationModel>> call, Response<List<StationModel>> response) {
-
                 if(!response.isSuccessful()){
-//                    Toast.makeText(getActivity(), "failed response", Toast.LENGTH_SHORT).show();
-                    System.out.println("faillllllllllllllll");
+                  System.out.println("failed ..");
                 }
 
                 fuelStationModelList =response.body();
                 for(int i=0;i<fuelStationModelList.size();i++){
 
                 if(fuelStationModelList.get(i).getUserId().equals(userForStation)){
-
                       dbStationName = response.body().get(i).getStationName();
                       dbStationLocation = response.body().get(i).getLocation();
                       dbStationBrand = response.body().get(i).getBrand();
-
-
                 }
-
-
             }
+//                System.out.println("inn------------------- dbStationName : "+dbStationName);
+//                System.out.println("inn------------------- dbStationName : "+dbStationLocation);
+//                System.out.println("inn------------------- dbStationName : "+dbStationBrand);
 
-                System.out.println("inn------------------- dbStationName : "+dbStationName);
-                System.out.println("inn------------------- dbStationName : "+dbStationLocation);
-                System.out.println("inn------------------- dbStationName : "+dbStationBrand);
+                stationName.setText(dbStationName);
+                stationLocation.setText(dbStationLocation);
 
 
+//                getMyData111(dbStationName);
 
+                testName=dbStationName;
             }
-
             @Override
             public void onFailure(Call<List<StationModel>> call, Throwable t) {
-
             }
-
-
         });
+                System.out.println("------------------- dbStationName : "+testName);
+                System.out.println("------------------- dbStationName : "+dbStationLocation);
+                System.out.println("------------------- dbStationName : "+dbStationBrand);
 
-
-        System.out.println("------------------- dbStationName : "+dbStationName);
-        System.out.println("------------------- dbStationName : "+dbStationLocation);
-        System.out.println("------------------- dbStationName : "+dbStationBrand);
-
-
+        System.out.println("------------------- sssssssssssssssssssssssssssssaaaaaaaaaaaaa------------------------------------------------------- : "+testName);
+        System.out.println("------------------- sssssssssssssssssssssssssssssaaaaaaaaaaaaa-----string-------------------------------------------------- : "+stationName.getText().toString());
 
 //        // calling this activity's function to
 //        // use ActionBar utility methods
@@ -151,6 +154,7 @@ public class FuelStationHomepage extends AppCompatActivity {
                 switch (id){
                     case R.id.profile:
                         Intent profile = new Intent(FuelStationHomepage.this, StationProfile.class);
+                        profile.putExtra("stationName", dbStationName);
                         startActivity(profile);
                         break;
                     case R.id.logout:
@@ -164,6 +168,22 @@ public class FuelStationHomepage extends AppCompatActivity {
     }
 
 
+    String TESTING_DATAng ;
+
+
+//    public void getMyData111(String stationName11111) {
+//
+//        TESTING_DATAng=stationName11111;
+//        System.out.println("------------ffffffffffffffffffffffffffffffffffff----------:"+TESTING_DATAng);
+//
+//
+//    }
+
+
+    public String getMyData () {
+
+        return TESTING_DATAng;
+    }
 
 
     // Initializing the TabLayout view of Fuel Status and Current Vehicle

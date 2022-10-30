@@ -19,6 +19,13 @@ public class QueueModel {
         this.stationName = stationName;
     }
 
+    public QueueModel(String id,String departureTime, String reason, String stationName) {
+        this.id = id;
+        this.departureTime = departureTime;
+        this.reason = reason;
+        this.stationName = stationName;
+    }
+
 
 
 
