@@ -16,12 +16,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import com.example.fuel.Controller.FuelInterface;
 import com.example.fuel.R;
 import com.example.fuel.adapterClass.FuelStatusAdapter;
-import com.example.fuel.modelClass.FuelModel;
 import com.example.fuel.modelClass.FuelStatusModel;
-import com.example.fuel.modelClass.UserModel;
 import com.example.fuel.user.FuelStation;
 
 import java.time.format.DateTimeFormatter;
@@ -29,32 +26,12 @@ import java.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 //Fuel Status Fragment to display the availability of fuel
 public class FuelStation_FuelStatus_StationOwner extends Fragment {
 
 
-
-
-    private FuelInterface fuelInterface;
-
-    List<FuelModel> fuelModelList;
-
-    String ispetrolAvailable = "";
-    String issuperPetrolAvailable = "";
-    String isdieselAvailable = "";
-    String issuperDieselAvailable = "";
-
-
-
-    //    Implementing List View for Fuel Status
+//    Implementing List View for Fuel Status
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,202 +44,107 @@ public class FuelStation_FuelStatus_StationOwner extends Fragment {
 
         ListView mListView = (ListView) v.findViewById(R.id.listView);
 
+        //Create the Fuel Types and their availability
+        FuelStatusModel petrol92 = new FuelStatusModel("Petrol 92", "Yes", "1");
+        FuelStatusModel petrol95 = new FuelStatusModel("Petrol 95", "No", "1");
+        FuelStatusModel superDiesel = new FuelStatusModel("Super Diesel", "Yes", "1");
+        FuelStatusModel diesel = new FuelStatusModel("Diesel", "No", "1");
 
-
-
-
+        //Add Fuel types to an ArrayList
         ArrayList<FuelStatusModel> fuelTypes = new ArrayList<>();
+        fuelTypes.add(petrol92);
+        fuelTypes.add(petrol95);
+        fuelTypes.add(superDiesel);
+        fuelTypes.add(diesel);
 
 
-        FuelStationHomepage activity = (FuelStationHomepage) getActivity();
-        String receivedStationName = activity.getMyData();
+        FuelStatusAdapter adapter = new FuelStatusAdapter(getActivity(), R.layout.adapter_view_layout_fuelstatus_stationowner, fuelTypes);
+        mListView.setAdapter(adapter);
 
 
-
-        ///////////////////////
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://ahmedameer-001-site1.atempurl.com/api/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-
-        fuelInterface = retrofit.create(FuelInterface.class);
-
-
-
-
-        String queueStationName = "john station";
-        Call<List<FuelModel>> call = fuelInterface.getFuel();
-        System.out.println("inside 1111111111111----------------------");
-        call.enqueue(new Callback<List<FuelModel>>() {
+        // Update Fuel Availability when ListView is clicked
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public void onResponse(Call<List<FuelModel>> call, Response<List<FuelModel>> response) {
-                System.out.println("Fuel data retreived Sucessfully");
-                fuelModelList = response.body();
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
-                for(int i =0 ; i<fuelModelList.size(); i++){
-                    if(fuelModelList.get(i).getStationName().equals(queueStationName)){
-                        ispetrolAvailable = fuelModelList.get(i).getPetrol();
-                        issuperPetrolAvailable = fuelModelList.get(i).getSuperPetrol();
-                        isdieselAvailable = fuelModelList.get(i).getDiesel();
-                        issuperDieselAvailable = fuelModelList.get(i).getSuperDiesel();
-                    }
-                    if(ispetrolAvailable.isEmpty()){
-                        ispetrolAvailable = "NO STATION";
-                    }
+                // Fuel Availability Dropdown
+                String[] fuelStatus;
+
+                if(fuelTypes.get(position).getFuelAvailability().equals("Yes")){
+                    fuelStatus = new String[]{"No"};
+                }else{
+                    fuelStatus = new String[]{"Yes"};
                 }
 
-                /////////
-                //Create the Fuel Types and their availability
-                FuelStatusModel petrol92 = new FuelStatusModel("Petrol 92", ispetrolAvailable, "1");
-                FuelStatusModel petrol95 = new FuelStatusModel("Petrol 95", issuperPetrolAvailable, "1");
-                FuelStatusModel superDiesel = new FuelStatusModel("Super Diesel", isdieselAvailable, "1");
-                FuelStatusModel diesel = new FuelStatusModel("Diesel", issuperDieselAvailable, "1");
-
-                //Add Fuel types to an ArrayList
-
-                fuelTypes.add(petrol92);
-                fuelTypes.add(petrol95);
-                fuelTypes.add(superDiesel);
-                fuelTypes.add(diesel);
+                ArrayAdapter<String> adapterFuelAvailability;
 
 
-                FuelStatusAdapter adapter = new FuelStatusAdapter(getActivity(), R.layout.adapter_view_layout_fuelstatus_stationowner, fuelTypes);
-                mListView.setAdapter(adapter);
+                final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                View mView = getLayoutInflater().inflate(R.layout.edit_vehicle_status_dialog, null);
+                final TextView fuelType = (TextView) mView.findViewById(R.id.fuelType);
+                fuelType.setText(fuelTypes.get(position).getFuelName());
+                final AutoCompleteTextView fuelAvailabilityDropdown = (AutoCompleteTextView) mView.findViewById(R.id.fuelAvailability);
+                adapterFuelAvailability = new ArrayAdapter<String>(getActivity(), R.layout.list_item, fuelStatus);
+                fuelAvailabilityDropdown.setAdapter(adapterFuelAvailability);
+                Button btn_cancel = (Button) mView.findViewById(R.id.cancel_button);
+                Button btn_okay = (Button) mView.findViewById(R.id.updateFuelStatus);
+                alert.setView(mView);
+                final AlertDialog alertDialog = alert.create();
+                alertDialog.setCanceledOnTouchOutside(false);
 
-
-
-                // Update Fuel Availability when ListView is clicked
-                mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+                btn_cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-
-                        // Fuel Availability Dropdown
-                        String[] fuelStatus;
-
-                        if(fuelTypes.get(position).getFuelAvailability().equals("Yes")){
-                            fuelStatus = new String[]{"No"};
-                        }else{
-                            fuelStatus = new String[]{"Yes"};
-                        }
-
-                        ArrayAdapter<String> adapterFuelAvailability;
-
-
-                        final AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-                        View mView = getLayoutInflater().inflate(R.layout.edit_vehicle_status_dialog, null);
-                        final TextView fuelType = (TextView) mView.findViewById(R.id.fuelType);
-                        fuelType.setText(fuelTypes.get(position).getFuelName());
-                        final AutoCompleteTextView fuelAvailabilityDropdown = (AutoCompleteTextView) mView.findViewById(R.id.fuelAvailability);
-                        adapterFuelAvailability = new ArrayAdapter<String>(getActivity(), R.layout.list_item, fuelStatus);
-                        fuelAvailabilityDropdown.setAdapter(adapterFuelAvailability);
-                        Button btn_cancel = (Button) mView.findViewById(R.id.cancel_button);
-                        Button btn_okay = (Button) mView.findViewById(R.id.updateFuelStatus);
-                        alert.setView(mView);
-                        final AlertDialog alertDialog = alert.create();
-                        alertDialog.setCanceledOnTouchOutside(false);
-
-                        btn_cancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                alertDialog.dismiss();
-                            }
-                        });
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
 
 //        Update Button in Update Fuel Modal
 
-                        final String[] item = new String[1];
+                final String[] item = new String[1];
 
-                        fuelAvailabilityDropdown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                                item[0] = adapterView.getItemAtPosition(position).toString();
-
-                            }
-                        });
-
-                        btn_okay.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-//                        Printing Time
-                                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
-                                LocalDateTime now = LocalDateTime.now();
-
-//                        Toast.makeText(getActivity(), "Item: " + item[0] + " Time: " + dtf.format(now), Toast.LENGTH_SHORT).show();
-                                time[0] = dtf.format(now);
-
-
-
-
-                                FuelModel post = new FuelModel("test no","tost yes","yes","yes");
-                                Call<FuelModel> call = fuelInterface.updateFuel(queueStationName,post);
-                                call.enqueue(new Callback<FuelModel>() {
-                                    @Override
-                                    public void onResponse(Call<FuelModel> call, Response<FuelModel> response) {
-                                        System.out.println("fuel updated sucessfully");
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<FuelModel> call, Throwable t) {
-                                        System.out.println("fuel updated failed");
-                                    }
-                                });
-
-
-
-
-
-
-                                if(fuelTypes.get(position).getFuelName().equals("Petrol 92")){
-//                            Toast.makeText(getActivity(), "Petrol 92: " + time[0], Toast.LENGTH_SHORT).show();
-                                    petrol92.setFuelStatusChangeTime(time[0]);
-                                    Toast.makeText(getActivity(), "Get: " + fuelTypes.get(position).getFuelStatusChangeTime(), Toast.LENGTH_SHORT).show();
-                                }else if(fuelTypes.get(position).getFuelName().equals("Petrol 95")){
-                                    Toast.makeText(getActivity(), "Petrol 95: " + time[0], Toast.LENGTH_SHORT).show();
-                                    petrol95.setFuelStatusChangeTime(time[0]);
-                                }else if(fuelTypes.get(position).getFuelName().equals("Super Diesel")){
-                                    Toast.makeText(getActivity(), "Super Diesel: " + time[0], Toast.LENGTH_SHORT).show();
-                                    superDiesel.setFuelStatusChangeTime(time[0]);
-                                }else if(fuelTypes.get(position).getFuelName().equals("Diesel")){
-                                    Toast.makeText(getActivity(), "Super Diesel: " + time[0], Toast.LENGTH_SHORT).show();
-                                    diesel.setFuelStatusChangeTime(time[0]);
-                                }
-
-
-
-
-
-                                alertDialog.dismiss();
-                            }
-                        });
-                        alertDialog.show();
+                fuelAvailabilityDropdown.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                        item[0] = adapterView.getItemAtPosition(position).toString();
 
                     }
                 });
 
+                btn_okay.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+//                        Printing Time
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+                        LocalDateTime now = LocalDateTime.now();
+
+//                        Toast.makeText(getActivity(), "Item: " + item[0] + " Time: " + dtf.format(now), Toast.LENGTH_SHORT).show();
+                        time[0] = dtf.format(now);
 
 
+                        if(fuelTypes.get(position).getFuelName().equals("Petrol 92")){
+//                            Toast.makeText(getActivity(), "Petrol 92: " + time[0], Toast.LENGTH_SHORT).show();
+                            petrol92.setFuelStatusChangeTime(time[0]);
+                            Toast.makeText(getActivity(), "Get: " + fuelTypes.get(position).getFuelStatusChangeTime(), Toast.LENGTH_SHORT).show();
+                        }else if(fuelTypes.get(position).getFuelName().equals("Petrol 95")){
+                            Toast.makeText(getActivity(), "Petrol 95: " + time[0], Toast.LENGTH_SHORT).show();
+                            petrol95.setFuelStatusChangeTime(time[0]);
+                        }else if(fuelTypes.get(position).getFuelName().equals("Super Diesel")){
+                            Toast.makeText(getActivity(), "Super Diesel: " + time[0], Toast.LENGTH_SHORT).show();
+                            superDiesel.setFuelStatusChangeTime(time[0]);
+                        }else if(fuelTypes.get(position).getFuelName().equals("Diesel")){
+                            Toast.makeText(getActivity(), "Super Diesel: " + time[0], Toast.LENGTH_SHORT).show();
+                            diesel.setFuelStatusChangeTime(time[0]);
+                        }
 
+                        alertDialog.dismiss();
+                    }
+                });
+                alertDialog.show();
 
-
-
-
-
-
-
-
-
-            }
-
-            @Override
-            public void onFailure(Call<List<FuelModel>> call, Throwable t) {
-                System.out.println("Fuel data retreived Failed");
             }
         });
-
 
         return v;
 

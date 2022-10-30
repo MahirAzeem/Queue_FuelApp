@@ -5,6 +5,9 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +26,11 @@ import com.example.fuel.R;
 import com.example.fuel.modelClass.FuelModel;
 import com.example.fuel.modelClass.StationModel;
 import com.example.fuel.modelClass.UserModel;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -65,6 +72,73 @@ public class StationOwner_SignUpFragment extends Fragment {
         ArrayAdapter<String> adapterStationTypes;
 
         View v =inflater.inflate(R.layout.stationowner_sign_up, null);
+
+        //        Email Validation
+        TextInputLayout emailField = v.findViewById(R.id.enterStationEmail);
+        TextInputEditText editEmail = v.findViewById(R.id.editStationEmail);
+
+        editEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(Patterns.EMAIL_ADDRESS.matcher(editEmail.getText().toString()).matches()){
+                    emailField.setHelperText("");
+                    emailField.setError("");
+                }else {
+                    emailField.setError("Invalid Email Address");
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
+
+//        Password Validation
+        TextInputLayout passwordField = v.findViewById(R.id.enterStationPassword);
+        TextInputEditText editPassword = v.findViewById(R.id.editStationPassword);
+
+        editPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String password = charSequence.toString();
+                if(password.length() >= 5) {
+                    Pattern pattern = Pattern.compile("[^a-zA-Z0-9]");
+                    Matcher matcher = pattern.matcher(password);
+                    boolean isPwdContainsSpeChar = matcher.find();
+
+                    if(isPwdContainsSpeChar){
+                        passwordField.setHelperText("Strong Password");
+                        passwordField.setError("");
+                    }else{
+                        passwordField.setHelperText("");
+                        passwordField.setError("Weak Password, Include minimum 1 special character");
+                    }
+                }else {
+                    passwordField.setHelperText("Enter minimum 5 characters");
+                    passwordField.setError("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
 
         stationLocation = v.findViewById(R.id.stationLocations);
         stationType = v.findViewById(R.id.stationType);
