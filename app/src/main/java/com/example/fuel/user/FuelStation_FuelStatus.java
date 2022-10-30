@@ -74,7 +74,8 @@ public class FuelStation_FuelStatus extends Fragment {
             public void onResponse(Call<List<FuelModel>> call, Response<List<FuelModel>> response) {
                 System.out.println("Fuel data retreived Sucessfully");
                 fuelModelList = response.body();
-
+                System.out.println("Fuel data retreived 11111");
+                System.out.println("Fuel data retreived 222222222222"+fuelModelList.size());
                 for(int i =0 ; i<fuelModelList.size(); i++){
                     if(fuelModelList.get(i).getStationName().equals(queueStationName)){
                         ispetrolAvailable = fuelModelList.get(i).getPetrol();

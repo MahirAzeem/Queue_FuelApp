@@ -57,6 +57,8 @@ public class FuelStation extends AppCompatActivity {
     List<QueueModel> queueStationModelList;
 
 
+    Boolean isJoinedQueue=false;
+
     String tablecreated ;
 
     private QueueInterface queueInterface ;
@@ -112,21 +114,32 @@ public class FuelStation extends AppCompatActivity {
 
 
 
+        System.out.println("is joined ahmeddddddddddd---------------"+isJoinedQueue);
+        if(isJoinedQueue.equals(true)){
+            System.out.println("is joined ahmeddddddddddd-------true--------"+isJoinedQueue);
+        }else{
+            System.out.println("is joined ahmeddddddddddd--------false-------"+isJoinedQueue);
+        }
+
+
         ////////////////
-        String queueStationName = "fuelStation_name";
+        String queueStationName = fuelStation_name;
+
         Call<List<QueueModel>> call = queueInterface.getQueue();
         call.enqueue(new Callback<List<QueueModel>>() {
             @Override
             public void onResponse(Call<List<QueueModel>> call, Response<List<QueueModel>> response) {
-                System.out.println("Fuel data retreived Sucessfully");
+                System.out.println("Fuel data retreived Sucessfully"+fuelStation_name);
                 queueStationModelList = response.body();
                 for(int i=0;i<queueStationModelList.size();i++){
                     if(   queueStationModelList.get(i).getStationName().equals(queueStationName)){
+
+
                         tablecreated="true";
-                        System.out.println("trueeeeeeeeeeee-------------------------");
+
                     }else{
                         tablecreated="false";
-                        System.out.println("false ........-------------------------");
+
                     }
                 }
 
@@ -302,7 +315,7 @@ public class FuelStation extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<QueueModel> call, Response<QueueModel> response) {
                         System.out.println(" Queue Created Successfully");
-
+                        isJoinedQueue=true;
                     }
                     @Override
                     public void onFailure(Call<QueueModel> call, Throwable t) {
@@ -324,12 +337,12 @@ public class FuelStation extends AppCompatActivity {
 
 
 
-//                alertDialog.dismiss();
+                alertDialog.dismiss();
 
 
-                Intent intent = new Intent(FuelStation.this, FuelStation_ExitQueue.class);
+//                Intent intent = new Intent(FuelStation.this, FuelStation_ExitQueue.class);
 //                intent.putExtra("stationName", "userForStation");
-                startActivity(intent);
+//                startActivity(intent);
 
 
 

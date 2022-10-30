@@ -58,15 +58,58 @@ public class FuelStation_FuelStatus_StationOwner extends Fragment {
         fuelTypes.add(diesel);
 
 
+
+        FuelStationHomepage activity = (FuelStationHomepage) getActivity();
+        String receivedStationName = activity.getAdminData();
+
+
+
+        ///////////////////////
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://ahmedameer-001-site1.atempurl.com/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+
+        fuelInterface = retrofit.create(FuelInterface.class);
+
+
         FuelStatusAdapter adapter = new FuelStatusAdapter(getActivity(), R.layout.adapter_view_layout_fuelstatus_stationowner, fuelTypes);
         mListView.setAdapter(adapter);
+
 
 
         // Update Fuel Availability when ListView is clicked
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
+
+            public void onResponse(Call<List<FuelModel>> call, Response<List<FuelModel>> response) {
+                System.out.println("Fuel data retreived Sucessfully");
+                fuelModelList = response.body();
+
+                for(int i =0 ; i<fuelModelList.size(); i++){
+                    if(fuelModelList.get(i).getStationName().equals(queueStationName)){
+                        ispetrolAvailable = fuelModelList.get(i).getPetrol();
+                        issuperPetrolAvailable = fuelModelList.get(i).getSuperPetrol();
+                        isdieselAvailable = fuelModelList.get(i).getDiesel();
+                        issuperDieselAvailable = fuelModelList.get(i).getSuperDiesel();
+                    }
+                    if(ispetrolAvailable.isEmpty()){
+                        ispetrolAvailable = "NO STATION";
+                    }
+                }
+
+                /////////
+                //Create the Fuel Types and their availability
+                FuelStatusModel petrol92 = new FuelStatusModel("Petrol 92", receivedStationName, "1");
+                FuelStatusModel petrol95 = new FuelStatusModel("Petrol 95", issuperPetrolAvailable, "1");
+                FuelStatusModel superDiesel = new FuelStatusModel("Super Diesel", isdieselAvailable, "1");
+                FuelStatusModel diesel = new FuelStatusModel("Diesel", issuperDieselAvailable, "1");
+
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
 
                 // Fuel Availability Dropdown
                 String[] fuelStatus;

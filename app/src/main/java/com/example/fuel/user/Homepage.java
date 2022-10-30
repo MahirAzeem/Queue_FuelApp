@@ -2,24 +2,26 @@ package com.example.fuel.user;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fuel.Controller.FuelInterface;
 import com.example.fuel.Controller.StationInterface;
 import com.example.fuel.R;
-import com.example.fuel.SignInFragment;
 import com.example.fuel.adapterClass.FuelStationAdapter;
+import com.example.fuel.adapterClass.FuelStopRecyclerViewAdapter;
 import com.example.fuel.modelClass.FuelStationModel;
 import com.example.fuel.modelClass.StationModel;
+
 import com.example.fuel.stationOwner.StationProfile;
 import com.example.fuel.Login_SignUp_Interface;
+import com.example.fuel.stationOwner.recyclerviewItemClick.RecyclerViewInterface;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 import androidx.appcompat.widget.SearchView;
@@ -35,51 +37,31 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 //Implementation of Homepage Screen with Recycler View and Search View
-public class Homepage extends AppCompatActivity {
+public class Homepage extends AppCompatActivity implements RecyclerViewInterface {
 
+    RecyclerView recyclerView;
+    RecyclerViewInterface recyclerViewInterface;
     private ArrayList<FuelStationModel> fuelStationModelArrayList;
-    private FuelStationAdapter fuelStationAdapter;
+    private FuelStopRecyclerViewAdapter fuelStationAdapter;
     private SearchView searchView;
-    private FuelStationAdapter.RecyclerViewClickListener listener;
+    FuelStationAdapter.RecyclerViewClickListener listener;
     ChipNavigationBar bottomNav;
 
-    String userEmail;
-
-
-    SignInFragment  sss = new SignInFragment();
 
     List<StationModel> fuelStationModelList;
-    private StationInterface stationInterface ;
+    private StationInterface stationInterface;
 
     //    Page Navigation and Recycler View Implementation
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        recyclerViewInterface = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
+        Context context = new Homepage();
+        searchView = findViewById(R.id.searchView);
+        searchView.clearFocus();
 
-//        myCustomMessage = (TextView) findViewById(R.id.myCustommessage);
-
-//       String  fuelStation_name = "Name not available";
-//        String fuelStation_location = "Location not available";
-//
-//        Bundle extras = getIntent().getExtras();
-//        if (extras != null) {
-//            fuelStation_name = extras.getString("email");
-//
-//        }
-
-
-        userEmail = "Name not available";
-//        String fuelStation_location = "Location not available";
-
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            userEmail = extras.getString("userEmail");
-        }
-
-//        myCustomMessage.setText(fuelStation_name + "\n" + fuelStation_location);
-        System.out.println("home ----------------------------------"+userEmail);
-        ////
+        recyclerView = findViewById(R.id.idFuelStation);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://ahmedameer-001-site1.atempurl.com/api/")
@@ -89,84 +71,81 @@ public class Homepage extends AppCompatActivity {
 
 
         Call<List<StationModel>> call = stationInterface.getStation();
+
         call.enqueue(new Callback<List<StationModel>>() {
 
             @Override
             public void onResponse(Call<List<StationModel>> call, Response<List<StationModel>> response) {
 
-                if(!response.isSuccessful()){
+                if (!response.isSuccessful()) {
 //                    Toast.makeText(getActivity(), "failed response", Toast.LENGTH_SHORT).show();
                     System.out.println("faillllllllllllllll");
                 }
 
-                fuelStationModelList =response.body();
 
+
+                System.out.println("dddddddddddddddddddddddd");
+                System.out.println("dddddddddddddddddddddddd"+response.body().size());
+
+
+
+
+                System.out.println("ffffffffffffffffffffff : " + response.body().get(0).getStationName());
+                fuelStationModelList = response.body();
                 System.out.println(response.body().size());
                 System.out.println(response.body().get(0).getStationName());
-                System.out.println(response.body().get(1).getLocation() );
-                System.out.println(response.body().get(1).getBrand() );
+                System.out.println(response.body().get(0).getLocation());
+                System.out.println(response.body().get(1).getBrand());
+
+
+                fuelStationAdapter = new FuelStopRecyclerViewAdapter( recyclerViewInterface,context, fuelStationModelList);
+//
+
+
+                recyclerView.setAdapter( fuelStationAdapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+
+
+
+
+
+
+
+
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        filterFuelStation(newText);
+                        return true;
+                    }
+                });
+
+
+
+
+
             }
+
+
 
             @Override
             public void onFailure(Call<List<StationModel>> call, Throwable t) {
 
             }
 
-//            @Override
-//            public void onResponse(Call<List<FuelStationModel>> call, Response<List<FuelStationModel>> response) {
-//                if(!response.isSuccessful()){
-////                    Toast.makeText(getActivity(), "failed response", Toast.LENGTH_SHORT).show();
-//                    System.out.println("faillllllllllllllll");
-//                }
-//                fuelStationModelList =response.body();
-//
-//
-//                System.out.println(response.body().size());
-//                System.out.println(response.body().get(1).getStationName());
-//                System.out.println(response.body().get(1).getLocation() );
-//                System.out.println(response.body().get(1).getBrand() );
-//
-//
-//                //attach adapter
-//                System.out.println(fuelStationModelList.isEmpty());
-//                System.out.println(fuelStationModelList.size());
-//
-//
-//                System.out.println("inside adapter class attaching");
-//                System.out.println("inside adapter class attaching----");
-//                fuelStationAdapter = new FuelStationAdapter( fuelStationModelList);
-//                fuelStation.setAdapter(fuelStationAdapter);
-//                fuelStation.setLayoutManager(new LinearLayoutManager(SysConfig.context));
-//                System.out.println("inside adapter class attaching 11111111111 : "+fuelStationModelList.size());
-//
-//                // below line is for setting a layout manager for our recycler view.
-//                // here we are creating vertical list so we will provide orientation as vertical
-//
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<FuelStationModel>> call, Throwable t) {
-//
-//            }
-
-
-
-
-//            @Override
-//            public void onFailure(Call<List<FuelStop>> call, Throwable t) {
-//
-//                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
-//                System.out.println(t.getMessage());
-//            }
         });
 
 
 
-
-
-        RecyclerView fuelStation = findViewById(R.id.idFuelStation);
         bottomNav = findViewById(R.id.bottom_nav);
+
+//        System.out.println("STATION MODEL LIST:"+ fuelStationModelList.size());
 
         bottomNav.setItemSelected(R.id.homepage, true);
 
@@ -174,14 +153,10 @@ public class Homepage extends AppCompatActivity {
             @Override
             public void onItemSelected(int id) {
 
-                switch (id){
+                switch (id) {
                     case R.id.profile:
                         Intent profile = new Intent(Homepage.this, UserProfile.class);
-                        profile.putExtra("userEmail", userEmail);
                         startActivity(profile);
-
-
-
                         break;
                     case R.id.logout:
                         Intent login = new Intent(Homepage.this, Login_SignUp_Interface.class);
@@ -192,71 +167,74 @@ public class Homepage extends AppCompatActivity {
             }
         });
 
-        searchView = findViewById(R.id.searchView);
-        searchView.clearFocus();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                filterList(newText);
-                return true;
-            }
-        });
 
-        setOnClickListener();
+//        setOnClickListener();
 
         fuelStationModelArrayList = new ArrayList<FuelStationModel>();
-        fuelStationModelArrayList.add(new FuelStationModel("john station", "Kalubowila", "Ceypetco", R.drawable.petrol_shed));
-        fuelStationModelArrayList.add(new FuelStationModel("Ahmed", "Rajagiriya", "IOC", R.drawable.petrol_shed));
-//        fuelStationModelArrayList.add(new FuelStationModel("Malindu", "Narahenpita", "IOC", R.drawable.petrol_shed));
-//        fuelStationModelArrayList.add(new FuelStationModel("Saajid", "Panadura", "Ceypetco", R.drawable.petrol_shed));
-//        fuelStationModelArrayList.add(new FuelStationModel("Hussain", "Budhgamuwa", "IOC", R.drawable.petrol_shed));
-//        fuelStationModelArrayList.add(new FuelStationModel("Mahir", "Dehiwala", "Ceypetco", R.drawable.petrol_shed));
-//        fuelStationModelArrayList.add(new FuelStationModel("Dilan", "Kotikawatta", "IOC", R.drawable.petrol_shed));
+//        fuelStationModelArrayList.add(new FuelStationModel("Aagaash Petrol Shed", "Kalubowila", "Ceypetco", R.drawable.petrol_shed));
+//        fuelStationModelArrayList.add(new FuelStationModel("Ahmed Petrol Shed", "Rajagiriya", "IOC", R.drawable.petrol_shed));
+//        fuelStationModelArrayList.add(new FuelStationModel("Malindu Petrol Shed", "Narahenpita", "IOC", R.drawable.petrol_shed));
+//        fuelStationModelArrayList.add(new FuelStationModel("Saajidh Petrol Shed", "Panadura", "Ceypetco", R.drawable.petrol_shed));
+//        fuelStationModelArrayList.add(new FuelStationModel("Hussain Petrol Shed", "Budhgamuwa", "IOC", R.drawable.petrol_shed));
+//        fuelStationModelArrayList.add(new FuelStationModel("Mahir Petrol Shed", "Dehiwala", "Ceypetco", R.drawable.petrol_shed));
+//        fuelStationModelArrayList.add(new FuelStationModel("Dilan Petrol Shed", "Kotikawatta", "IOC", R.drawable.petrol_shed));
+//
 
-        fuelStationAdapter = new FuelStationAdapter(this, fuelStationModelArrayList, listener);
+//
+//        fuelStationAdapter = new FuelStationAdapter(this, fuelStationModelList,listener);
+//
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+//
+//        fuelStation.setLayoutManager(linearLayoutManager);
+//        fuelStation.setAdapter(fuelStationAdapter);
+//    }
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
-        fuelStation.setLayoutManager(linearLayoutManager);
-        fuelStation.setAdapter(fuelStationAdapter);
-    }
 
-    //    Change Activity when Recycler View Card is pressed
-    public void setOnClickListener() {
-        listener = new FuelStationAdapter.RecyclerViewClickListener() {
-            @Override
-            public void onClick(View v, int position) {
-                Intent intent = new Intent(getApplicationContext(), FuelStation.class);
-                intent.putExtra("fuelStation_name", fuelStationModelArrayList.get(position).getFuelStation_name());
-                intent.putExtra("fuelStation_location", fuelStationModelArrayList.get(position).getFuelStation_location());
-                startActivity(intent);
-            }
-        };
+
+
     }
 
     //    Implementation of Search Filter using Fuel Station Location and Fuel Station Type
-    private void filterList(String text) {
-
-        ArrayList<FuelStationModel> filteredList = new ArrayList<>();
-        for(FuelStationModel fuelStationModel: fuelStationModelArrayList){
-            if(fuelStationModel.getFuelStation_location().toLowerCase().contains(text.toLowerCase())){
-                filteredList.add(fuelStationModel);
-            }
-            if(fuelStationModel.getFuelStation_type().toLowerCase().contains(text.toLowerCase())){
-                filteredList.add(fuelStationModel);
+    private void filterFuelStation(String newvalue) {
+        List<StationModel> fuelStopslist = new ArrayList<>();
+        for (StationModel fuel : fuelStationModelList) {
+            if (fuel.getLocation().contains(newvalue.toLowerCase())) {
+                fuelStopslist.add(fuel);
             }
         }
 
-        if(filteredList.isEmpty()){
-            Toast.makeText(this, "Fuel Station not found", Toast.LENGTH_SHORT).show();
+        if (fuelStopslist.isEmpty()) {
+            Toast.makeText(this,"No item found", Toast.LENGTH_SHORT).show();
         }else{
-            fuelStationAdapter.setFilteredList(filteredList);
+            fuelStationAdapter.setFilteredList(fuelStopslist);
         }
+
     }
 
+
+    //      Change Activity when Recycler View Card is pressed
+//  public void setOnClickListener(FuelStationAdapter.RecyclerViewClickListener listener) {
+//      listener = new FuelStationAdapter.RecyclerViewClickListener() {
+//          @Override
+//          public void onClick(View v, int position) {
+//              Intent intent = new Intent(getApplicationContext(), FuelStation.class);
+//              intent.putExtra("fuelStation_name", fuelStationModelList.get(position).getStationName());
+//              intent.putExtra("fuelStation_location", fuelStationModelList.get(position).getLocation());
+//              startActivity(intent);
+//          }
+//      };
+//  }
+
+
+
+    @Override
+    public void onItemClick(int postion) {
+        System.out.println("clicked here");
+        Intent intent = new Intent(this, FuelStation.class);
+        intent.putExtra("fuelStation_name",fuelStationModelList.get(postion).getStationName());
+        intent.putExtra("fuelStation_location",fuelStationModelList.get(postion).getLocation() );
+        startActivity(intent);
+    }
 }
