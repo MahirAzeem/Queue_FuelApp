@@ -24,8 +24,12 @@ import com.example.fuel.Controller.QueueInterface;
 import com.example.fuel.Controller.StationInterface;
 import com.example.fuel.Login_SignUp_Interface;
 import com.example.fuel.R;
+import com.example.fuel.adapterClass.FuelStatusAdapter;
 import com.example.fuel.databinding.ActivityFuelStationBinding;
+import com.example.fuel.modelClass.FuelModel;
+import com.example.fuel.modelClass.FuelStatusModel;
 import com.example.fuel.modelClass.QueueModel;
+import com.example.fuel.modelClass.StationModel;
 import com.example.fuel.modelClass.UserModel;
 import com.example.fuel.stationOwner.FuelStationHomepage;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -50,9 +54,10 @@ public class FuelStation extends AppCompatActivity {
     private ViewPagerAdapter adapter;
     TextView myCustomMessage;
     String fuelStation_name;
+    List<QueueModel> queueStationModelList;
 
 
-
+    String tablecreated ;
 
     private QueueInterface queueInterface ;
 
@@ -63,6 +68,13 @@ public class FuelStation extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_fuel_station);
         fuelStation = this;
 
+        Button exitQueue = findViewById(R.id.exitQueue);
+
+
+
+//        if(exitQueue){
+//
+//        }
 
 //        System.out.println("admin----------------------- ");
 //        Intent intent = new Intent(FuelStation.this, FuelStation_CurrentVehicle.class);
@@ -82,6 +94,8 @@ public class FuelStation extends AppCompatActivity {
         initView();
 
 
+
+
         //      Retrieving Fuel Station name and location
         myCustomMessage = (TextView) findViewById(R.id.myCustommessage);
 
@@ -95,6 +109,66 @@ public class FuelStation extends AppCompatActivity {
         }
 
         myCustomMessage.setText(fuelStation_name + "\n" + fuelStation_location);
+
+
+
+        ////////////////
+        String queueStationName = "fuelStation_name";
+        Call<List<QueueModel>> call = queueInterface.getQueue();
+        call.enqueue(new Callback<List<QueueModel>>() {
+            @Override
+            public void onResponse(Call<List<QueueModel>> call, Response<List<QueueModel>> response) {
+                System.out.println("Fuel data retreived Sucessfully");
+                queueStationModelList = response.body();
+                for(int i=0;i<queueStationModelList.size();i++){
+                    if(   queueStationModelList.get(i).getStationName().equals(queueStationName)){
+                        tablecreated="true";
+                        System.out.println("trueeeeeeeeeeee-------------------------");
+                    }else{
+                        tablecreated="false";
+                        System.out.println("false ........-------------------------");
+                    }
+                }
+
+//                exitQueue.setVisibility(!tablecreated? View.GONE : View.VISIBLE);
+
+                if(tablecreated=="true"){
+                    exitQueue.setVisibility( View.GONE);
+                    System.out.println("onResponse---------trueee------------11111111111111-- exit queue btn  --"+tablecreated);
+                }else{
+                    exitQueue.setVisibility( View.VISIBLE);
+                    System.out.println("onResponse-----------false ----   join  queue  btn   -"+tablecreated);
+                }
+
+
+
+
+
+
+
+
+            }
+
+
+
+            @Override
+            public void onFailure(Call<List<QueueModel>> call, Throwable t) {
+                System.out.println("Fuel data retreived Failed");
+            }
+        });
+
+
+
+        System.out.println("tablecreated---------------------11111111111111----"+tablecreated);
+        ///////////////
+
+
+
+
+
+
+
+
 
     }
 
@@ -219,7 +293,7 @@ public class FuelStation extends AppCompatActivity {
                 System.out.println("----------------------Item--------------------"+item[0]);
                 System.out.println("----------------------time--------------------"+time[0]);
 
-                System.out.println("----------------------station namemmmm --------------------"+fuelStation_name);
+
 
 
                 QueueModel queueModel = new QueueModel(time[0], item[0],fuelStation_name);
@@ -246,7 +320,19 @@ public class FuelStation extends AppCompatActivity {
                 System.out.println("----------------------Item--------------------"+item[0]);
                 System.out.println("----------------------time--------------------"+time[0]);
 
-                alertDialog.dismiss();
+
+
+
+
+//                alertDialog.dismiss();
+
+
+                Intent intent = new Intent(FuelStation.this, FuelStation_ExitQueue.class);
+//                intent.putExtra("stationName", "userForStation");
+                startActivity(intent);
+
+
+
             }
         });
         alertDialog.show();

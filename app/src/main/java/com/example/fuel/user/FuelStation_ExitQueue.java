@@ -69,7 +69,7 @@ public class FuelStation_ExitQueue extends AppCompatActivity {
 //        startActivity(intent);
 //
 
-
+     System.out.println("EXIT 1111111111111111111----------------------- ");
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -77,6 +77,7 @@ public class FuelStation_ExitQueue extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         queueInterface = retrofit.create(QueueInterface.class);
+
 
         initView();
 
@@ -99,8 +100,8 @@ public class FuelStation_ExitQueue extends AppCompatActivity {
 
 
 
-    public String getMyData() {
-        return fuelStation_name;
+    public String getMyDataExitQueue() {
+        return "fuelStation_name";
     }
 
     // Initializing the TabLayout view of Fuel Status and Current Vehicle

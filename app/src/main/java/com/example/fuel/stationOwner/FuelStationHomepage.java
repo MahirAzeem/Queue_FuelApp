@@ -209,7 +209,7 @@ public class FuelStationHomepage extends AppCompatActivity {
         adapter = new ViewPagerAdapter(fuelStationHomepage.getSupportFragmentManager(),
                 fuelStationHomepage.getLifecycle());
         adapter.addFragment(new FuelStation_FuelStatus_StationOwner(), "Fuel Status");
-        adapter.addFragment(new FuelStation_CurrentVehicle(), "Current Vehicles");
+        adapter.addFragment(new FuelStation_CurrentVehicle_StationOwner(), "Current Vehicles");
 
 
         viewPager.setAdapter(adapter);

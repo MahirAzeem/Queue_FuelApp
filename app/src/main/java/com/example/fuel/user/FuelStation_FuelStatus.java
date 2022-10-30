@@ -54,9 +54,9 @@ public class FuelStation_FuelStatus extends Fragment {
 
         ListView mListView = (ListView) v.findViewById(R.id.listView);
 
-
-        FuelStation_ExitQueue activity = (FuelStation_ExitQueue) getActivity();
-        String receivedFuelStationName = activity.getMyData();
+//
+//        FuelStation_ExitQueue activity = (FuelStation_ExitQueue) getActivity();
+//        String receivedFuelStationName = activity.getMyData();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://ahmedameer-001-site1.atempurl.com/api/")
@@ -66,11 +66,10 @@ public class FuelStation_FuelStatus extends Fragment {
 
         fuelInterface = retrofit.create(FuelInterface.class);
 
-        String queueStationName = receivedFuelStationName;
+//        String queueStationName = receivedFuelStationName;
+        String queueStationName = "Ahmed";
         Call<List<FuelModel>> call = fuelInterface.getFuel();
-
         call.enqueue(new Callback<List<FuelModel>>() {
-
             @Override
             public void onResponse(Call<List<FuelModel>> call, Response<List<FuelModel>> response) {
                 System.out.println("Fuel data retreived Sucessfully");
