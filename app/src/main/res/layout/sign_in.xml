@@ -50,7 +50,7 @@
                 android:id="@+id/enterEmailField"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="337dp"
-                android:layout_height="54dp"
+                android:layout_height="76dp"
                 android:layout_marginStart="37dp"
                 android:layout_marginTop="50dp"
                 android:layout_marginEnd="37dp"
@@ -58,12 +58,15 @@
                 android:hint="Email"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/colorGrey"
+                app:errorEnabled="true"
                 app:layout_constraintBottom_toTopOf="@+id/enterPasswordField"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/signInHeading">
+                app:layout_constraintTop_toBottomOf="@+id/signInHeading"
+                app:startIconDrawable="@drawable/ic_baseline_email_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editEmailField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -76,7 +79,7 @@
                 android:layout_width="335dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="38dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="38dp"
                 android:elevation="4dp"
                 android:hint="Password"
@@ -84,7 +87,8 @@
                 app:endIconTint="@color/colorGrey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/enterEmailField">
+                app:layout_constraintTop_toBottomOf="@+id/enterEmailField"
+                app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"

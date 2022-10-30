@@ -48,8 +48,8 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/enterUserEmailField"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="337dp"
-                android:layout_height="54dp"
+                android:layout_width="338dp"
+                android:layout_height="73dp"
                 android:layout_marginStart="37dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="37dp"
@@ -57,13 +57,17 @@
                 android:hint="Email"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/colorGrey"
+                app:errorEnabled="true"
                 app:layout_constraintBottom_toTopOf="@+id/enterUserPasswordField"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/signUpHeading"
-                app:layout_constraintVertical_bias="0.19999999">
+                app:layout_constraintVertical_bias="0.19999999"
+                app:placeholderText="eg: john@gmail.com"
+                app:startIconDrawable="@drawable/ic_baseline_email_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/userEmailEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -74,21 +78,27 @@
                 android:id="@+id/enterUserPasswordField"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="337dp"
-                android:layout_height="54dp"
+                android:layout_height="77dp"
                 android:layout_marginStart="37dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="37dp"
                 android:layout_marginBottom="32dp"
                 android:elevation="4dp"
                 android:hint="Password"
+                app:counterEnabled="true"
+                app:counterMaxLength="20"
                 app:endIconMode="password_toggle"
                 app:endIconTint="@color/colorGrey"
+                app:errorEnabled="true"
+                app:helperText="Enter Strong Password"
+                app:helperTextTextColor="#009688"
                 app:layout_constraintBottom_toTopOf="@+id/enterUserDistrict"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/enterUserEmailField">
+                app:layout_constraintTop_toBottomOf="@+id/enterUserEmailField"
+                app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/userPasswordEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -101,7 +111,7 @@
                 android:layout_width="335dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="37dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginEnd="37dp"
                 android:layout_marginBottom="32dp"
                 android:hint="Select District"
@@ -109,7 +119,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/enterUserPasswordField"
-                app:layout_constraintVertical_bias="0.19999999">
+                app:layout_constraintVertical_bias="0.19999999"
+                app:startIconDrawable="@drawable/ic_baseline_location_on_24">
 
                 <AutoCompleteTextView
                     android:id="@+id/UserDistrict"
@@ -123,19 +134,23 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/enterUserPhoneNoField"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="337dp"
-                android:layout_height="54dp"
+                android:layout_width="334dp"
+                android:layout_height="77dp"
                 android:layout_marginStart="37dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="37dp"
                 android:layout_marginBottom="32dp"
                 android:hint="Phone Number"
+                app:counterEnabled="true"
+                app:counterMaxLength="10"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/colorGrey"
                 app:layout_constraintBottom_toTopOf="@+id/enterUserDrivingLicenseNo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/enterUserDistrict">
+                app:layout_constraintTop_toBottomOf="@+id/enterUserDistrict"
+                app:prefixText="+94 "
+                app:startIconDrawable="@drawable/ic_baseline_phone_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -150,14 +165,15 @@
                 android:layout_width="337dp"
                 android:layout_height="54dp"
                 android:layout_marginStart="37dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="37dp"
                 android:hint="Driving License"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/colorGrey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/enterUserPhoneNoField">
+                app:layout_constraintTop_toBottomOf="@+id/enterUserPhoneNoField"
+                app:startIconDrawable="@drawable/ic_baseline_perm_identity_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"

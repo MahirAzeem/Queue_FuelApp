@@ -60,7 +60,8 @@
                 app:layout_constraintBottom_toTopOf="@+id/enterStationEmail"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/StationOwnerSignUnHeading">
+                app:layout_constraintTop_toBottomOf="@+id/StationOwnerSignUnHeading"
+                app:startIconDrawable="@drawable/ic_baseline_local_gas_station_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -71,8 +72,8 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/enterStationEmail"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="337dp"
-                android:layout_height="54dp"
+                android:layout_width="336dp"
+                android:layout_height="75dp"
                 android:layout_marginStart="37dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="37dp"
@@ -80,12 +81,16 @@
                 android:hint="Email"
                 app:endIconMode="clear_text"
                 app:endIconTint="@color/colorGrey"
+                app:errorEnabled="true"
                 app:layout_constraintBottom_toTopOf="@+id/enterStationPassword"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/enterStationName">
+                app:layout_constraintTop_toBottomOf="@+id/enterStationName"
+                app:placeholderText="eg: john@gmail.com"
+                app:startIconDrawable="@drawable/ic_baseline_email_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editStationEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -96,21 +101,23 @@
                 android:id="@+id/enterStationPassword"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="335dp"
-                android:layout_height="60dp"
+                android:layout_height="76dp"
                 android:layout_marginStart="37dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="37dp"
                 android:layout_marginBottom="32dp"
                 android:elevation="4dp"
                 android:hint="Password"
                 app:endIconMode="password_toggle"
                 app:endIconTint="@color/colorGrey"
+                app:errorEnabled="true"
                 app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/enterStationEmail">
+                app:layout_constraintTop_toBottomOf="@+id/enterStationEmail"
+                app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editStationPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -130,7 +137,8 @@
                 app:layout_constraintBottom_toTopOf="@+id/textInputLayout3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/enterStationPassword">
+                app:layout_constraintTop_toBottomOf="@+id/enterStationPassword"
+                app:startIconDrawable="@drawable/ic_baseline_location_on_24">
 
                 <AutoCompleteTextView
                     android:id="@+id/stationLocations"
