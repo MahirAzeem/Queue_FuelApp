@@ -2,6 +2,9 @@ package com.example.fuel.userLogin;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +21,11 @@ import com.example.fuel.DBHelper;
 import com.example.fuel.Login_SignUp_Interface;
 import com.example.fuel.R;
 import com.example.fuel.modelClass.UserModel;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,12 +42,12 @@ public class User_SignUpFragment extends Fragment {
 
 
 
+
 //    Providing value for User District Dropdown
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://ahmedameer-001-site1.atempurl.com/api/")
@@ -55,7 +62,75 @@ public class User_SignUpFragment extends Fragment {
 
         View v =inflater.inflate(R.layout.user_sign_up, null);
 
-        userDistrict = v.findViewById(R.id.UserDistrict);
+//        Email Validation
+        TextInputLayout emailField = v.findViewById(R.id.enterUserEmailField);
+        TextInputEditText editEmail = v.findViewById(R.id.userEmailEdit);
+
+        editEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(Patterns.EMAIL_ADDRESS.matcher(editEmail.getText().toString()).matches()){
+                    emailField.setHelperText("");
+                    emailField.setError("");
+                }else {
+                    emailField.setError("Invalid Email Address");
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
+
+//        Password Validation
+        TextInputLayout passwordField = v.findViewById(R.id.enterUserPasswordField);
+        TextInputEditText editPassword = v.findViewById(R.id.userPasswordEdit);
+
+        editPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String password = charSequence.toString();
+                if(password.length() >= 5) {
+                    Pattern pattern = Pattern.compile("[^a-zA-Z0-9]");
+                    Matcher matcher = pattern.matcher(password);
+                    boolean isPwdContainsSpeChar = matcher.find();
+
+                    if(isPwdContainsSpeChar){
+                        passwordField.setHelperText("Strong Password");
+                        passwordField.setError("");
+                    }else{
+                        passwordField.setHelperText("");
+                        passwordField.setError("Weak Password, Include minimum 1 special character");
+                    }
+                }else {
+                    passwordField.setHelperText("Enter minimum 5 characters");
+                    passwordField.setError("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
+
+                userDistrict = v.findViewById(R.id.UserDistrict);
         adapteruserDistrict = new ArrayAdapter<String>(getActivity(), R.layout.list_item, UserDistrict);
         userDistrict.setAdapter(adapteruserDistrict);
         userDistrict.setThreshold(5);
