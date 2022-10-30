@@ -46,7 +46,7 @@ public class FuelStation_FuelStatus extends Fragment {
 
 
 
-//    Implementing List View for Fuel Status
+    //    Implementing List View for Fuel Status
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class FuelStation_FuelStatus extends Fragment {
         ListView mListView = (ListView) v.findViewById(R.id.listView);
 
 
-        FuelStation activity = (FuelStation) getActivity();
+        FuelStation_ExitQueue activity = (FuelStation_ExitQueue) getActivity();
         String receivedFuelStationName = activity.getMyData();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -65,9 +65,6 @@ public class FuelStation_FuelStatus extends Fragment {
 
 
         fuelInterface = retrofit.create(FuelInterface.class);
-
-
-
 
         String queueStationName = receivedFuelStationName;
         Call<List<FuelModel>> call = fuelInterface.getFuel();
