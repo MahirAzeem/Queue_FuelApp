@@ -46,7 +46,7 @@ public class FuelStation_FuelStatus extends Fragment {
 
 
 
-//    Implementing List View for Fuel Status
+    //    Implementing List View for Fuel Status
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

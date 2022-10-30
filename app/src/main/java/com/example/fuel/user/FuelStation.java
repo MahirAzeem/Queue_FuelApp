@@ -56,7 +56,7 @@ public class FuelStation extends AppCompatActivity {
 
     private QueueInterface queueInterface ;
 
-//    Retrieving and Displaying Fuel Station Name and Fuel Station Location
+    //    Retrieving and Displaying Fuel Station Name and Fuel Station Location
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,7 +104,7 @@ public class FuelStation extends AppCompatActivity {
         return fuelStation_name;
     }
 
-// Initializing the TabLayout view of Fuel Status and Current Vehicle
+    // Initializing the TabLayout view of Fuel Status and Current Vehicle
     private void initView() {
         setupViewPager(binding.viewPager);
         new TabLayoutMediator(binding.tabLayout, binding.viewPager,
@@ -121,7 +121,7 @@ public class FuelStation extends AppCompatActivity {
         }
     }
 
-//    Connecting Fuel Status and Current Vehicle fragments to the adapter
+    //    Connecting Fuel Status and Current Vehicle fragments to the adapter
     private void setupViewPager(ViewPager2 viewPager) {
         adapter = new ViewPagerAdapter(fuelStation.getSupportFragmentManager(),
                 fuelStation.getLifecycle());

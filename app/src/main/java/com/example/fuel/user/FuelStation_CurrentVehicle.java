@@ -52,22 +52,24 @@ public class FuelStation_CurrentVehicle extends Fragment {
         String  fuelStation_name = "nulllllll";
 
 
-//        FuelStationModel  FMM =  new FuelStationModel();
-//        System.out.println("  FMM.getFuelStation_name();"+  FMM.getFuelStation_name());
-//
-//        Bundle extras = getActivity().getIntent().getExtras();
-//        if (extras != null) {
-//            fuelStation_name = extras.getString("fuelStation_name");
-//
-//        }
-//
-//        System.out.println("yyyyyyyyyyyyyyyyyyyyyyyy"+fuelStation_name);
+        FuelStationModel  FMM =  new FuelStationModel();
+        System.out.println("  FMM.getFuelStation_name();"+  FMM.getFuelStation_name());
+
+        Bundle extras = getActivity().getIntent().getExtras();
+        if (extras != null) {
+            fuelStation_name = extras.getString("fuelStation_name");
+
+        }
+
+        System.out.println("yyyyyyyyyyyyyyyyyyyyyyyy"+fuelStation_name);
 
 
 
 
-//        FuelStation activity = (FuelStation) getActivity();
-//        String receivedFuelStationName = activity.getMyData();
+        FuelStation activity = (FuelStation) getActivity();
+        String receivedFuelStationName = activity.getMyData();
+
+
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -81,8 +83,8 @@ public class FuelStation_CurrentVehicle extends Fragment {
 
 
 
-//        String queueStationName = receivedFuelStationName;
-        String queueStationName = "Ahmed";
+        String queueStationName = receivedFuelStationName;
+//        String queueStationName = "Ahmed";
         Call<List<QueueModel>> call = queueInterface.getQueue();
 
         call.enqueue(new Callback<List<QueueModel>>() {
