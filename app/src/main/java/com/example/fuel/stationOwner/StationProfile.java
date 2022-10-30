@@ -36,7 +36,7 @@ public class StationProfile extends AppCompatActivity {
     private QueueInterface queueInterface;
     ChipNavigationBar stationOwnerProfile;
     String stationName;
-
+    String  userForStation = "";
     List<StationModel> stationModelList;
     List<QueueModel> queueModelList;
 
@@ -58,6 +58,7 @@ public class StationProfile extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             stationName = extras.getString("stationName");
+            userForStation = extras.getString("userForStation");
         }
         System.out.println("stationName profile ----------------------- :"+stationName);
 
@@ -140,7 +141,8 @@ public class StationProfile extends AppCompatActivity {
                     case R.id.homepage:
 
                         Intent homepage = new Intent(StationProfile.this, FuelStationHomepage.class);
-                        homepage.putExtra("stationName", stationName);
+
+                        homepage.putExtra("stationName", userForStation);
                         startActivity(homepage);
 
 

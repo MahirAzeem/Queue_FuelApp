@@ -1,4 +1,4 @@
-package com.example.fuel.user;
+package com.example.fuel.stationOwner;
 
 import android.os.Bundle;
 
@@ -28,7 +28,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 //    Implementing List View for to identify the count of Vehicle Types
-public class FuelStation_CurrentVehicle extends Fragment {
+public class FuelStation_CurrentVehicle_StationOwner extends Fragment {
 
 
     private StationInterface stationInterface;
@@ -52,26 +52,22 @@ public class FuelStation_CurrentVehicle extends Fragment {
         String  fuelStation_name = "nulllllll";
 
 
-        FuelStationModel  FMM =  new FuelStationModel();
-        System.out.println("  FMM.getFuelStation_name();"+  FMM.getFuelStation_name());
-
-        Bundle extras = getActivity().getIntent().getExtras();
-        if (extras != null) {
-            fuelStation_name = extras.getString("fuelStation_name");
-
-        }
-
-        System.out.println("yyyyyyyyyyyyyyyyyyyyyyyy"+fuelStation_name);
-
-
+//        FuelStationModel  FMM =  new FuelStationModel();
+//        System.out.println("  FMM.getFuelStation_name();"+  FMM.getFuelStation_name());
+//
+//        Bundle extras = getActivity().getIntent().getExtras();
+//        if (extras != null) {
+//            fuelStation_name = extras.getString("fuelStation_name");
+//
+//        }
+//
+//        System.out.println("yyyyyyyyyyyyyyyyyyyyyyyy"+fuelStation_name);
 
 
-//        FuelStation_ExitQueue activityExitQueue = (FuelStation_ExitQueue) getActivity();
-//        String receivedFuelStationNameExitQueue = activityExitQueue.getMyDataExitQueue();
 
 
-        FuelStation activityJoinQueue = (FuelStation) getActivity();
-        String receivedFuelStationNameJoinQueue = activityJoinQueue.getMyData();
+//        FuelStation activity = (FuelStation) getActivity();
+//        String receivedFuelStationName = activity.getMyData();
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -85,8 +81,8 @@ public class FuelStation_CurrentVehicle extends Fragment {
 
 
 
-        String queueStationName = receivedFuelStationNameJoinQueue;
-//        String queueStationName = "Ahmed";
+//        String queueStationName = receivedFuelStationName;
+        String queueStationName = "Ahmed";
         Call<List<QueueModel>> call = queueInterface.getQueue();
 
         call.enqueue(new Callback<List<QueueModel>>() {
@@ -128,10 +124,6 @@ public class FuelStation_CurrentVehicle extends Fragment {
                 CurrentVehicleAdapter adapter = new CurrentVehicleAdapter(getActivity(), R.layout.adapter_view_layout_currentvehicle, vehicleTypes);
                 mListView.setAdapter(adapter);
 
-
-
-
-
             }
 
             @Override
@@ -139,13 +131,6 @@ public class FuelStation_CurrentVehicle extends Fragment {
                 System.out.println("Queue  Retreived Failed ");
             }
         });
-
-
-
-
-
-
-
 
         return v;
     }

@@ -80,7 +80,7 @@ public class FuelStationHomepage extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            userForStation = extras.getString("userForStation");
+            userForStation = extras.getString("stationName");
         }
         System.out.println("userForStation id : "+userForStation);
 
@@ -155,6 +155,7 @@ public class FuelStationHomepage extends AppCompatActivity {
                     case R.id.profile:
                         Intent profile = new Intent(FuelStationHomepage.this, StationProfile.class);
                         profile.putExtra("stationName", dbStationName);
+                        profile.putExtra("userForStation", userForStation);
                         startActivity(profile);
                         break;
                     case R.id.logout:
@@ -208,7 +209,7 @@ public class FuelStationHomepage extends AppCompatActivity {
         adapter = new ViewPagerAdapter(fuelStationHomepage.getSupportFragmentManager(),
                 fuelStationHomepage.getLifecycle());
         adapter.addFragment(new FuelStation_FuelStatus_StationOwner(), "Fuel Status");
-        adapter.addFragment(new FuelStation_CurrentVehicle(), "Current Vehicles");
+        adapter.addFragment(new FuelStation_CurrentVehicle_StationOwner(), "Current Vehicles");
 
 
         viewPager.setAdapter(adapter);
