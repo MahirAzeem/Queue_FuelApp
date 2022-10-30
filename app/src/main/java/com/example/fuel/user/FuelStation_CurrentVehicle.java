@@ -66,9 +66,6 @@ public class FuelStation_CurrentVehicle extends Fragment {
 
 
 
-//        FuelStation_ExitQueue activityExitQueue = (FuelStation_ExitQueue) getActivity();
-//        String receivedFuelStationNameExitQueue = activityExitQueue.getMyDataExitQueue();
-
 
         FuelStation activityJoinQueue = (FuelStation) getActivity();
         String receivedFuelStationNameJoinQueue = activityJoinQueue.getMyData();
@@ -86,6 +83,7 @@ public class FuelStation_CurrentVehicle extends Fragment {
 
 
         String queueStationName = receivedFuelStationNameJoinQueue;
+//        String queueStationName = "john station";
 //        String queueStationName = "Ahmed";
         Call<List<QueueModel>> call = queueInterface.getQueue();
 

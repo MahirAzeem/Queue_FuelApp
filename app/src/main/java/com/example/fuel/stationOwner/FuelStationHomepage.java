@@ -121,6 +121,11 @@ public class FuelStationHomepage extends AppCompatActivity {
 //                getMyData111(dbStationName);
 
                 testName=dbStationName;
+
+
+                System.out.println("-------inside ------------ sssssssssaaaaaaaaaaaaa------------------------------- : "+testName);
+
+
             }
             @Override
             public void onFailure(Call<List<StationModel>> call, Throwable t) {
@@ -130,8 +135,7 @@ public class FuelStationHomepage extends AppCompatActivity {
                 System.out.println("------------------- dbStationName : "+dbStationLocation);
                 System.out.println("------------------- dbStationName : "+dbStationBrand);
 
-        System.out.println("------------------- sssssssssssssssssssssssssssssaaaaaaaaaaaaa------------------------------------------------------- : "+testName);
-        System.out.println("------------------- sssssssssssssssssssssssssssssaaaaaaaaaaaaa-----string-------------------------------------------------- : "+stationName.getText().toString());
+        System.out.println("-------outside  ------------ sssssssssaaaaaaaaaaaaa------------------------------- : "+testName);
 
 //        // calling this activity's function to
 //        // use ActionBar utility methods
@@ -181,9 +185,14 @@ public class FuelStationHomepage extends AppCompatActivity {
 //    }
 
 
-    public String getMyData () {
+//    public String getMyData () {
+//
+//        return TESTING_DATAng;
+//    }
 
-        return TESTING_DATAng;
+    public String getAdminData () {
+
+        return "test station";
     }
 
 

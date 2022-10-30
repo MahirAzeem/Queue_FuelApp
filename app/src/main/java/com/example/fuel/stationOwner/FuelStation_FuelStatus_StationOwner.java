@@ -75,7 +75,7 @@ public class FuelStation_FuelStatus_StationOwner extends Fragment {
 
 
         FuelStationHomepage activity = (FuelStationHomepage) getActivity();
-        String receivedStationName = activity.getMyData();
+        String receivedStationName = activity.getAdminData();
 
 
 
@@ -116,7 +116,7 @@ public class FuelStation_FuelStatus_StationOwner extends Fragment {
 
                 /////////
                 //Create the Fuel Types and their availability
-                FuelStatusModel petrol92 = new FuelStatusModel("Petrol 92", ispetrolAvailable, "1");
+                FuelStatusModel petrol92 = new FuelStatusModel("Petrol 92", receivedStationName, "1");
                 FuelStatusModel petrol95 = new FuelStatusModel("Petrol 95", issuperPetrolAvailable, "1");
                 FuelStatusModel superDiesel = new FuelStatusModel("Super Diesel", isdieselAvailable, "1");
                 FuelStatusModel diesel = new FuelStatusModel("Diesel", issuperDieselAvailable, "1");
