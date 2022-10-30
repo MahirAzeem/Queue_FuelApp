@@ -22,6 +22,16 @@ public class FuelModel {
 
     }
 
+    //update fuel by  station constructor
+    public FuelModel(String petrol, String superPetrol, String diesel, String superDiesel ) {
+        this.petrol = petrol;
+        this.superPetrol = superPetrol;
+        this.diesel = diesel;
+        this.superDiesel = superDiesel;
+
+
+    }
+
     public String getId() {
         return id;
     }

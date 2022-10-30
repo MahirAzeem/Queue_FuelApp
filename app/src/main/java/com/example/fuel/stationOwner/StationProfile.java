@@ -17,6 +17,8 @@ import com.example.fuel.modelClass.StationModel;
 import com.example.fuel.modelClass.UserModel;
 import com.example.fuel.user.FuelStation;
 import com.example.fuel.user.Homepage;
+import com.example.fuel.user.UserProfile;
+import com.google.android.material.textfield.TextInputLayout;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 import java.util.List;
@@ -33,16 +35,11 @@ public class StationProfile extends AppCompatActivity {
     private StationInterface stationInterface;
     private QueueInterface queueInterface;
     ChipNavigationBar stationOwnerProfile;
-
+    String stationName;
 
     List<StationModel> stationModelList;
     List<QueueModel> queueModelList;
 
-
-    int bikeCount = 0;
-    int threeWheelCount = 0;
-    int heavyVehicleCount = 0;
-    int lightVehicleCount = 0;
 
 
 
@@ -57,6 +54,21 @@ public class StationProfile extends AppCompatActivity {
         stationOwnerProfile.setItemSelected(R.id.profile, true);
 
 
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            stationName = extras.getString("stationName");
+        }
+        System.out.println("stationName profile ----------------------- :"+stationName);
+
+
+
+            TextInputLayout stationNameField = findViewById(R.id.stationNameField);
+
+        stationNameField.setHint(stationName);
+
+
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://ahmedameer-001-site1.atempurl.com/api/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -67,49 +79,6 @@ public class StationProfile extends AppCompatActivity {
 
         System.out.println("inside   station profile ---------------------------------");
 
-
-//        String queueStationName = "john station";
-//        Call<List<QueueModel>> call = queueInterface.getQueue();
-//        System.out.println("inside 1111111111111----------------------");
-//        call.enqueue(new Callback<List<QueueModel>>() {
-//
-//            @Override
-//            public void onResponse(Call<List<QueueModel>> call, Response<List<QueueModel>> response) {
-//                System.out.println("inside 2222222222222----------------------");
-//                queueModelList = response.body();
-//                System.out.println("inside 4444444444----------------------");
-//                System.out.println(response.body().get(0).getVehicleType());
-//                for(int i =0 ; i<queueModelList.size(); i++){
-//
-//                    if(queueModelList.get(i).getStationName().equals(queueStationName)){
-//                        if(queueModelList.get(i).getVehicleType().equals("Bike")) {
-//                            bikeCount = bikeCount +1;
-//                        }else   if(queueModelList.get(i).getVehicleType().equals("Light Vehicle")) {
-//                            lightVehicleCount = lightVehicleCount +1;
-//                        }else   if(queueModelList.get(i).getVehicleType().equals("Heavy Vehicle")) {
-//                            heavyVehicleCount = heavyVehicleCount +1;
-//                        }else   if(queueModelList.get(i).getVehicleType().equals("Three Wheel")) {
-//                            threeWheelCount = threeWheelCount +1;
-//                        }
-//                    }
-//                }
-//
-//                System.out.println("total vehicle  in station : " + queueStationName);
-//                System.out.println("---------------------------------");
-//                System.out.println("bikeCount : " + bikeCount);
-//                System.out.println("threeWheelCount : " + threeWheelCount);
-//                System.out.println("heavyVehicleCount : " + heavyVehicleCount);
-//                System.out.println("lightVehicleCount : " + lightVehicleCount);
-//                System.out.println("---------------------------------");
-//
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<QueueModel>> call, Throwable t) {
-//                System.out.println("failed .......  ---------------------");
-//            }
-//        });
 
 
 
@@ -169,8 +138,13 @@ public class StationProfile extends AppCompatActivity {
 
                 switch (id) {
                     case R.id.homepage:
+
                         Intent homepage = new Intent(StationProfile.this, FuelStationHomepage.class);
+                        homepage.putExtra("stationName", stationName);
                         startActivity(homepage);
+
+
+
                         break;
                     case R.id.logout:
                         Intent login = new Intent(StationProfile.this, Login_SignUp_Interface.class);

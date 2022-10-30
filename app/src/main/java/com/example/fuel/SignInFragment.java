@@ -119,7 +119,7 @@ public class SignInFragment extends Fragment {
                                     System.out.println("user----------------------- "+isUserRole);
 //
                                     Intent intent = new Intent(getActivity(), Homepage.class);
-                                    intent.putExtra("email", email);
+                                    intent.putExtra("userEmail", email);
                                     startActivity(intent);
 
                                     ////

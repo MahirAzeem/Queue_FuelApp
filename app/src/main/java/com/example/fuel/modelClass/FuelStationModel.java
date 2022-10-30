@@ -18,7 +18,11 @@ public class FuelStationModel {
         this.fuelStation_image = fuelStation_image;
     }
 
-//Implementation of Setter and Getters
+    public FuelStationModel() {
+
+    }
+
+    //Implementation of Setter and Getters
     public String getFuelStation_name() {
         return fuelStation_name;
     }
