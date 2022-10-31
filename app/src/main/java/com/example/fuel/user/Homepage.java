@@ -60,7 +60,6 @@ public class Homepage extends AppCompatActivity implements RecyclerViewInterface
         Context context = new Homepage();
         searchView = findViewById(R.id.searchView);
         searchView.clearFocus();
-
         recyclerView = findViewById(R.id.idFuelStation);
 
 

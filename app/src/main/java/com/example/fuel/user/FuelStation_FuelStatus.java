@@ -43,6 +43,11 @@ public class FuelStation_FuelStatus extends Fragment {
     String issuperDieselAvailable = "";
 
 
+    String petrolTime = "";
+    String superPetrolTime = "";
+    String dieselTime = "";
+    String superDieselTime = "";
+
 
 
 
@@ -82,6 +87,11 @@ public class FuelStation_FuelStatus extends Fragment {
                         issuperPetrolAvailable = fuelModelList.get(i).getSuperPetrol();
                         isdieselAvailable = fuelModelList.get(i).getDiesel();
                         issuperDieselAvailable = fuelModelList.get(i).getSuperDiesel();
+
+                        petrolTime = fuelModelList.get(i).getPetrolTime();
+                        superPetrolTime = fuelModelList.get(i).getSuperPetrolTime();
+                        dieselTime = fuelModelList.get(i).getDieselTime();
+                        superDieselTime = fuelModelList.get(i).getSuperDieselTime();
                     }
                     if(ispetrolAvailable.isEmpty()){
                         ispetrolAvailable = "NO STATION";
@@ -89,10 +99,12 @@ public class FuelStation_FuelStatus extends Fragment {
                 }
 
                 //Create the Fuel Types and their availability
-                FuelStatusModel petrol92 = new FuelStatusModel("Petrol 92", ispetrolAvailable, "1");
-                FuelStatusModel petrol95 = new FuelStatusModel("Petrol 95", issuperPetrolAvailable, "1");
-                FuelStatusModel superDiesel = new FuelStatusModel("Super Diesel",issuperDieselAvailable , "1");
-                FuelStatusModel diesel = new FuelStatusModel("Diesel", isdieselAvailable, "1");
+         
+
+                FuelStatusModel petrol92 = new FuelStatusModel("Petrol 92", ispetrolAvailable, petrolTime);
+                FuelStatusModel petrol95 = new FuelStatusModel("Petrol 95", issuperPetrolAvailable, superPetrolTime);
+                FuelStatusModel superDiesel = new FuelStatusModel("Super Diesel", isdieselAvailable, dieselTime);
+                FuelStatusModel diesel = new FuelStatusModel("Diesel", issuperDieselAvailable, superDieselTime);
 
                 //Add Fuel types to an ArrayList
                 ArrayList<FuelStatusModel> fuelTypes = new ArrayList<>();

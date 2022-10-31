@@ -58,7 +58,7 @@ public class FuelStation extends AppCompatActivity {
 
     String queueID= "";
     Boolean isJoinedQueue=false;
-String emailfromHome;
+    String emailfromHome;
     String tablecreated ;
     Button exitQueue;
     private QueueInterface queueInterface ;
@@ -69,23 +69,7 @@ String emailfromHome;
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_fuel_station);
         fuelStation = this;
-
-         exitQueue = findViewById(R.id.exitQueue);
-
-
-
-//        if(exitQueue){
-//
-//        }
-
-//        System.out.println("admin----------------------- ");
-//        Intent intent = new Intent(FuelStation.this, FuelStation_CurrentVehicle.class);
-//        intent.putExtra("fuelStation_name", fuelStation_name);
-//        startActivity(intent);
-//
-
-
-
+        exitQueue = findViewById(R.id.exitQueue);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://ahmedameer-001-site1.atempurl.com/api/")
@@ -95,40 +79,22 @@ String emailfromHome;
 
         initView();
 
-
-
-
-        //      Retrieving Fuel Station name and location
+       //      Retrieving Fuel Station name and location
         myCustomMessage = (TextView) findViewById(R.id.myCustommessage);
 
         fuelStation_name = "Name not available";
         String fuelStation_location = "Location not available";
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             fuelStation_name = extras.getString("fuelStation_name");
-            fuelStation_location = extras.getString("emailfromHome");
+            fuelStation_location = extras.getString("fuelStation_location");
             fuelStation_name = extras.getString("fuelStation_name");
             emailfromHome = extras.getString("emailfromHome");
-
-
         }
 
         myCustomMessage.setText(fuelStation_name + "\n" + fuelStation_location);
 
-
-
-        System.out.println("is joined ahmeddddddddddd---------------"+isJoinedQueue);
-        if(isJoinedQueue.equals(true)){
-            System.out.println("is joined ahmeddddddddddd-------true--------"+isJoinedQueue);
-        }else{
-            System.out.println("is joined ahmeddddddddddd--------false-------"+isJoinedQueue);
-        }
-
-
-        ////////////////
         String queueStationName = emailfromHome;
-
         Call<List<QueueModel>> call = queueInterface.getQueue();
         call.enqueue(new Callback<List<QueueModel>>() {
             @Override
@@ -137,50 +103,19 @@ String emailfromHome;
                 queueStationModelList = response.body();
                 for(int i=0;i<queueStationModelList.size();i++){
                     if(   queueStationModelList.get(i).getEmail().equals(queueStationName)){
-
-
                         tablecreated="true";
-                        System.out.println("inside trueee-- ----"+tablecreated);
+                        exitQueue.setVisibility( View.VISIBLE);
                     }else{
                         tablecreated="false";
-                        System.out.println("inside false-- ----"+tablecreated);
+                        exitQueue.setVisibility( View.GONE);
                     }
                 }
-
-//                exitQueue.setVisibility(!tablecreated? View.GONE : View.VISIBLE);
-
-                if(tablecreated=="true"){
-                    exitQueue.setVisibility( View.VISIBLE);
-
-                    System.out.println("onResponse---------trueee------------11111111111111-- exit queue btn  --"+tablecreated);
-                }else{
-                    exitQueue.setVisibility( View.GONE);
-                    System.out.println("onResponse-----------false ----   join  queue  btn   -"+tablecreated);
-                }
-
-
             }
-
-
-
             @Override
             public void onFailure(Call<List<QueueModel>> call, Throwable t) {
                 System.out.println("Fuel data retreived Failed");
             }
         });
-
-
-
-        System.out.println("tablecreated---------------------11111111111111----"+tablecreated);
-        ///////////////
-
-
-
-
-
-
-
-
 
     }
 
@@ -189,7 +124,6 @@ String emailfromHome;
     public String getMyData() {
         return fuelStation_name;
     }
-
     // Initializing the TabLayout view of Fuel Status and Current Vehicle
     private void initView() {
         setupViewPager(binding.viewPager);
@@ -213,7 +147,6 @@ String emailfromHome;
                 fuelStation.getLifecycle());
         adapter.addFragment(new FuelStation_FuelStatus(), "Fuel Status");
         adapter.addFragment(new FuelStation_CurrentVehicle(), "Current Vehicles");
-
 
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(1);
@@ -251,7 +184,7 @@ String emailfromHome;
     //    Implementation of Join Queue Dialog Box
     public void btn_showMessage(View view) {
 
-        //        Values for Vehicle Type Dropdown in Join Queue Dialog
+        //  Values for Vehicle Type Dropdown in Join Queue Dialog
         String[] vehicleType = {"Light Vehicle", "Heavy Vehicle", "Bike", "Three Wheel"};
         ArrayAdapter<String> adapterVehicleType;
 
@@ -318,29 +251,8 @@ String emailfromHome;
                     }
                 });
 
-
-
-
-
-
                 Toast.makeText(FuelStation.this, "Item: " + item[0] + " Time: " + time[0], Toast.LENGTH_SHORT).show();
-
-                System.out.println("----------------------Item--------------------"+item[0]);
-                System.out.println("----------------------time--------------------"+time[0]);
-
-
-
-
-
                 alertDialog.dismiss();
-
-
-//                Intent intent = new Intent(FuelStation.this, FuelStation_ExitQueue.class);
-//                intent.putExtra("stationName", "userForStation");
-//                startActivity(intent);
-
-
-
             }
         });
         alertDialog.show();
@@ -402,31 +314,18 @@ String emailfromHome;
 
                 Toast.makeText(FuelStation.this, "Item: " + item[0] + " Time: " + time[0], Toast.LENGTH_SHORT).show();
 
-                System.out.println("----------------------Item--------------------"+item[0]);
-                System.out.println("----------------------time--------------------"+time[0]);
-
-
-
-
                 QueueModel queueModel = new QueueModel(time[0], item[0],"ddd");
                 Call<QueueModel> userModelcall = queueInterface.updateQueue(queueID,queueModel);
                 userModelcall.enqueue(new Callback<QueueModel>() {
                     @Override
                     public void onResponse(Call<QueueModel> call, Response<QueueModel> response) {
-                        System.out.println("----------------------queueID--------------------"+queueID);
-                        System.out.println(" Queue Updated Successfully");
-                        exitQueue.setVisibility( View.GONE);
+                         exitQueue.setVisibility( View.GONE);
                     }
                     @Override
                     public void onFailure(Call<QueueModel> call, Throwable t) {
                         System.out.println(" Queue Updated Failed");
                     }
                 });
-
-
-
-
-
                 alertDialog.dismiss();
             }
         });
@@ -434,14 +333,5 @@ String emailfromHome;
         alertDialog.show();
 
     }
-
-
-
-
-
-
-
-
-
 
 }

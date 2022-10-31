@@ -52,6 +52,12 @@ public class FuelStation_FuelStatus_StationOwner extends Fragment {
     String isdieselAvailable = "";
     String issuperDieselAvailable = "";
 
+    String petrolTime = "";
+    String superPetrolTime = "";
+    String dieselTime = "";
+    String superDieselTime = "";
+
+
 
 
     //    Implementing List View for Fuel Status
@@ -92,7 +98,7 @@ public class FuelStation_FuelStatus_StationOwner extends Fragment {
 
 
 
-        String queueStationName = "john station";
+        String queueStationName = "admin";
         Call<List<FuelModel>> call = fuelInterface.getFuel();
         System.out.println("inside 1111111111111----------------------");
         call.enqueue(new Callback<List<FuelModel>>() {
@@ -108,6 +114,15 @@ public class FuelStation_FuelStatus_StationOwner extends Fragment {
                         issuperPetrolAvailable = fuelModelList.get(i).getSuperPetrol();
                         isdieselAvailable = fuelModelList.get(i).getDiesel();
                         issuperDieselAvailable = fuelModelList.get(i).getSuperDiesel();
+
+                        petrolTime = fuelModelList.get(i).getPetrolTime();
+                        superPetrolTime = fuelModelList.get(i).getSuperPetrolTime();
+                        dieselTime = fuelModelList.get(i).getDieselTime();
+                        superDieselTime = fuelModelList.get(i).getSuperDieselTime();
+
+
+
+
                     }
                     if(ispetrolAvailable.isEmpty()){
                         ispetrolAvailable = "NO STATION";
@@ -116,10 +131,10 @@ public class FuelStation_FuelStatus_StationOwner extends Fragment {
 
                 /////////
                 //Create the Fuel Types and their availability
-                FuelStatusModel petrol92 = new FuelStatusModel("Petrol 92", receivedStationName, "1");
-                FuelStatusModel petrol95 = new FuelStatusModel("Petrol 95", issuperPetrolAvailable, "1");
-                FuelStatusModel superDiesel = new FuelStatusModel("Super Diesel", isdieselAvailable, "1");
-                FuelStatusModel diesel = new FuelStatusModel("Diesel", issuperDieselAvailable, "1");
+                FuelStatusModel petrol92 = new FuelStatusModel("Petrol 92", receivedStationName, petrolTime);
+                FuelStatusModel petrol95 = new FuelStatusModel("Petrol 95", issuperPetrolAvailable, superPetrolTime);
+                FuelStatusModel superDiesel = new FuelStatusModel("Super Diesel", isdieselAvailable, dieselTime);
+                FuelStatusModel diesel = new FuelStatusModel("Diesel", issuperDieselAvailable, superDieselTime);
 
                 //Add Fuel types to an ArrayList
 
@@ -197,22 +212,6 @@ public class FuelStation_FuelStatus_StationOwner extends Fragment {
 
 
 
-                                FuelModel post = new FuelModel("test no","tost yes","yes","yes");
-                                Call<FuelModel> call = fuelInterface.updateFuel(queueStationName,post);
-                                call.enqueue(new Callback<FuelModel>() {
-                                    @Override
-                                    public void onResponse(Call<FuelModel> call, Response<FuelModel> response) {
-                                        System.out.println("fuel updated sucessfully");
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<FuelModel> call, Throwable t) {
-                                        System.out.println("fuel updated failed");
-                                    }
-                                });
-
-
-
 
 
 
@@ -230,6 +229,25 @@ public class FuelStation_FuelStatus_StationOwner extends Fragment {
                                     Toast.makeText(getActivity(), "Super Diesel: " + time[0], Toast.LENGTH_SHORT).show();
                                     diesel.setFuelStatusChangeTime(time[0]);
                                 }
+
+
+
+
+
+                                FuelModel post = new FuelModel("No","10","superPetrol","12","dieselTime","12","superDiesel","12",queueStationName);
+                                Call<FuelModel> call = fuelInterface.updateFuel(queueStationName,post);
+                                call.enqueue(new Callback<FuelModel>() {
+                                    @Override
+                                    public void onResponse(Call<FuelModel> call, Response<FuelModel> response) {
+                                        System.out.println("fuel updated sucessfully");
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<FuelModel> call, Throwable t) {
+                                        System.out.println("fuel updated failed");
+                                    }
+                                });
+
 
 
 
