@@ -233,8 +233,18 @@ public class FuelStation_FuelStatus_StationOwner extends Fragment {
 
 
 
+                                 String petrol="";
+                                 String petrolTime="";
+                                 String superPetrol="Yes";
+                                 String superPetrolTime="10";
+                                 String diesel="";
+                                 String dieselTime="";
+                                 String superDiesel="";
+                                 String superDieselTime="";
+                                 String stationName=queueStationName;
 
-                                FuelModel post = new FuelModel("No","10","superPetrol","12","dieselTime","12","superDiesel","12",queueStationName);
+
+                                FuelModel post = new FuelModel(petrol,petrolTime,superPetrol,superPetrolTime,diesel,dieselTime,superDiesel,superDieselTime,stationName);
                                 Call<FuelModel> call = fuelInterface.updateFuel(queueStationName,post);
                                 call.enqueue(new Callback<FuelModel>() {
                                     @Override
