@@ -2,6 +2,9 @@ package com.example.fuel;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +21,7 @@ import com.example.fuel.modelClass.UserModel;
 import com.example.fuel.stationOwner.FuelStationHomepage;
 import com.example.fuel.user.FuelStation;
 import com.example.fuel.user.Homepage;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.List;
@@ -60,6 +64,33 @@ public class SignInFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View v =inflater.inflate(R.layout.sign_in, null);
+
+        //        Email Validation
+        TextInputLayout emailField = v.findViewById(R.id.enterEmailField);
+        TextInputEditText editEmail = v.findViewById(R.id.editEmailField);
+
+        editEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(Patterns.EMAIL_ADDRESS.matcher(editEmail.getText().toString()).matches()){
+                    emailField.setHelperText("");
+                    emailField.setError("");
+                }else {
+                    emailField.setError("Invalid Email Address");
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         TextInputLayout emailLogin = v.findViewById(R.id.enterEmailField);
         TextInputLayout passwordLogin = v.findViewById(R.id.enterPasswordField);
