@@ -56,11 +56,11 @@ public class FuelStation extends AppCompatActivity {
     String fuelStation_name;
     List<QueueModel> queueStationModelList;
 
-
+    String queueID= "";
     Boolean isJoinedQueue=false;
-
+String emailfromHome;
     String tablecreated ;
-
+    Button exitQueue;
     private QueueInterface queueInterface ;
 
     //    Retrieving and Displaying Fuel Station Name and Fuel Station Location
@@ -70,7 +70,7 @@ public class FuelStation extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_fuel_station);
         fuelStation = this;
 
-        Button exitQueue = findViewById(R.id.exitQueue);
+         exitQueue = findViewById(R.id.exitQueue);
 
 
 
@@ -107,7 +107,11 @@ public class FuelStation extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             fuelStation_name = extras.getString("fuelStation_name");
-            fuelStation_location = extras.getString("fuelStation_location");
+            fuelStation_location = extras.getString("emailfromHome");
+            fuelStation_name = extras.getString("fuelStation_name");
+            emailfromHome = extras.getString("emailfromHome");
+
+
         }
 
         myCustomMessage.setText(fuelStation_name + "\n" + fuelStation_location);
@@ -123,41 +127,36 @@ public class FuelStation extends AppCompatActivity {
 
 
         ////////////////
-        String queueStationName = fuelStation_name;
+        String queueStationName = emailfromHome;
 
         Call<List<QueueModel>> call = queueInterface.getQueue();
         call.enqueue(new Callback<List<QueueModel>>() {
             @Override
             public void onResponse(Call<List<QueueModel>> call, Response<List<QueueModel>> response) {
-                System.out.println("Fuel data retreived Sucessfully"+fuelStation_name);
+                System.out.println("Fuel data retreived Sucessfully"+queueStationName);
                 queueStationModelList = response.body();
                 for(int i=0;i<queueStationModelList.size();i++){
-                    if(   queueStationModelList.get(i).getStationName().equals(queueStationName)){
+                    if(   queueStationModelList.get(i).getEmail().equals(queueStationName)){
 
 
                         tablecreated="true";
-
+                        System.out.println("inside trueee-- ----"+tablecreated);
                     }else{
                         tablecreated="false";
-
+                        System.out.println("inside false-- ----"+tablecreated);
                     }
                 }
 
 //                exitQueue.setVisibility(!tablecreated? View.GONE : View.VISIBLE);
 
                 if(tablecreated=="true"){
-                    exitQueue.setVisibility( View.GONE);
+                    exitQueue.setVisibility( View.VISIBLE);
+
                     System.out.println("onResponse---------trueee------------11111111111111-- exit queue btn  --"+tablecreated);
                 }else{
-                    exitQueue.setVisibility( View.VISIBLE);
+                    exitQueue.setVisibility( View.GONE);
                     System.out.println("onResponse-----------false ----   join  queue  btn   -"+tablecreated);
                 }
-
-
-
-
-
-
 
 
             }
@@ -302,20 +301,16 @@ public class FuelStation extends AppCompatActivity {
                 time[0] = dtf.format(now);
 
                 //inserting join queue details to the database
-
-                System.out.println("----------------------Item--------------------"+item[0]);
-                System.out.println("----------------------time--------------------"+time[0]);
-
-
-
-
-                QueueModel queueModel = new QueueModel(time[0], item[0],fuelStation_name);
+                QueueModel queueModel = new QueueModel(emailfromHome,time[0],"joined", item[0],fuelStation_name);
                 Call<QueueModel> userModelcall = queueInterface.createQueue(queueModel);
                 userModelcall.enqueue(new Callback<QueueModel>() {
                     @Override
                     public void onResponse(Call<QueueModel> call, Response<QueueModel> response) {
                         System.out.println(" Queue Created Successfully");
                         isJoinedQueue=true;
+                        tablecreated="true";
+                        queueID = response.body().getId();
+                        exitQueue.setVisibility( View.VISIBLE);
                     }
                     @Override
                     public void onFailure(Call<QueueModel> call, Throwable t) {
@@ -411,15 +406,16 @@ public class FuelStation extends AppCompatActivity {
                 System.out.println("----------------------time--------------------"+time[0]);
 
 
-                String queueID= "635cd550387c133270c94a4f";
 
-                QueueModel queueModel = new QueueModel(queueID,time[0], item[0],"ddd");
+
+                QueueModel queueModel = new QueueModel(time[0], item[0],"ddd");
                 Call<QueueModel> userModelcall = queueInterface.updateQueue(queueID,queueModel);
                 userModelcall.enqueue(new Callback<QueueModel>() {
                     @Override
                     public void onResponse(Call<QueueModel> call, Response<QueueModel> response) {
+                        System.out.println("----------------------queueID--------------------"+queueID);
                         System.out.println(" Queue Updated Successfully");
-
+                        exitQueue.setVisibility( View.GONE);
                     }
                     @Override
                     public void onFailure(Call<QueueModel> call, Throwable t) {

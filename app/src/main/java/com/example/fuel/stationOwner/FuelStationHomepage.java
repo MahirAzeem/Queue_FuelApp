@@ -54,6 +54,7 @@ public class FuelStationHomepage extends AppCompatActivity {
     private StationInterface stationInterface ;
     List<StationModel> fuelStationModelList;
     String  userForStation = "";
+    String  receivedPassword = "";
 
     String  testName;
 
@@ -81,6 +82,9 @@ public class FuelStationHomepage extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             userForStation = extras.getString("stationName");
+            receivedPassword = extras.getString("password");
+
+
         }
         System.out.println("userForStation id : "+userForStation);
 
@@ -160,6 +164,9 @@ public class FuelStationHomepage extends AppCompatActivity {
                         Intent profile = new Intent(FuelStationHomepage.this, StationProfile.class);
                         profile.putExtra("stationName", dbStationName);
                         profile.putExtra("userForStation", userForStation);
+                        profile.putExtra("receivedPassword", receivedPassword);
+
+
                         startActivity(profile);
                         break;
                     case R.id.logout:

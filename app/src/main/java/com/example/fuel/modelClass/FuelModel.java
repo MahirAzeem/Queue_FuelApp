@@ -8,10 +8,17 @@ public class FuelModel {
 
     private String id;
     private String petrol;
+    private String petrolTime;
     private String superPetrol;
+    private String superPetrolTime;
     private String diesel;
+    private String dieselTime;
     private String superDiesel;
+    private String superDieselTime;
     private String stationName;
+
+
+
 
     public FuelModel(String petrol, String superPetrol, String diesel, String superDiesel, String stationName ) {
         this.petrol = petrol;
@@ -30,6 +37,51 @@ public class FuelModel {
         this.superDiesel = superDiesel;
 
 
+    }
+
+
+    public FuelModel(String petrol, String petrolTime, String superPetrol, String superPetrolTime, String diesel, String dieselTime, String superDiesel, String superDieselTime, String stationName) {
+        this.petrol = petrol;
+        this.petrolTime = petrolTime;
+        this.superPetrol = superPetrol;
+        this.superPetrolTime = superPetrolTime;
+        this.diesel = diesel;
+        this.dieselTime = dieselTime;
+        this.superDiesel = superDiesel;
+        this.superDieselTime = superDieselTime;
+        this.stationName = stationName;
+    }
+
+    public String getPetrolTime() {
+        return petrolTime;
+    }
+
+    public void setPetrolTime(String petrolTime) {
+        this.petrolTime = petrolTime;
+    }
+
+    public String getSuperPetrolTime() {
+        return superPetrolTime;
+    }
+
+    public void setSuperPetrolTime(String superPetrolTime) {
+        this.superPetrolTime = superPetrolTime;
+    }
+
+    public String getDieselTime() {
+        return dieselTime;
+    }
+
+    public void setDieselTime(String dieselTime) {
+        this.dieselTime = dieselTime;
+    }
+
+    public String getSuperDieselTime() {
+        return superDieselTime;
+    }
+
+    public void setSuperDieselTime(String superDieselTime) {
+        this.superDieselTime = superDieselTime;
     }
 
     public String getId() {

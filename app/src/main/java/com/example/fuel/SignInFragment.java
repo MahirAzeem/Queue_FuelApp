@@ -128,6 +128,7 @@ public class SignInFragment extends Fragment {
                                     System.out.println("admin----------------------- "+userForStation);
                                     Intent intent = new Intent(getActivity(), FuelStationHomepage.class);
                                     intent.putExtra("stationName", userForStation);
+                                    intent.putExtra("password", pass);
                                     startActivity(intent);
 
 //                                    System.out.println("admin----------------------- "+isUserRole);

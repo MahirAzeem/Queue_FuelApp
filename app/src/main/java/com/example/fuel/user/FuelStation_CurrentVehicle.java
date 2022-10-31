@@ -98,13 +98,24 @@ public class FuelStation_CurrentVehicle extends Fragment {
 
                     if(queueModelList.get(i).getStationName().equals(queueStationName)){
                         if(queueModelList.get(i).getVehicleType().equals("Bike")) {
-                            bikeCount = bikeCount +1;
+                            if(queueModelList.get(i).getDepartureTime().equals("joined")){
+                                bikeCount = bikeCount +1;
+                            }
+
                         }else   if(queueModelList.get(i).getVehicleType().equals("Light Vehicle")) {
-                            lightVehicleCount = lightVehicleCount +1;
+                            if(queueModelList.get(i).getDepartureTime().equals("joined")) {
+                                lightVehicleCount = lightVehicleCount + 1;
+                            }
                         }else   if(queueModelList.get(i).getVehicleType().equals("Heavy Vehicle")) {
-                            heavyVehicleCount = heavyVehicleCount +1;
+                            if(queueModelList.get(i).getDepartureTime().equals("joined")){
+                                heavyVehicleCount = heavyVehicleCount +1;
+                            }
+
                         }else   if(queueModelList.get(i).getVehicleType().equals("Three Wheel")) {
-                            threeWheelCount = threeWheelCount +1;
+                            if(queueModelList.get(i).getDepartureTime().equals("joined")){
+                                threeWheelCount = threeWheelCount +1;
+                            }
+
                         }
                     }
                 }

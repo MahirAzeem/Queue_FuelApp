@@ -36,7 +36,9 @@ public class StationProfile extends AppCompatActivity {
     private QueueInterface queueInterface;
     ChipNavigationBar stationOwnerProfile;
     String stationName;
+    String stationId;
     String  userForStation = "";
+    String  receivedPassword = "";
     List<StationModel> stationModelList;
     List<QueueModel> queueModelList;
 
@@ -59,14 +61,21 @@ public class StationProfile extends AppCompatActivity {
         if (extras != null) {
             stationName = extras.getString("stationName");
             userForStation = extras.getString("userForStation");
+            receivedPassword= extras.getString("receivedPassword");
+
+
         }
         System.out.println("stationName profile ----------------------- :"+stationName);
 
 
 
             TextInputLayout stationNameField = findViewById(R.id.stationNameField);
+       TextInputLayout stationLocationField = findViewById(R.id.stationLocation);
+        TextInputLayout stationTypeField = findViewById(R.id.stationTypeField);
+        TextInputLayout stationPasswordField = findViewById(R.id.stationPasswordField);
 
         stationNameField.setHint(stationName);
+        stationPasswordField.setHint(receivedPassword);
 
 
 
@@ -85,34 +94,42 @@ public class StationProfile extends AppCompatActivity {
 
 
 
-        //retreiving  the details from station
-//        String stationName ="test_station";
-//        Call<List<StationModel>> stationModelcall = stationInterface.getStation();
-//        stationModelcall.enqueue(new Callback<List<StationModel>>() {
-//                         @Override
-//                         public void onResponse(Call<List<StationModel>> call, Response<List<StationModel>> response) {
-//                             stationModelList = response.body();
-//                             for(int i =0 ; i<stationModelList.size(); i++){
-//                                 if(stationModelList.get(i).getStationName().equals(stationName)){
-//                                     System.out.println("true");
-//                                     System.out.println(stationModelList.size());
-//                                     System.out.println(stationModelList.get(i).getStationName());
-//                                     System.out.println(stationModelList.get(i).getBrand());
-//                                     System.out.println(stationModelList.get(i).getLocation());
-//                                 }
-//                             }
-//                         }
-//                         @Override
-//                         public void onFailure(Call<List<StationModel>> call, Throwable t) {
-//                         }
-//                     });
+//        retreiving  the details from station
+        String stationName ="admin";
+        Call<List<StationModel>> stationModelcall = stationInterface.getStation();
+        stationModelcall.enqueue(new Callback<List<StationModel>>() {
+                         @Override
+                         public void onResponse(Call<List<StationModel>> call, Response<List<StationModel>> response) {
+                             System.out.println("Station retreived Sucess");
+                             stationModelList = response.body();
+                             for(int i =0 ; i<stationModelList.size(); i++){
+                                 if(stationModelList.get(i).getStationName().equals(stationName)){
+                                     System.out.println("true");
+                                     System.out.println(stationModelList.size());
+                                     System.out.println(stationModelList.get(i).getStationName());
+                                     System.out.println(stationModelList.get(i).getBrand());
+                                     System.out.println(stationModelList.get(i).getLocation());
+                                     stationId=stationModelList.get(i).getId();
+                                     stationTypeField.setHint(stationModelList.get(i).getBrand());
+                                     stationLocationField.setHint(stationModelList.get(i).getLocation());
+                                 }
+                             }
+                         }
+                         @Override
+                         public void onFailure(Call<List<StationModel>> call, Throwable t) {
+                             System.out.println("Station retreived failed");
+                         }
+                     });
 
 
 
+
+        String updatedLocation =stationLocationField.getEditText().getText().toString();
+        String updatedBrand =stationTypeField.getEditText().getText().toString();
 
         //updating the details from station id
-        StationModel staionModel = new StationModel("TEST","TEST","TEST");
-        Call<StationModel> call = stationInterface.updateStation("635565f94c7f49a28a559cb3",staionModel);
+        StationModel staionModel = new StationModel(stationName,updatedLocation,updatedBrand);
+        Call<StationModel> call = stationInterface.updateStation(stationId,staionModel);
         call.enqueue(new Callback<StationModel>() {
             @Override
             public void onResponse(Call<StationModel> call, Response<StationModel> response) {
@@ -143,6 +160,10 @@ public class StationProfile extends AppCompatActivity {
                         Intent homepage = new Intent(StationProfile.this, FuelStationHomepage.class);
 
                         homepage.putExtra("stationName", userForStation);
+                        homepage.putExtra("password", receivedPassword);
+
+
+                        receivedPassword= extras.getString("receivedPassword");
                         startActivity(homepage);
 
 

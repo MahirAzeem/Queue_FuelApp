@@ -7,27 +7,37 @@ public class QueueModel {
 
     private String id;
     private String reason;
+    private String email;
     private String arivalTime;
     private String departureTime;
     private String vehicleType;
     private String stationName;
 
 
-    public QueueModel(String arivalTime, String vehicleType, String stationName) {
+    //create a queue
+    public QueueModel(String email,String arivalTime,String departureTime,  String vehicleType, String stationName) {
+        this.email = email;
         this.arivalTime = arivalTime;
+        this.departureTime = departureTime;
         this.vehicleType = vehicleType;
         this.stationName = stationName;
     }
 
-    public QueueModel(String id,String departureTime, String reason, String stationName) {
-        this.id = id;
+    public QueueModel(String departureTime, String reason, String stationName) {
+
         this.departureTime = departureTime;
         this.reason = reason;
         this.stationName = stationName;
     }
 
 
+    public String getEmail() {
+        return email;
+    }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getId() {
         return id;

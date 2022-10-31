@@ -46,7 +46,7 @@ public class Homepage extends AppCompatActivity implements RecyclerViewInterface
     private SearchView searchView;
     FuelStationAdapter.RecyclerViewClickListener listener;
     ChipNavigationBar bottomNav;
-
+    String emailfromLogin;
 
     List<StationModel> fuelStationModelList;
     private StationInterface stationInterface;
@@ -63,6 +63,21 @@ public class Homepage extends AppCompatActivity implements RecyclerViewInterface
 
         recyclerView = findViewById(R.id.idFuelStation);
 
+
+
+
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            emailfromLogin = extras.getString("userEmail");
+
+        }
+
+
+
+
+
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://ahmedameer-001-site1.atempurl.com/api/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -77,25 +92,13 @@ public class Homepage extends AppCompatActivity implements RecyclerViewInterface
             @Override
             public void onResponse(Call<List<StationModel>> call, Response<List<StationModel>> response) {
 
-                if (!response.isSuccessful()) {
-//                    Toast.makeText(getActivity(), "failed response", Toast.LENGTH_SHORT).show();
-                    System.out.println("faillllllllllllllll");
-                }
-
-
-
-                System.out.println("dddddddddddddddddddddddd");
-                System.out.println("dddddddddddddddddddddddd"+response.body().size());
 
 
 
 
-                System.out.println("ffffffffffffffffffffff : " + response.body().get(0).getStationName());
+
                 fuelStationModelList = response.body();
-                System.out.println(response.body().size());
-                System.out.println(response.body().get(0).getStationName());
-                System.out.println(response.body().get(0).getLocation());
-                System.out.println(response.body().get(1).getBrand());
+
 
 
                 fuelStationAdapter = new FuelStopRecyclerViewAdapter( recyclerViewInterface,context, fuelStationModelList);
@@ -155,8 +158,13 @@ public class Homepage extends AppCompatActivity implements RecyclerViewInterface
 
                 switch (id) {
                     case R.id.profile:
-                        Intent profile = new Intent(Homepage.this, UserProfile.class);
-                        startActivity(profile);
+
+                        Intent intent = new Intent(Homepage.this, UserProfile.class);
+                        intent.putExtra("userEmail", emailfromLogin);
+                        startActivity(intent);
+
+//                        Intent profile = new Intent(Homepage.this, UserProfile.class);
+//                        startActivity(profile);
                         break;
                     case R.id.logout:
                         Intent login = new Intent(Homepage.this, Login_SignUp_Interface.class);
@@ -172,24 +180,6 @@ public class Homepage extends AppCompatActivity implements RecyclerViewInterface
 //        setOnClickListener();
 
         fuelStationModelArrayList = new ArrayList<FuelStationModel>();
-//        fuelStationModelArrayList.add(new FuelStationModel("Aagaash Petrol Shed", "Kalubowila", "Ceypetco", R.drawable.petrol_shed));
-//        fuelStationModelArrayList.add(new FuelStationModel("Ahmed Petrol Shed", "Rajagiriya", "IOC", R.drawable.petrol_shed));
-//        fuelStationModelArrayList.add(new FuelStationModel("Malindu Petrol Shed", "Narahenpita", "IOC", R.drawable.petrol_shed));
-//        fuelStationModelArrayList.add(new FuelStationModel("Saajidh Petrol Shed", "Panadura", "Ceypetco", R.drawable.petrol_shed));
-//        fuelStationModelArrayList.add(new FuelStationModel("Hussain Petrol Shed", "Budhgamuwa", "IOC", R.drawable.petrol_shed));
-//        fuelStationModelArrayList.add(new FuelStationModel("Mahir Petrol Shed", "Dehiwala", "Ceypetco", R.drawable.petrol_shed));
-//        fuelStationModelArrayList.add(new FuelStationModel("Dilan Petrol Shed", "Kotikawatta", "IOC", R.drawable.petrol_shed));
-//
-
-//
-//        fuelStationAdapter = new FuelStationAdapter(this, fuelStationModelList,listener);
-//
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-//
-//        fuelStation.setLayoutManager(linearLayoutManager);
-//        fuelStation.setAdapter(fuelStationAdapter);
-//    }
-
 
 
 
@@ -235,6 +225,9 @@ public class Homepage extends AppCompatActivity implements RecyclerViewInterface
         Intent intent = new Intent(this, FuelStation.class);
         intent.putExtra("fuelStation_name",fuelStationModelList.get(postion).getStationName());
         intent.putExtra("fuelStation_location",fuelStationModelList.get(postion).getLocation() );
+        intent.putExtra("emailfromHome",emailfromLogin );
+
+
         startActivity(intent);
     }
 }
