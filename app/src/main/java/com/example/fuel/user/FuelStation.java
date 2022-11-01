@@ -93,18 +93,22 @@ public class FuelStation extends AppCompatActivity {
         }
 
         myCustomMessage.setText(fuelStation_name + "\n" + fuelStation_location);
+        exitQueue.setVisibility( View.GONE);
 
-        String queueStationName = emailfromHome;
+        String receivedEmail = emailfromHome;
         Call<List<QueueModel>> call = queueInterface.getQueue();
         call.enqueue(new Callback<List<QueueModel>>() {
             @Override
             public void onResponse(Call<List<QueueModel>> call, Response<List<QueueModel>> response) {
-                System.out.println("Fuel data retreived Sucessfully"+queueStationName);
+                System.out.println("Fuel data retreived Sucessfully"+receivedEmail);
                 queueStationModelList = response.body();
                 for(int i=0;i<queueStationModelList.size();i++){
-                    if(   queueStationModelList.get(i).getEmail().equals(queueStationName)){
-                        tablecreated="true";
-                        exitQueue.setVisibility( View.VISIBLE);
+                    if(   queueStationModelList.get(i).getEmail().equals(receivedEmail)){
+                        if( queueStationModelList.get(i).getDepartureTime().equals("joined")){
+                            exitQueue.setVisibility( View.VISIBLE);
+                        }else{
+                            exitQueue.setVisibility( View.GONE);
+                        }
                     }else{
                         tablecreated="false";
                         exitQueue.setVisibility( View.GONE);
@@ -314,19 +318,84 @@ public class FuelStation extends AppCompatActivity {
 
                 Toast.makeText(FuelStation.this, "Item: " + item[0] + " Time: " + time[0], Toast.LENGTH_SHORT).show();
 
-                QueueModel queueModel = new QueueModel(time[0], item[0],"ddd");
-                Call<QueueModel> userModelcall = queueInterface.updateQueue(queueID,queueModel);
-                userModelcall.enqueue(new Callback<QueueModel>() {
-                    @Override
-                    public void onResponse(Call<QueueModel> call, Response<QueueModel> response) {
-                         exitQueue.setVisibility( View.GONE);
-                    }
-                    @Override
-                    public void onFailure(Call<QueueModel> call, Throwable t) {
-                        System.out.println(" Queue Updated Failed");
-                    }
-                });
-                alertDialog.dismiss();
+
+
+
+///////////////////////
+
+                if(queueID.isEmpty()){
+
+                    String receivedEmail = emailfromHome;
+
+                    System.out.println("queue id is empty  ---  email from --------------------------"+receivedEmail);
+
+                    Call<List<QueueModel>> call = queueInterface.getQueue();
+                    call.enqueue(new Callback<List<QueueModel>>() {
+                        @Override
+                        public void onResponse(Call<List<QueueModel>> call, Response<List<QueueModel>> response) {
+                            System.out.println("Fuel data retreived Sucessfully"+receivedEmail);
+                            queueStationModelList = response.body();
+                            for(int i=0;i<queueStationModelList.size();i++){
+                                if(   queueStationModelList.get(i).getEmail().equals(receivedEmail)) {
+                                    if (queueStationModelList.get(i).getDepartureTime().equals("joined")) {
+                                        queueID = queueStationModelList.get(i).getId();
+                                    }
+                                }
+                                QueueModel queueModel = new QueueModel(time[0], item[0],"ddd");
+                                Call<QueueModel> userModelcall = queueInterface.updateQueue(queueID,queueModel);
+                                userModelcall.enqueue(new Callback<QueueModel>() {
+                                    @Override
+                                    public void onResponse(Call<QueueModel> call, Response<QueueModel> response) {
+                                        exitQueue.setVisibility( View.GONE);
+                                    }
+                                    @Override
+                                    public void onFailure(Call<QueueModel> call, Throwable t) {
+                                        System.out.println(" Queue Updated Failed");
+                                    }
+                                });
+                                alertDialog.dismiss();
+
+
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<List<QueueModel>> call, Throwable t) {
+                            System.out.println("Fuel data retreived Failed");
+                        }
+                    });
+
+
+
+                }
+
+                else{
+                    System.out.println("queue id is not  emty  ---  email from --------------------------");
+                    QueueModel queueModel = new QueueModel(time[0], item[0],"ddd");
+                    Call<QueueModel> userModelcall = queueInterface.updateQueue(queueID,queueModel);
+                    userModelcall.enqueue(new Callback<QueueModel>() {
+                        @Override
+                        public void onResponse(Call<QueueModel> call, Response<QueueModel> response) {
+                            exitQueue.setVisibility( View.GONE);
+                        }
+                        @Override
+                        public void onFailure(Call<QueueModel> call, Throwable t) {
+                            System.out.println(" Queue Updated Failed");
+                        }
+                    });
+                    alertDialog.dismiss();
+
+
+
+                }
+
+
+
+
+
+
+
+
+
             }
         });
 
