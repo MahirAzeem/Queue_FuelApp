@@ -48,20 +48,21 @@ public class FuelStation_FuelStatus extends Fragment {
     String dieselTime = "";
     String superDieselTime = "";
 
+    String queueStationName = "Ahmed";
 
 
+    /*
+    -------------------------------------------------------------------------
+    Implementing List View for Fuel Status
+    -------------------------------------------------------------------------
+    */
 
-    //    Implementing List View for Fuel Status
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.user_fuel_status, null);
 
         ListView mListView = (ListView) v.findViewById(R.id.listView);
-
-//
-//        FuelStation_ExitQueue activity = (FuelStation_ExitQueue) getActivity();
-//        String receivedFuelStationName = activity.getMyData();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://ahmedameer-001-site1.atempurl.com/api/")
@@ -72,16 +73,25 @@ public class FuelStation_FuelStatus extends Fragment {
         fuelInterface = retrofit.create(FuelInterface.class);
 
 //        String queueStationName = receivedFuelStationName;
-        String queueStationName = "Ahmed";
+
+
+
+        FuelStation activityJoinQueue = (FuelStation) getActivity();
+        queueStationName = activityJoinQueue.getMyData();
+
+
+        /*
+        -------------------------------------------------------------------------
+        RETREIVING THE FUEL DATA FROM THE API
+        -------------------------------------------------------------------------
+        */
         Call<List<FuelModel>> call = fuelInterface.getFuel();
         call.enqueue(new Callback<List<FuelModel>>() {
             @Override
             public void onResponse(Call<List<FuelModel>> call, Response<List<FuelModel>> response) {
                 System.out.println("Fuel data retreived Sucessfully");
                 fuelModelList = response.body();
-                System.out.println("Fuel data retreived 11111");
-                System.out.println("Fuel data retreived 222222222222"+fuelModelList.size());
-                for(int i =0 ; i<fuelModelList.size(); i++){
+                 for(int i =0 ; i<fuelModelList.size(); i++){
                     if(fuelModelList.get(i).getStationName().equals(queueStationName)){
                         ispetrolAvailable = fuelModelList.get(i).getPetrol();
                         issuperPetrolAvailable = fuelModelList.get(i).getSuperPetrol();
@@ -99,8 +109,6 @@ public class FuelStation_FuelStatus extends Fragment {
                 }
 
                 //Create the Fuel Types and their availability
-         
-
                 FuelStatusModel petrol92 = new FuelStatusModel("Petrol 92", ispetrolAvailable, petrolTime);
                 FuelStatusModel petrol95 = new FuelStatusModel("Petrol 95", issuperPetrolAvailable, superPetrolTime);
                 FuelStatusModel superDiesel = new FuelStatusModel("Super Diesel", isdieselAvailable, dieselTime);
@@ -122,21 +130,6 @@ public class FuelStation_FuelStatus extends Fragment {
                 System.out.println("Fuel data retreived Failed");
             }
         });
-
-
-
-
-
-//Update Fuel Availability when ListView is clicked
-//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-//                Intent intent = new Intent(getActivity(), UpdateFuelStatus.class);
-//                intent.putExtra("fuelType", fuelTypes.get(position).getFuelName());
-//                intent.putExtra("fuelAvailability", fuelTypes.get(position).getFuelAvailability());
-//                startActivity(intent);
-//            }
-//        });
 
         return v;
 

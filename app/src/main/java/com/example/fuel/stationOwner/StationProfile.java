@@ -84,7 +84,7 @@ public class StationProfile extends AppCompatActivity {
             RETREVING STATION DATA FROM THE DATABASE BASED ON THE STATION NAME TO UPDATE
             -------------------------------------------------------------------------
             */
-            String stationName ="admin";
+            ;
             Call<List<StationModel>> stationModelcall = stationInterface.getStation();
             stationModelcall.enqueue(new Callback<List<StationModel>>() {
                          @Override
@@ -127,12 +127,6 @@ public class StationProfile extends AppCompatActivity {
                 System.out.println("Update Failed ");
             }
         });
-
-
-
-
-
-
 
 
 

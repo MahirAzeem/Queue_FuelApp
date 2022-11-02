@@ -43,14 +43,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class FuelStation_FuelStatus_StationOwner extends Fragment {
     private FuelInterface fuelInterface;
     List<FuelModel> fuelModelList;
-    String ispetrolAvailable = "";
-    String issuperPetrolAvailable = "";
-    String isdieselAvailable = "";
-    String issuperDieselAvailable = "";
-    String petrolTime = "";
-    String superPetrolTime = "";
-    String dieselTime = "";
-    String superDieselTime = "";
+    String ispetrolAvailable = "No";
+    String issuperPetrolAvailable = "No";
+    String isdieselAvailable = "No";
+    String issuperDieselAvailable = "No";
+    String petrolTime = "00";
+    String superPetrolTime = "00";
+    String dieselTime = "00";
+    String superDieselTime = "00";
 
     //    Implementing List View for Fuel Status
     @Override
@@ -68,26 +68,18 @@ public class FuelStation_FuelStatus_StationOwner extends Fragment {
 
         FuelStationHomepage activity = (FuelStationHomepage) getActivity();
         String receivedStationName = activity.getAdminData();
-
-
-
-        ///////////////////////
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://ahmedameer-001-site1.atempurl.com/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
-
         fuelInterface = retrofit.create(FuelInterface.class);
-
 
         /*
         -------------------------------------------------------------------------
         RETREVING FUEL DATA FROM THE DATABASE BASED ON THE STATION NAME
         -------------------------------------------------------------------------
         */
-        String queueStationName = "admin";
+        String queueStationName = "Ahmed";
         Call<List<FuelModel>> call = fuelInterface.getFuel();
         call.enqueue(new Callback<List<FuelModel>>() {
             @Override

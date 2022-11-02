@@ -62,19 +62,10 @@ public class Homepage extends AppCompatActivity implements RecyclerViewInterface
         searchView.clearFocus();
         recyclerView = findViewById(R.id.idFuelStation);
 
-
-
-
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             emailfromLogin = extras.getString("userEmail");
-
         }
-
-
-
-
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -82,38 +73,19 @@ public class Homepage extends AppCompatActivity implements RecyclerViewInterface
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         stationInterface = retrofit.create(StationInterface.class);
-
-
+        /*
+        -------------------------------------------------------------------------
+        RETREVING DATA FROM THE API
+        -------------------------------------------------------------------------
+        */
         Call<List<StationModel>> call = stationInterface.getStation();
-
         call.enqueue(new Callback<List<StationModel>>() {
-
             @Override
             public void onResponse(Call<List<StationModel>> call, Response<List<StationModel>> response) {
-
-
-
-
-
-
                 fuelStationModelList = response.body();
-
-
-
                 fuelStationAdapter = new FuelStopRecyclerViewAdapter( recyclerViewInterface,context, fuelStationModelList);
-//
-
-
                 recyclerView.setAdapter( fuelStationAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
-
-
-
-
-
-
-
-
 
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
@@ -127,63 +99,34 @@ public class Homepage extends AppCompatActivity implements RecyclerViewInterface
                         return true;
                     }
                 });
-
-
-
-
-
             }
-
-
-
             @Override
             public void onFailure(Call<List<StationModel>> call, Throwable t) {
-
             }
-
         });
 
-
-
         bottomNav = findViewById(R.id.bottom_nav);
-
-//        System.out.println("STATION MODEL LIST:"+ fuelStationModelList.size());
-
         bottomNav.setItemSelected(R.id.homepage, true);
-
         bottomNav.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
             @Override
             public void onItemSelected(int id) {
 
                 switch (id) {
                     case R.id.profile:
-
                         Intent intent = new Intent(Homepage.this, UserProfile.class);
                         intent.putExtra("userEmail", emailfromLogin);
                         startActivity(intent);
-
-//                        Intent profile = new Intent(Homepage.this, UserProfile.class);
-//                        startActivity(profile);
                         break;
                     case R.id.logout:
                         Intent login = new Intent(Homepage.this, Login_SignUp_Interface.class);
                         startActivity(login);
                         break;
                 }
-
             }
         });
-
-
-
-//        setOnClickListener();
-
         fuelStationModelArrayList = new ArrayList<FuelStationModel>();
-
-
-
-
     }
+
 
     //    Implementation of Search Filter using Fuel Station Location and Fuel Station Type
     private void filterFuelStation(String newvalue) {
@@ -202,22 +145,6 @@ public class Homepage extends AppCompatActivity implements RecyclerViewInterface
 
     }
 
-
-    //      Change Activity when Recycler View Card is pressed
-//  public void setOnClickListener(FuelStationAdapter.RecyclerViewClickListener listener) {
-//      listener = new FuelStationAdapter.RecyclerViewClickListener() {
-//          @Override
-//          public void onClick(View v, int position) {
-//              Intent intent = new Intent(getApplicationContext(), FuelStation.class);
-//              intent.putExtra("fuelStation_name", fuelStationModelList.get(position).getStationName());
-//              intent.putExtra("fuelStation_location", fuelStationModelList.get(position).getLocation());
-//              startActivity(intent);
-//          }
-//      };
-//  }
-
-
-
     @Override
     public void onItemClick(int postion) {
         System.out.println("clicked here");
@@ -225,7 +152,6 @@ public class Homepage extends AppCompatActivity implements RecyclerViewInterface
         intent.putExtra("fuelStation_name",fuelStationModelList.get(postion).getStationName());
         intent.putExtra("fuelStation_location",fuelStationModelList.get(postion).getLocation() );
         intent.putExtra("emailfromHome",emailfromLogin );
-
 
         startActivity(intent);
     }

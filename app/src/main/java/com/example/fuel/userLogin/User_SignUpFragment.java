@@ -36,14 +36,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 //Implementation of User Sign Up
 public class User_SignUpFragment extends Fragment {
-
-
     private UserInterface userInterface ;
-
-
-
-
-//    Providing value for User District Dropdown
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,16 +55,14 @@ public class User_SignUpFragment extends Fragment {
 
         View v =inflater.inflate(R.layout.user_sign_up, null);
 
-//        Email Validation
+
         TextInputLayout emailField = v.findViewById(R.id.enterUserEmailField);
         TextInputEditText editEmail = v.findViewById(R.id.userEmailEdit);
 
         editEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if(Patterns.EMAIL_ADDRESS.matcher(editEmail.getText().toString()).matches()){
@@ -80,15 +71,11 @@ public class User_SignUpFragment extends Fragment {
                 }else {
                     emailField.setError("Invalid Email Address");
                 }
-
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
-
             }
         });
-
 
 
 //        Password Validation
@@ -130,7 +117,7 @@ public class User_SignUpFragment extends Fragment {
 
 
 
-                userDistrict = v.findViewById(R.id.UserDistrict);
+        userDistrict = v.findViewById(R.id.UserDistrict);
         adapteruserDistrict = new ArrayAdapter<String>(getActivity(), R.layout.list_item, UserDistrict);
         userDistrict.setAdapter(adapteruserDistrict);
         userDistrict.setThreshold(5);
@@ -168,6 +155,11 @@ public class User_SignUpFragment extends Fragment {
 
 
 
+                /*
+                -------------------------------------------------------------------------
+                CREATING A NORMAL USER
+                -------------------------------------------------------------------------
+                */
                 UserModel userModel = new UserModel(user_Email, user_Password,user_PhoneNumber,"user",user_DrivingLicense);
                 Call<UserModel> userModelcall = userInterface.createUser(userModel);
                 userModelcall.enqueue(new Callback<UserModel>() {

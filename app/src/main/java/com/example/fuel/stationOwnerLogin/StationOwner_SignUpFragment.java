@@ -43,9 +43,8 @@ public class StationOwner_SignUpFragment extends Fragment {
     private StationInterface stationInterface ;
     private UserInterface userInterface ;
     private FuelInterface fuelInterface ;
-    String  stationId = "";
+    String  stationNamefromSignup = "";
     String  userIdresponse = "";
-
 
 //  Initializing Dropdown values for Fuel Station Location and Type
     @Override
@@ -190,6 +189,14 @@ public class StationOwner_SignUpFragment extends Fragment {
                 String station_Location = String.valueOf(stationLocationValue);
                 String station_Type = String.valueOf(stationTypeValue);
 
+
+
+
+                /*
+                -------------------------------------------------------------------------
+                CREATING A STATION MASTER USER
+                -------------------------------------------------------------------------
+                */
                 UserModel userModel = new UserModel(station_Email, pass,"stationAdmin");
                 Call<UserModel> userModelcall = userInterface.createUser(userModel);
                 userModelcall.enqueue(new Callback<UserModel>() {
@@ -198,27 +205,32 @@ public class StationOwner_SignUpFragment extends Fragment {
                     System.out.println(" User Created Successfully");
                     userIdresponse = response.body().getId();
 
-                    //Station table created base on the user id
+                    /*
+                    -------------------------------------------------------------------------
+                    CREATING A STATION TABLE BASED ON THE  USER ID
+                    -------------------------------------------------------------------------
+                    */
                     StationModel stationModel = new StationModel(userIdresponse,station_Name, stationLocationValue[0],stationTypeValue[0]);
                     Call<StationModel> call1 = stationInterface.createStation(stationModel);
                     call1.enqueue(new Callback<StationModel>() {
                         @Override
                         public void onResponse(Call<StationModel> call, Response<StationModel> response) {
                             System.out.println(" Station Created Successfully");
-                            stationId = response.body().getStationName();
+                            stationNamefromSignup = response.body().getStationName();
 
 
-                            //Fuel table created base on the station name
-                            FuelModel fuelModel = new FuelModel("No", "No","No","No",stationId);
+                            /*
+                            -------------------------------------------------------------------------
+                            CREATING A FUEL TABLE  BASED ON THE  STATION NAME
+                            -------------------------------------------------------------------------
+                            */
+                            FuelModel fuelModel = new FuelModel("No","00", "No","00","No","00","No","00",stationNamefromSignup);
                             Call<FuelModel> fuelModelcall = fuelInterface.createFuel(fuelModel);
-
                             fuelModelcall.enqueue(new Callback<FuelModel>() {
                                 @Override
                                 public void onResponse(Call<FuelModel> call, Response<FuelModel> response) {
                                     System.out.println(" Fuel Created Successfully");
-
                                     Boolean checkExistingUser = DB.checkExistingUser(station_Email, pass);
-
                                     if (station_Name.equals("") || pass.equals("") || station_Email.equals("") || station_Location.equals("") || station_Type.equals("")) {
                                         Toast.makeText(getActivity(), "Please enter all the fields", Toast.LENGTH_SHORT).show();
                                     } else if (checkExistingUser == false) {
@@ -251,29 +263,6 @@ public class StationOwner_SignUpFragment extends Fragment {
                    System.out.println(" User Created Failed");
                 }
                 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             }});
 
         return v;

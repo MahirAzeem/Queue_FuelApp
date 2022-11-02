@@ -27,15 +27,19 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-//    Implementing List View for to identify the count of Vehicle Types
-public class FuelStation_CurrentVehicle extends Fragment {
 
+
+
+  /*
+  -------------------------------------------------------------------------
+   IMPLEMENTING LIST VIEW FOR TO IDENTIFY THE COUNT OF THE VEHICLE TYPES
+  -------------------------------------------------------------------------
+  */
+  public class FuelStation_CurrentVehicle extends Fragment {
 
     private StationInterface stationInterface;
     private QueueInterface queueInterface;
-
     List<QueueModel> queueModelList;
-
     int bikeCount = 0;
     int threeWheelCount = 0;
     int heavyVehicleCount = 0;
@@ -46,26 +50,15 @@ public class FuelStation_CurrentVehicle extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.user_currrent_vehicle, null);
-
         ListView mListView = (ListView) v.findViewById(R.id.listView);
-
         String  fuelStation_name = "nulllllll";
-
-
         FuelStationModel  FMM =  new FuelStationModel();
         System.out.println("  FMM.getFuelStation_name();"+  FMM.getFuelStation_name());
 
         Bundle extras = getActivity().getIntent().getExtras();
         if (extras != null) {
             fuelStation_name = extras.getString("fuelStation_name");
-
         }
-
-        System.out.println("yyyyyyyyyyyyyyyyyyyyyyyy"+fuelStation_name);
-
-
-
-
 
         FuelStation activityJoinQueue = (FuelStation) getActivity();
         String receivedFuelStationNameJoinQueue = activityJoinQueue.getMyData();
@@ -82,26 +75,24 @@ public class FuelStation_CurrentVehicle extends Fragment {
 
 
 
+       /*
+        -------------------------------------------------------------------------
+        RETREIVING THE QUEUE DETAILS FROM THE API
+        -------------------------------------------------------------------------
+        */
         String queueStationName = receivedFuelStationNameJoinQueue;
-//        String queueStationName = "john station";
-//        String queueStationName = "Ahmed";
         Call<List<QueueModel>> call = queueInterface.getQueue();
-
         call.enqueue(new Callback<List<QueueModel>>() {
-
             @Override
             public void onResponse(Call<List<QueueModel>> call, Response<List<QueueModel>> response) {
-                System.out.println("Queue  Retreived Sucess ");
+                System.out.println("Queue  Retreived Success ");
                 queueModelList = response.body();
-
                 for(int i =0 ; i<queueModelList.size(); i++){
-
                     if(queueModelList.get(i).getStationName().equals(queueStationName)){
                         if(queueModelList.get(i).getVehicleType().equals("Bike")) {
                             if(queueModelList.get(i).getDepartureTime().equals("joined")){
                                 bikeCount = bikeCount +1;
                             }
-
                         }else   if(queueModelList.get(i).getVehicleType().equals("Light Vehicle")) {
                             if(queueModelList.get(i).getDepartureTime().equals("joined")) {
                                 lightVehicleCount = lightVehicleCount + 1;
@@ -110,12 +101,10 @@ public class FuelStation_CurrentVehicle extends Fragment {
                             if(queueModelList.get(i).getDepartureTime().equals("joined")){
                                 heavyVehicleCount = heavyVehicleCount +1;
                             }
-
                         }else   if(queueModelList.get(i).getVehicleType().equals("Three Wheel")) {
                             if(queueModelList.get(i).getDepartureTime().equals("joined")){
                                 threeWheelCount = threeWheelCount +1;
                             }
-
                         }
                     }
                 }
@@ -136,11 +125,6 @@ public class FuelStation_CurrentVehicle extends Fragment {
 
                 CurrentVehicleAdapter adapter = new CurrentVehicleAdapter(getActivity(), R.layout.adapter_view_layout_currentvehicle, vehicleTypes);
                 mListView.setAdapter(adapter);
-
-
-
-
-
             }
 
             @Override
@@ -148,13 +132,6 @@ public class FuelStation_CurrentVehicle extends Fragment {
                 System.out.println("Queue  Retreived Failed ");
             }
         });
-
-
-
-
-
-
-
 
         return v;
     }

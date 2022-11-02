@@ -45,51 +45,32 @@ public class UserProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_profile);
 
-
-//        TextInputLayout  userEmail = findViewById(R.id.userEmailField);
-
-
-
         bottomNav = findViewById(R.id.bottom_nav);
-
         bottomNav.setItemSelected(R.id.profile, true);
 
 
         userEmail = "Name not available";
-
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             userEmail = extras.getString("userEmail");
         }
-        System.out.println("user profile ----------------------- :"+userEmail);
 
         TextInputLayout userEmailField = findViewById(R.id.userEmailField);
         TextInputLayout userPhoneField = findViewById(R.id.userPhoneNoField);
         TextInputLayout userPasswordField = findViewById(R.id.userPasswordField);
         TextInputLayout userlicenceField = findViewById(R.id.userDrivingLicenseNo);
-
-
         Button updateButton = findViewById(R.id.update_profile);
-
-
-
-
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://ahmedameer-001-site1.atempurl.com/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
         stationInterface = retrofit.create(StationInterface.class);
         userInterface = retrofit.create(UserInterface.class);
         fuelInterface = retrofit.create(FuelInterface.class);
 
 
 
-
-        //retreiving details from the email
-//        String userEmail =userEmail;
         Call<List<UserModel>> call = userInterface.getUser();
         call.enqueue(new Callback<List<UserModel>>() {
             @Override
@@ -98,28 +79,17 @@ public class UserProfile extends AppCompatActivity {
                 for(int i =0 ; i<userModelList.size(); i++){
                     if(userModelList.get(i).getEmail().equals(userEmail)){
                      userId=userModelList.get(i).getId();
-
                         testingphonenumber=userModelList.get(i).getPhoneNumber();
-
-
                         userEmailField.setHint(userModelList.get(i).getEmail());
                         userPhoneField.setHint(userModelList.get(i).getPhoneNumber());
                         userPasswordField.setHint(userModelList.get(i).getPassword());
-
                         userlicenceField.setHint(userModelList.get(i).getDrivingLicenceNo());
-
-
-
                     }
                 }
             }
-
             @Override
             public void onFailure(Call<List<UserModel>> call, Throwable t) {
-
             }
-
-
         });
 
 
@@ -129,29 +99,10 @@ public class UserProfile extends AppCompatActivity {
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                System.out.println("inside ---------------------------onClick ");
-
-                System.out.println("inside ---------------------------onClick ");
-
-
-
-                if(userPhoneField.getEditText().getText().toString().isEmpty()){
-
-
-                }else{
-
-                }
-
-
-
-
                 String updatedEmail=userEmailField.getEditText().getText().toString();
                 String updatedNumber=userPhoneField.getEditText().getText().toString();
                 String updatedPassword=userPasswordField.getEditText().getText().toString();
                 String updatedLiecence=userlicenceField.getEditText().getText().toString();
-
-
 
                 //updating the details from email
                 UserModel userData = new UserModel(updatedLiecence,userEmail,updatedPassword,updatedNumber);
@@ -161,42 +112,28 @@ public class UserProfile extends AppCompatActivity {
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                         System.out.println("user updated sucessfully");
                     }
-
                     @Override
                     public void onFailure(Call<UserModel> call, Throwable t) {
                     }
                 });
-
-
             }
         });
-
-
-
-
-
-
-
 
 
         bottomNav.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
             @Override
             public void onItemSelected(int id) {
-
                 switch (id){
                     case R.id.homepage:
                         Intent homepage = new Intent(UserProfile.this, Homepage.class);
                         homepage.putExtra("userEmail", userEmail);
                         startActivity(homepage);
-
-
                         break;
                     case R.id.logout:
                         Intent login = new Intent(UserProfile.this, Login_SignUp_Interface.class);
                         startActivity(login);
                         break;
                 }
-
             }
         });
     }

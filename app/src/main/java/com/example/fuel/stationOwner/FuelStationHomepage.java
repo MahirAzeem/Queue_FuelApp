@@ -87,9 +87,6 @@ public class FuelStationHomepage extends AppCompatActivity {
                 .build();
         stationInterface = retrofit.create(StationInterface.class);
 
-
-
-
         /*
         --------------------------------------------
         RETREVING STATION DATA FROM THE DATABASE BASED ON THE STATION NAME
@@ -138,22 +135,13 @@ public class FuelStationHomepage extends AppCompatActivity {
                         startActivity(login);
                         break;
                 }
-
             }
         });
     }
 
-
-
-//
-//        return TESTING_DATAng;
-//    }
-
     public String getAdminData () {
-
         return "test station";
     }
-
 
     // Initializing the TabLayout view of Fuel Status and Current Vehicle
     private void initView() {
@@ -172,7 +160,7 @@ public class FuelStationHomepage extends AppCompatActivity {
         }
     }
 
-    //    Connecting Fuel Status and Current Vehicle fragments to the adapter
+    //  Connecting Fuel Status and Current Vehicle fragments to the adapter
     private void setupViewPager(ViewPager2 viewPager) {
         adapter = new ViewPagerAdapter(fuelStationHomepage.getSupportFragmentManager(),
                 fuelStationHomepage.getLifecycle());
@@ -191,12 +179,10 @@ public class FuelStationHomepage extends AppCompatActivity {
         public ViewPagerAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
             super(fragmentManager, lifecycle);
         }
-
         public void addFragment(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }
-
         @NonNull
         @Override
         public Fragment createFragment(int position) {
@@ -208,7 +194,5 @@ public class FuelStationHomepage extends AppCompatActivity {
             return mFragmentList.size();
         }
     }
-
-
 
 }
