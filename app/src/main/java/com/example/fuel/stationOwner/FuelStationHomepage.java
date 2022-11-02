@@ -55,26 +55,20 @@ public class FuelStationHomepage extends AppCompatActivity {
     List<StationModel> fuelStationModelList;
     String  userForStation = "";
     String  receivedPassword = "";
-
     String  testName;
-
-
-
     String  dbStationName;
     String  dbStationLocation = "";
     String  dbStationBrand = "";
-
     String ReceivedfuelStation_name;
 
 
-    //    Retrieving and Displaying Fuel Station Name and Fuel Station Location
+    //Retrieving and Displaying Fuel Station Name and Fuel Station Location
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_fuel_station_homepage);
         fuelStationHomepage = this;
         initView();
-
 
         TextView stationName = findViewById(R.id.myCustommessage);
         TextView stationLocation = findViewById(R.id.myCustommessage2);
@@ -83,11 +77,8 @@ public class FuelStationHomepage extends AppCompatActivity {
         if (extras != null) {
             userForStation = extras.getString("stationName");
             receivedPassword = extras.getString("password");
-
-
         }
         System.out.println("userForStation id : "+userForStation);
-
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -96,60 +87,35 @@ public class FuelStationHomepage extends AppCompatActivity {
                 .build();
         stationInterface = retrofit.create(StationInterface.class);
 
+
+
+
+        /*
+        --------------------------------------------
+        RETREVING STATION DATA FROM THE DATABASE BASED ON THE STATION NAME
+        ----------------------------
+        */
+
         Call<List<StationModel>> call = stationInterface.getStation();
         call.enqueue(new Callback<List<StationModel>>() {
-
             @Override
             public void onResponse(Call<List<StationModel>> call, Response<List<StationModel>> response) {
-                if(!response.isSuccessful()){
-                  System.out.println("failed ..");
-                }
-
                 fuelStationModelList =response.body();
                 for(int i=0;i<fuelStationModelList.size();i++){
-
-                if(fuelStationModelList.get(i).getUserId().equals(userForStation)){
-                      dbStationName = response.body().get(i).getStationName();
-                      dbStationLocation = response.body().get(i).getLocation();
-                      dbStationBrand = response.body().get(i).getBrand();
+                    if(fuelStationModelList.get(i).getUserId().equals(userForStation)){
+                          dbStationName = response.body().get(i).getStationName();
+                          dbStationLocation = response.body().get(i).getLocation();
+                          dbStationBrand = response.body().get(i).getBrand();
+                    }
                 }
-            }
-//                System.out.println("inn------------------- dbStationName : "+dbStationName);
-//                System.out.println("inn------------------- dbStationName : "+dbStationLocation);
-//                System.out.println("inn------------------- dbStationName : "+dbStationBrand);
-
                 stationName.setText(dbStationName);
                 stationLocation.setText(dbStationLocation);
-
-
-//                getMyData111(dbStationName);
-
                 testName=dbStationName;
-
-
-                System.out.println("-------inside ------------ sssssssssaaaaaaaaaaaaa------------------------------- : "+testName);
-
-
             }
             @Override
             public void onFailure(Call<List<StationModel>> call, Throwable t) {
             }
         });
-                System.out.println("------------------- dbStationName : "+testName);
-                System.out.println("------------------- dbStationName : "+dbStationLocation);
-                System.out.println("------------------- dbStationName : "+dbStationBrand);
-
-        System.out.println("-------outside  ------------ sssssssssaaaaaaaaaaaaa------------------------------- : "+testName);
-
-//        // calling this activity's function to
-//        // use ActionBar utility methods
-//        ActionBar actionBar = getSupportActionBar();
-//
-//        // providing title for the ActionBar
-//        actionBar.setTitle("Aagaash Fuel Station");
-//
-//        // providing subtitle for the ActionBar
-//        actionBar.setSubtitle("Kalubowila");
 
         bottomNav = findViewById(R.id.bottom_nav);
 
@@ -165,8 +131,6 @@ public class FuelStationHomepage extends AppCompatActivity {
                         profile.putExtra("stationName", dbStationName);
                         profile.putExtra("userForStation", userForStation);
                         profile.putExtra("receivedPassword", receivedPassword);
-
-
                         startActivity(profile);
                         break;
                     case R.id.logout:
@@ -180,19 +144,7 @@ public class FuelStationHomepage extends AppCompatActivity {
     }
 
 
-    String TESTING_DATAng ;
 
-
-//    public void getMyData111(String stationName11111) {
-//
-//        TESTING_DATAng=stationName11111;
-//        System.out.println("------------ffffffffffffffffffffffffffffffffffff----------:"+TESTING_DATAng);
-//
-//
-//    }
-
-
-//    public String getMyData () {
 //
 //        return TESTING_DATAng;
 //    }
@@ -226,7 +178,6 @@ public class FuelStationHomepage extends AppCompatActivity {
                 fuelStationHomepage.getLifecycle());
         adapter.addFragment(new FuelStation_FuelStatus_StationOwner(), "Fuel Status");
         adapter.addFragment(new FuelStation_CurrentVehicle_StationOwner(), "Current Vehicles");
-
 
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(1);

@@ -146,25 +146,19 @@ public class SignInFragment extends Fragment {
                                 if(isUserRole.equals("user")){
 
 
-
-                                    System.out.println("user----------------------- "+isUserRole);
-//
                                     Intent intent = new Intent(getActivity(), Homepage.class);
                                     intent.putExtra("userEmail", email);
                                     startActivity(intent);
 
-                                    ////
 
                                 }else{
-                                    System.out.println("admin----------------------- "+userForStation);
+
                                     Intent intent = new Intent(getActivity(), FuelStationHomepage.class);
                                     intent.putExtra("stationName", userForStation);
                                     intent.putExtra("password", pass);
                                     startActivity(intent);
 
-//                                    System.out.println("admin----------------------- "+isUserRole);
-//                                    Intent stationOwnerSide  = new Intent(getActivity(), FuelStationHomepage.class);
-//                                    startActivity(stationOwnerSide);
+
                                 }
                             }
                             @Override

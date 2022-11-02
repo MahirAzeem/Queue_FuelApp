@@ -95,12 +95,20 @@ public class FuelStation extends AppCompatActivity {
         myCustomMessage.setText(fuelStation_name + "\n" + fuelStation_location);
         exitQueue.setVisibility( View.GONE);
 
+
+
+
+        /*
+        -------------------------------------------------------------------------
+        CHECKING WEATHER THE USER ALREADY JOIN THE QUEUE
+        -------------------------------------------------------------------------
+        */
         String receivedEmail = emailfromHome;
         Call<List<QueueModel>> call = queueInterface.getQueue();
         call.enqueue(new Callback<List<QueueModel>>() {
             @Override
             public void onResponse(Call<List<QueueModel>> call, Response<List<QueueModel>> response) {
-                System.out.println("Fuel data retreived Sucessfully"+receivedEmail);
+                System.out.println("Fuel data retreived Sucessfully");
                 queueStationModelList = response.body();
                 for(int i=0;i<queueStationModelList.size();i++){
                     if(   queueStationModelList.get(i).getEmail().equals(receivedEmail)){
@@ -154,7 +162,6 @@ public class FuelStation extends AppCompatActivity {
 
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(1);
-
     }
 
     class ViewPagerAdapter extends FragmentStateAdapter {
@@ -184,9 +191,12 @@ public class FuelStation extends AppCompatActivity {
 
 
 
-
-    //    Implementation of Join Queue Dialog Box
-    public void btn_showMessage(View view) {
+      /*
+        ----------------------------------------------------------------
+          Implementation of Join Queue Dialog Box
+        ----------------------------------------------------------------
+      */
+       public void btn_showMessage(View view) {
 
         //  Values for Vehicle Type Dropdown in Join Queue Dialog
         String[] vehicleType = {"Light Vehicle", "Heavy Vehicle", "Bike", "Three Wheel"};
@@ -223,7 +233,7 @@ public class FuelStation extends AppCompatActivity {
             }
         });
 
-//        Time value is stored in time variable
+        // Time value is stored in time variable
         final String[] time = new String[1];
 
 
@@ -231,13 +241,13 @@ public class FuelStation extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //                Printing Time
+                //-----Printing Time----
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
                 LocalDateTime now = LocalDateTime.now();
 
                 time[0] = dtf.format(now);
 
-                //inserting join queue details to the database
+                //Inserting join queue details to the database
                 QueueModel queueModel = new QueueModel(emailfromHome,time[0],"joined", item[0],fuelStation_name);
                 Call<QueueModel> userModelcall = queueInterface.createQueue(queueModel);
                 userModelcall.enqueue(new Callback<QueueModel>() {
@@ -257,27 +267,37 @@ public class FuelStation extends AppCompatActivity {
 
                 Toast.makeText(FuelStation.this, "Item: " + item[0] + " Time: " + time[0], Toast.LENGTH_SHORT).show();
                 alertDialog.dismiss();
+                finish();
+                startActivity(getIntent());
+                // this basically provides animation
+                overridePendingTransition(0, 0);
+                String time = System.currentTimeMillis() + "";
             }
         });
         alertDialog.show();
     }
 
-    //    Implementation of Exist Queue Dialog Box
-    public void btn_exitModal(View view) {
 
-        //        Values for Exit Queue Dropdown in Join Queue Dialog
+
+
+
+    /*
+      ----------------------------------------------------------------
+      Implementation of Exist Queue Dialog Box
+      ----------------------------------------------------------------
+    */
+    public void btn_exitModal(View view) {
+        //--------Values for Exit Queue Dropdown in Join Queue Dialog----
         String[] exitReason = {"Pumped Fuel", "Fuel Over", "Other"};
         ArrayAdapter<String> adapterExistReason;
-
 
         final AlertDialog.Builder alert = new AlertDialog.Builder(FuelStation.this);
         View mView = getLayoutInflater().inflate(R.layout.exit_queue_dialog, null);
 
         final AutoCompleteTextView autoCompleteTextView = (AutoCompleteTextView) mView.findViewById(R.id.exitReason);
-        //        Values for Vehicle Type Dropdown in Join Queue Dialog
+        //------Values for Vehicle Type Dropdown in Join Queue Dialog------
         adapterExistReason = new ArrayAdapter<String>(FuelStation.this, R.layout.list_item, exitReason);
         autoCompleteTextView.setAdapter(adapterExistReason);
-
 
         Button btn_cancel = (Button) mView.findViewById(R.id.cancel_button);
         Button btn_okay = (Button) mView.findViewById(R.id.exitQueueButton);
@@ -293,7 +313,7 @@ public class FuelStation extends AppCompatActivity {
             }
         });
 
-//        Dropdown value is stored in item variable
+        // Dropdown value is stored in item variable
         final String[] item = new String[1];
 
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -303,14 +323,14 @@ public class FuelStation extends AppCompatActivity {
             }
         });
 
-//        Time value is stored in time variable
+        //Time value is stored in time variable
         final String[] time = new String[1];
 
         btn_okay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-//                Printing Time
+                //----Printing Time
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
                 LocalDateTime now = LocalDateTime.now();
 
@@ -318,22 +338,13 @@ public class FuelStation extends AppCompatActivity {
 
                 Toast.makeText(FuelStation.this, "Item: " + item[0] + " Time: " + time[0], Toast.LENGTH_SHORT).show();
 
-
-
-
-///////////////////////
-
+                //CHECKING  WEATHER THE QUEUE ID IS EMPTY
                 if(queueID.isEmpty()){
-
                     String receivedEmail = emailfromHome;
-
-                    System.out.println("queue id is empty  ---  email from --------------------------"+receivedEmail);
-
                     Call<List<QueueModel>> call = queueInterface.getQueue();
                     call.enqueue(new Callback<List<QueueModel>>() {
                         @Override
                         public void onResponse(Call<List<QueueModel>> call, Response<List<QueueModel>> response) {
-                            System.out.println("Fuel data retreived Sucessfully"+receivedEmail);
                             queueStationModelList = response.body();
                             for(int i=0;i<queueStationModelList.size();i++){
                                 if(   queueStationModelList.get(i).getEmail().equals(receivedEmail)) {
@@ -354,8 +365,11 @@ public class FuelStation extends AppCompatActivity {
                                     }
                                 });
                                 alertDialog.dismiss();
-
-
+//                                finish();
+//                                startActivity(getIntent());
+//                                // this basically provides animation
+//                                overridePendingTransition(0, 0);
+//                                String time = System.currentTimeMillis() + "";
                             }
                         }
                         @Override
@@ -363,18 +377,14 @@ public class FuelStation extends AppCompatActivity {
                             System.out.println("Fuel data retreived Failed");
                         }
                     });
-
-
-
                 }
-
                 else{
-                    System.out.println("queue id is not  emty  ---  email from --------------------------");
                     QueueModel queueModel = new QueueModel(time[0], item[0],"ddd");
                     Call<QueueModel> userModelcall = queueInterface.updateQueue(queueID,queueModel);
                     userModelcall.enqueue(new Callback<QueueModel>() {
                         @Override
                         public void onResponse(Call<QueueModel> call, Response<QueueModel> response) {
+                            System.out.println(" Queue Updated Success");
                             exitQueue.setVisibility( View.GONE);
                         }
                         @Override
@@ -383,24 +393,14 @@ public class FuelStation extends AppCompatActivity {
                         }
                     });
                     alertDialog.dismiss();
-
-
-
+//                    finish();
+//                    startActivity(getIntent());
+//                    // this basically provides animation
+//                    overridePendingTransition(0, 0);
+//                    String time = System.currentTimeMillis() + "";
                 }
-
-
-
-
-
-
-
-
-
             }
         });
-
         alertDialog.show();
-
     }
-
 }

@@ -50,65 +50,49 @@ public class StationProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.station_profile);
-
         stationOwnerProfile = findViewById(R.id.bottom_nav);
-
         stationOwnerProfile.setItemSelected(R.id.profile, true);
-
-
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             stationName = extras.getString("stationName");
             userForStation = extras.getString("userForStation");
             receivedPassword= extras.getString("receivedPassword");
-
-
         }
-        System.out.println("stationName profile ----------------------- :"+stationName);
+
+
+           TextInputLayout stationNameField = findViewById(R.id.stationNameField);
+           TextInputLayout stationLocationField = findViewById(R.id.stationLocation);
+           TextInputLayout stationTypeField = findViewById(R.id.stationTypeField);
+           TextInputLayout stationPasswordField = findViewById(R.id.stationPasswordField);
+
+            stationNameField.setHint(stationName);
+            stationPasswordField.setHint(receivedPassword);
 
 
 
-            TextInputLayout stationNameField = findViewById(R.id.stationNameField);
-       TextInputLayout stationLocationField = findViewById(R.id.stationLocation);
-        TextInputLayout stationTypeField = findViewById(R.id.stationTypeField);
-        TextInputLayout stationPasswordField = findViewById(R.id.stationPasswordField);
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("http://ahmedameer-001-site1.atempurl.com/api/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
 
-        stationNameField.setHint(stationName);
-        stationPasswordField.setHint(receivedPassword);
+            stationInterface = retrofit.create(StationInterface.class);
+            queueInterface = retrofit.create(QueueInterface.class);
 
-
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://ahmedameer-001-site1.atempurl.com/api/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        stationInterface = retrofit.create(StationInterface.class);
-        queueInterface = retrofit.create(QueueInterface.class);
-
-        System.out.println("inside   station profile ---------------------------------");
-
-
-
-
-
-
-//        retreiving  the details from station
-        String stationName ="admin";
-        Call<List<StationModel>> stationModelcall = stationInterface.getStation();
-        stationModelcall.enqueue(new Callback<List<StationModel>>() {
+             /*
+            -------------------------------------------------------------------------
+            RETREVING STATION DATA FROM THE DATABASE BASED ON THE STATION NAME TO UPDATE
+            -------------------------------------------------------------------------
+            */
+            String stationName ="admin";
+            Call<List<StationModel>> stationModelcall = stationInterface.getStation();
+            stationModelcall.enqueue(new Callback<List<StationModel>>() {
                          @Override
                          public void onResponse(Call<List<StationModel>> call, Response<List<StationModel>> response) {
                              System.out.println("Station retreived Sucess");
                              stationModelList = response.body();
                              for(int i =0 ; i<stationModelList.size(); i++){
                                  if(stationModelList.get(i).getStationName().equals(stationName)){
-                                     System.out.println("true");
-                                     System.out.println(stationModelList.size());
-                                     System.out.println(stationModelList.get(i).getStationName());
-                                     System.out.println(stationModelList.get(i).getBrand());
-                                     System.out.println(stationModelList.get(i).getLocation());
                                      stationId=stationModelList.get(i).getId();
                                      stationTypeField.setHint(stationModelList.get(i).getBrand());
                                      stationLocationField.setHint(stationModelList.get(i).getLocation());
@@ -119,25 +103,28 @@ public class StationProfile extends AppCompatActivity {
                          public void onFailure(Call<List<StationModel>> call, Throwable t) {
                              System.out.println("Station retreived failed");
                          }
-                     });
+            });
 
 
 
-
+        /*
+        -------------------------------------------------------------------------
+        UPDATING  STATION DATA TO  THE DATABASE BASED ON THE STATION ID
+        -------------------------------------------------------------------------
+        */
         String updatedLocation =stationLocationField.getEditText().getText().toString();
         String updatedBrand =stationTypeField.getEditText().getText().toString();
 
-        //updating the details from station id
         StationModel staionModel = new StationModel(stationName,updatedLocation,updatedBrand);
         Call<StationModel> call = stationInterface.updateStation(stationId,staionModel);
         call.enqueue(new Callback<StationModel>() {
             @Override
             public void onResponse(Call<StationModel> call, Response<StationModel> response) {
-                System.out.println("successs update -------");
+                System.out.println("Update Success ");
             }
-
             @Override
             public void onFailure(Call<StationModel> call, Throwable t) {
+                System.out.println("Update Failed ");
             }
         });
 
@@ -150,33 +137,22 @@ public class StationProfile extends AppCompatActivity {
 
 
         stationOwnerProfile.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
-
             @Override
             public void onItemSelected(int id) {
-
                 switch (id) {
                     case R.id.homepage:
-
                         Intent homepage = new Intent(StationProfile.this, FuelStationHomepage.class);
-
                         homepage.putExtra("stationName", userForStation);
                         homepage.putExtra("password", receivedPassword);
-
-
                         receivedPassword= extras.getString("receivedPassword");
                         startActivity(homepage);
-
-
-
                         break;
                     case R.id.logout:
                         Intent login = new Intent(StationProfile.this, Login_SignUp_Interface.class);
                         startActivity(login);
                         break;
                 }
-
             }
         });
-
     }
 }

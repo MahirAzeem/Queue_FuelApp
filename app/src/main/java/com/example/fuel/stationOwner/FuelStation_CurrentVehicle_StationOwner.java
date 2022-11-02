@@ -46,28 +46,10 @@ public class FuelStation_CurrentVehicle_StationOwner extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.user_currrent_vehicle, null);
-
         ListView mListView = (ListView) v.findViewById(R.id.listView);
-
         String  fuelStation_name = "nulllllll";
+        String queueStationName = "Ahmed";
 
-
-//        FuelStationModel  FMM =  new FuelStationModel();
-//        System.out.println("  FMM.getFuelStation_name();"+  FMM.getFuelStation_name());
-//
-//        Bundle extras = getActivity().getIntent().getExtras();
-//        if (extras != null) {
-//            fuelStation_name = extras.getString("fuelStation_name");
-//
-//        }
-//
-//        System.out.println("yyyyyyyyyyyyyyyyyyyyyyyy"+fuelStation_name);
-
-
-
-
-//        FuelStation activity = (FuelStation) getActivity();
-//        String receivedFuelStationName = activity.getMyData();
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -79,21 +61,18 @@ public class FuelStation_CurrentVehicle_StationOwner extends Fragment {
         queueInterface = retrofit.create(QueueInterface.class);
 
 
-
-
-//        String queueStationName = receivedFuelStationName;
-        String queueStationName = "Ahmed";
+        /*
+        -------------------------------------------------------------------------
+        RETREVING QUEUE DATA FROM THE DATABASE BASED ON THE STATION NAME
+        -------------------------------------------------------------------------
+        */
         Call<List<QueueModel>> call = queueInterface.getQueue();
-
         call.enqueue(new Callback<List<QueueModel>>() {
-
             @Override
             public void onResponse(Call<List<QueueModel>> call, Response<List<QueueModel>> response) {
                 System.out.println("Queue  Retreived Sucess ");
                 queueModelList = response.body();
-
                 for(int i =0 ; i<queueModelList.size(); i++){
-
                     if(queueModelList.get(i).getStationName().equals(queueStationName)){
                         if(queueModelList.get(i).getVehicleType().equals("Bike")) {
                             bikeCount = bikeCount +1;
@@ -107,8 +86,11 @@ public class FuelStation_CurrentVehicle_StationOwner extends Fragment {
                     }
                 }
 
-
-                //Create the Vehicle Types and their availability
+                /*
+                -------------------------------------------------------------------------
+                Print  the Vehicle Types and their availability
+                -------------------------------------------------------------------------
+                */
                 CurrentVehicleModel lightVehicle = new CurrentVehicleModel("Light Vehicle", lightVehicleCount);
                 CurrentVehicleModel heavyVehicle = new CurrentVehicleModel("Heavy Vehicle", heavyVehicleCount);
                 CurrentVehicleModel bike = new CurrentVehicleModel("Bike", bikeCount);

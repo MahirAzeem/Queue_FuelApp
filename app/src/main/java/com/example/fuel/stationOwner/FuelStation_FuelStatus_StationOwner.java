@@ -2,6 +2,7 @@ package com.example.fuel.stationOwner;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.fuel.Controller.FuelInterface;
 import com.example.fuel.R;
@@ -39,26 +41,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 //Fuel Status Fragment to display the availability of fuel
 public class FuelStation_FuelStatus_StationOwner extends Fragment {
-
-
-
-
     private FuelInterface fuelInterface;
-
     List<FuelModel> fuelModelList;
-
     String ispetrolAvailable = "";
     String issuperPetrolAvailable = "";
     String isdieselAvailable = "";
     String issuperDieselAvailable = "";
-
     String petrolTime = "";
     String superPetrolTime = "";
     String dieselTime = "";
     String superDieselTime = "";
-
-
-
 
     //    Implementing List View for Fuel Status
     @Override
@@ -72,13 +64,7 @@ public class FuelStation_FuelStatus_StationOwner extends Fragment {
         View v = inflater.inflate(R.layout.stationowner_fuel_status, null);
 
         ListView mListView = (ListView) v.findViewById(R.id.listView);
-
-
-
-
-
         ArrayList<FuelStatusModel> fuelTypes = new ArrayList<>();
-
 
         FuelStationHomepage activity = (FuelStationHomepage) getActivity();
         String receivedStationName = activity.getAdminData();
@@ -96,18 +82,17 @@ public class FuelStation_FuelStatus_StationOwner extends Fragment {
         fuelInterface = retrofit.create(FuelInterface.class);
 
 
-
-
+        /*
+        -------------------------------------------------------------------------
+        RETREVING FUEL DATA FROM THE DATABASE BASED ON THE STATION NAME
+        -------------------------------------------------------------------------
+        */
         String queueStationName = "admin";
         Call<List<FuelModel>> call = fuelInterface.getFuel();
-        System.out.println("inside 1111111111111----------------------");
         call.enqueue(new Callback<List<FuelModel>>() {
-
             @Override
             public void onResponse(Call<List<FuelModel>> call, Response<List<FuelModel>> response) {
-                System.out.println("Fuel data retreived Sucessfully");
-                fuelModelList = response.body();
-
+                  fuelModelList = response.body();
                 for(int i =0 ; i<fuelModelList.size(); i++){
                     if(fuelModelList.get(i).getStationName().equals(queueStationName)){
                         ispetrolAvailable = fuelModelList.get(i).getPetrol();
@@ -120,21 +105,22 @@ public class FuelStation_FuelStatus_StationOwner extends Fragment {
                         dieselTime = fuelModelList.get(i).getDieselTime();
                         superDieselTime = fuelModelList.get(i).getSuperDieselTime();
 
-
-
-
                     }
                     if(ispetrolAvailable.isEmpty()){
                         ispetrolAvailable = "NO STATION";
                     }
                 }
 
-                /////////
-                //Create the Fuel Types and their availability
-                FuelStatusModel petrol92 = new FuelStatusModel("Petrol 92", receivedStationName, petrolTime);
+
+                 /*
+                -------------------------------------------------------------------------
+                Print  the fuel Types and their Time
+                -------------------------------------------------------------------------
+                */
+                FuelStatusModel petrol92 = new FuelStatusModel("Petrol 92", ispetrolAvailable, petrolTime);
                 FuelStatusModel petrol95 = new FuelStatusModel("Petrol 95", issuperPetrolAvailable, superPetrolTime);
-                FuelStatusModel superDiesel = new FuelStatusModel("Super Diesel", isdieselAvailable, dieselTime);
-                FuelStatusModel diesel = new FuelStatusModel("Diesel", issuperDieselAvailable, superDieselTime);
+                FuelStatusModel superDiesel = new FuelStatusModel("Super Diesel", issuperDieselAvailable, superDieselTime);
+                FuelStatusModel diesel = new FuelStatusModel("Diesel", isdieselAvailable, dieselTime);
 
                 //Add Fuel types to an ArrayList
 
@@ -187,7 +173,7 @@ public class FuelStation_FuelStatus_StationOwner extends Fragment {
                             }
                         });
 
-//        Update Button in Update Fuel Modal
+                    //        Update Button in Update Fuel Modal
 
                         final String[] item = new String[1];
 
@@ -209,43 +195,47 @@ public class FuelStation_FuelStatus_StationOwner extends Fragment {
 //                        Toast.makeText(getActivity(), "Item: " + item[0] + " Time: " + dtf.format(now), Toast.LENGTH_SHORT).show();
                                 time[0] = dtf.format(now);
 
-
-
-
+                                String petrol="";
+                                String petrolTime="";
+                                String superPetrol="";
+                                String superPetrolTime="";
+                                String diesel="";
+                                String dieselTime="";
+                                String superDiesel="";
+                                String superDieselTime="";
+                                String stationName=queueStationName;
 
 
 
                                 if(fuelTypes.get(position).getFuelName().equals("Petrol 92")){
-//                            Toast.makeText(getActivity(), "Petrol 92: " + time[0], Toast.LENGTH_SHORT).show();
-                                    petrol92.setFuelStatusChangeTime(time[0]);
-                                    Toast.makeText(getActivity(), "Get: " + fuelTypes.get(position).getFuelStatusChangeTime(), Toast.LENGTH_SHORT).show();
+
+                                    petrol = fuelTypes.get(position).getFuelAvailability();
+                                    petrolTime = time[0];
+
                                 }else if(fuelTypes.get(position).getFuelName().equals("Petrol 95")){
-                                    Toast.makeText(getActivity(), "Petrol 95: " + time[0], Toast.LENGTH_SHORT).show();
-                                    petrol95.setFuelStatusChangeTime(time[0]);
+
+                                    superPetrol = fuelTypes.get(position).getFuelAvailability();
+                                    superPetrolTime = time[0];
+
                                 }else if(fuelTypes.get(position).getFuelName().equals("Super Diesel")){
-                                    Toast.makeText(getActivity(), "Super Diesel: " + time[0], Toast.LENGTH_SHORT).show();
-                                    superDiesel.setFuelStatusChangeTime(time[0]);
+
+                                    superDiesel = fuelTypes.get(position).getFuelAvailability();
+                                    superDieselTime = time[0];
+
                                 }else if(fuelTypes.get(position).getFuelName().equals("Diesel")){
-                                    Toast.makeText(getActivity(), "Super Diesel: " + time[0], Toast.LENGTH_SHORT).show();
-                                    diesel.setFuelStatusChangeTime(time[0]);
+
+                                    diesel = fuelTypes.get(position).getFuelAvailability();
+                                    dieselTime = time[0];
                                 }
 
 
+                                System.out.println("Petrol 92 Status : " + petrol);
+                                System.out.println("Petrol 95 Status : " + superPetrol);
+                                System.out.println("SD Status : " + superDiesel);
+                                System.out.println("D Status : " + diesel);
 
-
-                                 String petrol="";
-                                 String petrolTime="";
-                                 String superPetrol="Yes";
-                                 String superPetrolTime="10";
-                                 String diesel="";
-                                 String dieselTime="";
-                                 String superDiesel="";
-                                 String superDieselTime="";
-                                 String stationName=queueStationName;
-
-
-                                FuelModel post = new FuelModel(petrol,petrolTime,superPetrol,superPetrolTime,diesel,dieselTime,superDiesel,superDieselTime,stationName);
-                                Call<FuelModel> call = fuelInterface.updateFuel(queueStationName,post);
+                                FuelModel fuelData = new FuelModel(petrol,petrolTime,superPetrol,superPetrolTime,diesel,dieselTime,superDiesel,superDieselTime,stationName);
+                                Call<FuelModel> call = fuelInterface.updateFuel(queueStationName,fuelData);
                                 call.enqueue(new Callback<FuelModel>() {
                                     @Override
                                     public void onResponse(Call<FuelModel> call, Response<FuelModel> response) {
@@ -258,29 +248,15 @@ public class FuelStation_FuelStatus_StationOwner extends Fragment {
                                     }
                                 });
 
-
-
-
-
-
                                 alertDialog.dismiss();
+
+
                             }
                         });
                         alertDialog.show();
 
                     }
                 });
-
-
-
-
-
-
-
-
-
-
-
 
 
             }

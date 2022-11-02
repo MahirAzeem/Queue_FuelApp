@@ -34,13 +34,8 @@ public class UserProfile extends AppCompatActivity {
     private UserInterface userInterface ;
     private FuelInterface fuelInterface ;
     List<UserModel> userModelList;
-String userId;
-
-
+    String userId;
     String testingphonenumber;
-//    String updatedNumber;
-//    String updatedPassword;
-//    String updatedLiecence;
 
     String userEmail;
 
@@ -99,21 +94,10 @@ String userId;
         call.enqueue(new Callback<List<UserModel>>() {
             @Override
             public void onResponse(Call<List<UserModel>> call, Response<List<UserModel>> response) {
-
                 userModelList = response.body();
                 for(int i =0 ; i<userModelList.size(); i++){
-                    System.out.println(userModelList.get(i).getEmail());
-                    System.out.println(userModelList.get(i).getEmail().equals(userEmail));
-                    System.out.println("----------------------------");
                     if(userModelList.get(i).getEmail().equals(userEmail)){
-                        System.out.println("---------sucessssssssssssssssssssssssss-------------------");
-                        System.out.println(userModelList.size());
-                        System.out.println(userModelList.get(i).getUserRole());
-                        System.out.println(userModelList.get(i).getEmail());
-                        System.out.println(userModelList.get(i).getDrivingLicenceNo());
-
-
-                        userId=userModelList.get(i).getId();
+                     userId=userModelList.get(i).getId();
 
                         testingphonenumber=userModelList.get(i).getPhoneNumber();
 
@@ -153,32 +137,25 @@ String userId;
 
 
                 if(userPhoneField.getEditText().getText().toString().isEmpty()){
-                    System.out.println("inside - 1111111 7777  -----------isEmpty---------------userPhoneField : "+userPhoneField.getEditText().getHint().toString());
-                    System.out.println("inside - 1111111   -----------isEmpty---------------testingphonenumber : "+testingphonenumber);
-                    System.out.println("inside - 1111111   -----------isEmpty---------------userPhoneField : "+userPhoneField.getEditText().getHint().toString());
+
 
                 }else{
-                    System.out.println("inside - 222222222222   ---- isEmpty ------userPhoneField :  "+userPhoneField.getEditText().getText().toString());
-                    System.out.println("inside - 222222222222   ---- isEmpty ------testingphonenumber :  "+testingphonenumber);
-                    System.out.println("inside - 222222222222   3333---- isEmpty ------userPhoneField :  "+userPhoneField.getEditText().getText().toString());
+
                 }
 
 
 
-                System.out.println("userEmailField : "+userEmailField.getEditText().getText());
-                System.out.println("userPhoneField : "+userPhoneField.getEditText().getText().toString());
-                System.out.println("userPasswordField : "+userPasswordField.toString());
-                System.out.println("userlicenceField : "+userlicenceField.getHint().toString());
-                System.out.println("userId ---------- : "+userId);
 
                 String updatedEmail=userEmailField.getEditText().getText().toString();
                 String updatedNumber=userPhoneField.getEditText().getText().toString();
                 String updatedPassword=userPasswordField.getEditText().getText().toString();
                 String updatedLiecence=userlicenceField.getEditText().getText().toString();
 
+
+
                 //updating the details from email
-                UserModel post = new UserModel(updatedLiecence,userEmail,updatedPassword,updatedNumber);
-                Call<UserModel> call = userInterface.updateUser(userId,post);
+                UserModel userData = new UserModel(updatedLiecence,userEmail,updatedPassword,updatedNumber);
+                Call<UserModel> call = userInterface.updateUser(userId,userData);
                 call.enqueue(new Callback<UserModel>() {
                     @Override
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
